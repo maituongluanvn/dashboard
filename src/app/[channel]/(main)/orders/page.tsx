@@ -1,11 +1,15 @@
-import { CurrentUserOrderListDocument } from "@/gql/graphql";
-import { executeGraphQL } from "@/lib/graphql";
-import { LoginForm } from "@/ui/components/LoginForm";
-import { OrderListItem } from "@/ui/components/OrderListItem";
+/* eslint-disable @typescript-eslint/no-unsafe-call */
+/* eslint-disable @typescript-eslint/no-unsafe-member-access */
+/* eslint-disable @typescript-eslint/no-unsafe-assignment */
+import { CurrentUserOrderListDocument } from '@/gql/graphql';
+import { executeGraphQL } from '@/lib/graphql';
+import { LoginForm } from '@/ui/components/LoginForm';
+import { OrderListItem } from '@/ui/components/OrderListItem';
 
 export default async function OrderPage() {
-	const { me: user } = await executeGraphQL(CurrentUserOrderListDocument, {
-		cache: "no-cache",
+	const { me: user }: any = await executeGraphQL(CurrentUserOrderListDocument, {
+		cache: 'no-cache',
+		variables: undefined,
 	});
 
 	if (!user) {
@@ -28,7 +32,7 @@ export default async function OrderPage() {
 				</div>
 			) : (
 				<ul className="mt-8 space-y-6">
-					{orders.map(({ node: order }) => {
+					{orders.map(({ node: order }: any) => {
 						return <OrderListItem order={order} key={order.id} />;
 					})}
 				</ul>

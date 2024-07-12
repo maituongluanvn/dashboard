@@ -30,6 +30,7 @@ export async function executeGraphQL<Result, Variables>(
 			...headers,
 		},
 		body: JSON.stringify({
+			// eslint-disable-next-line @typescript-eslint/no-unsafe-assignment, @typescript-eslint/no-unsafe-call, @typescript-eslint/no-unsafe-member-access
 			query: operation.toString(),
 			...(variables && { variables }),
 		}),

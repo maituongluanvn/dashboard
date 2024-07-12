@@ -1,3 +1,5 @@
+/* eslint-disable @typescript-eslint/no-unsafe-return */
+/* eslint-disable @typescript-eslint/no-unsafe-call */
 /* eslint-disable @typescript-eslint/no-unsafe-assignment */
 /* eslint-disable @typescript-eslint/no-unsafe-member-access */
 /* eslint-disable @typescript-eslint/no-unsafe-argument */
@@ -24,7 +26,7 @@ export default async function Page({
 }) {
 	const cursor = typeof searchParams.cursor === 'string' ? searchParams.cursor : null;
 
-	const { products } = await executeGraphQL(ProductListPaginatedDocument, {
+	const { products }: any = await executeGraphQL(ProductListPaginatedDocument, {
 		variables: {
 			first: ProductsPerPage,
 			after: cursor,
@@ -44,7 +46,7 @@ export default async function Page({
 	return (
 		<section className="mx-auto max-w-7xl p-8 pb-16">
 			<h2 className="sr-only">Product list</h2>
-			<ProductList products={products.edges.map(e => e.node)} />
+			<ProductList products={products.edges.map((e: any) => e.node)} />
 			<Pagination
 				pageInfo={{
 					...products.pageInfo,

@@ -1,3 +1,7 @@
+/* eslint-disable @typescript-eslint/no-unsafe-assignment */
+/* eslint-disable @typescript-eslint/no-unsafe-member-access */
+/* eslint-disable @typescript-eslint/no-unsafe-call */
+/* eslint-disable @typescript-eslint/no-unsafe-return */
 import { type ReactNode } from 'react';
 import { executeGraphQL } from '@/lib/graphql';
 import { ChannelsListDocument } from '@/gql/graphql';

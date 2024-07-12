@@ -1,3 +1,6 @@
+/* eslint-disable @typescript-eslint/no-unsafe-call */
+/* eslint-disable @typescript-eslint/no-unsafe-assignment */
+/* eslint-disable @typescript-eslint/no-unsafe-member-access */
 import Link from 'next/link';
 import Image from 'next/image';
 import {
@@ -34,7 +37,7 @@ export async function Footer({ channel }: { channel: string }) {
 		<footer className="border-neutral-300 bg-neutral-50">
 			<div className="mx-auto max-w-7xl px-4 lg:px-8">
 				<div className="grid grid-cols-3 gap-8 py-16">
-					{(footerLinks ).menu?.items?.map(
+					{footerLinks.menu?.items?.map(
 						(item: {
 							id: Key | null | undefined;
 							name:
