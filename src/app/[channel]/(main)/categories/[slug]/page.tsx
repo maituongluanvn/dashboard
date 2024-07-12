@@ -12,6 +12,7 @@ export const generateMetadata = async (
 		variables: { slug: params.slug, channel: params.channel },
 		revalidate: 60,
 	});
+	console.log("🚀 ~ category 222:", category)
 
 	return {
 		title: `${category?.name || "Categroy"} | ${category?.seoTitle || (await parent).title?.absolute}`,
@@ -24,6 +25,7 @@ export default async function Page({ params }: { params: { slug: string; channel
 		variables: { slug: params.slug, channel: params.channel },
 		revalidate: 60,
 	});
+	console.log("🚀 ~ category 111:", category)
 
 	if (!category || !category.products) {
 		notFound();
