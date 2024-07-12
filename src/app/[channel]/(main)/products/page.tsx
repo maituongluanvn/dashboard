@@ -1,13 +1,16 @@
-import { notFound } from "next/navigation";
-import { ProductListPaginatedDocument } from "@/gql/graphql";
-import { executeGraphQL } from "@/lib/graphql";
-import { Pagination } from "@/ui/components/Pagination";
-import { ProductList } from "@/ui/components/ProductList";
-import { ProductsPerPage } from "@/app/config";
+/* eslint-disable @typescript-eslint/no-unsafe-assignment */
+/* eslint-disable @typescript-eslint/no-unsafe-member-access */
+/* eslint-disable @typescript-eslint/no-unsafe-argument */
+import { notFound } from 'next/navigation';
+import { ProductListPaginatedDocument } from '@/gql/graphql';
+import { executeGraphQL } from '@/lib/graphql';
+import { Pagination } from '@/ui/components/Pagination';
+import { ProductList } from '@/ui/components/ProductList';
+import { ProductsPerPage } from '@/app/config';
 
 export const metadata = {
-	title: "Products · Saleor Storefront example",
-	description: "All products in Saleor Storefront example",
+	title: 'Products · Saleor Storefront example',
+	description: 'All products in Saleor Storefront example',
 };
 
 export default async function Page({
@@ -19,7 +22,7 @@ export default async function Page({
 		cursor: string | string[] | undefined;
 	};
 }) {
-	const cursor = typeof searchParams.cursor === "string" ? searchParams.cursor : null;
+	const cursor = typeof searchParams.cursor === 'string' ? searchParams.cursor : null;
 
 	const { products } = await executeGraphQL(ProductListPaginatedDocument, {
 		variables: {
@@ -41,7 +44,7 @@ export default async function Page({
 	return (
 		<section className="mx-auto max-w-7xl p-8 pb-16">
 			<h2 className="sr-only">Product list</h2>
-			<ProductList products={products.edges.map((e) => e.node)} />
+			<ProductList products={products.edges.map(e => e.node)} />
 			<Pagination
 				pageInfo={{
 					...products.pageInfo,

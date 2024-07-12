@@ -1,23 +1,28 @@
-import { notFound, redirect } from "next/navigation";
-import { OrderDirection, ProductOrderField, SearchProductsDocument } from "@/gql/graphql";
-import { executeGraphQL } from "@/lib/graphql";
-import { Pagination } from "@/ui/components/Pagination";
-import { ProductList } from "@/ui/components/ProductList";
-import { ProductsPerPage } from "@/app/config";
+/* eslint-disable @typescript-eslint/no-unsafe-return */
+/* eslint-disable @typescript-eslint/no-unsafe-call */
+/* eslint-disable @typescript-eslint/no-unsafe-assignment */
+/* eslint-disable @typescript-eslint/no-unsafe-member-access */
+/* eslint-disable @typescript-eslint/no-unsafe-argument */
+import { notFound, redirect } from 'next/navigation';
+import { OrderDirection, ProductOrderField, SearchProductsDocument } from '@/gql/graphql';
+import { executeGraphQL } from '@/lib/graphql';
+import { Pagination } from '@/ui/components/Pagination';
+import { ProductList } from '@/ui/components/ProductList';
+import { ProductsPerPage } from '@/app/config';
 
 export const metadata = {
-	title: "Search products · Saleor Storefront example",
-	description: "Search products in Saleor Storefront example",
+	title: 'Search products · Saleor Storefront example',
+	description: 'Search products in Saleor Storefront example',
 };
 
 export default async function Page({
 	searchParams,
 	params,
 }: {
-	searchParams: Record<"query" | "cursor", string | string[] | undefined>;
+	searchParams: Record<'query' | 'cursor', string | string[] | undefined>;
 	params: { channel: string };
 }) {
-	const cursor = typeof searchParams.cursor === "string" ? searchParams.cursor : null;
+	const cursor = typeof searchParams.cursor === 'string' ? searchParams.cursor : null;
 	const searchValue = searchParams.query;
 
 	if (!searchValue) {
@@ -25,14 +30,14 @@ export default async function Page({
 	}
 
 	if (Array.isArray(searchValue)) {
-		const firstValidSearchValue = searchValue.find((v) => v.length > 0);
+		const firstValidSearchValue = searchValue.find(v => v.length > 0);
 		if (!firstValidSearchValue) {
 			notFound();
 		}
 		redirect(`/search?${new URLSearchParams({ query: firstValidSearchValue }).toString()}`);
 	}
 
-	const { products } = await executeGraphQL(SearchProductsDocument, {
+	const { products }: any = await executeGraphQL(SearchProductsDocument, {
 		variables: {
 			first: ProductsPerPage,
 			search: searchValue,
@@ -58,7 +63,7 @@ export default async function Page({
 			{products.totalCount && products.totalCount > 0 ? (
 				<div>
 					<h1 className="pb-8 text-xl font-semibold">Search results for &quot;{searchValue}&quot;:</h1>
-					<ProductList products={products.edges.map((e) => e.node)} />
+					<ProductList products={products.edges.map((e: any) => e.node)} />
 					<Pagination
 						pageInfo={{
 							...products.pageInfo,

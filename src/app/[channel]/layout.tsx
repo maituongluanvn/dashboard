@@ -1,6 +1,6 @@
-import { type ReactNode } from "react";
-import { executeGraphQL } from "@/lib/graphql";
-import { ChannelsListDocument } from "@/gql/graphql";
+import { type ReactNode } from 'react';
+import { executeGraphQL } from '@/lib/graphql';
+import { ChannelsListDocument } from '@/gql/graphql';
 
 export const generateStaticParams = async () => {
 	// the `channels` query is protected
@@ -13,14 +13,15 @@ export const generateStaticParams = async () => {
 				// and use app token instead
 				Authorization: `Bearer ${process.env.SALEOR_APP_TOKEN}`,
 			},
+			variables: undefined,
 		});
 		return (
-			channels.channels
-				?.filter((channel) => channel.isActive)
-				.map((channel) => ({ channel: channel.slug })) ?? []
+			(channels as any).channels
+				?.filter((channel: any) => channel.isActive)
+				.map((channel: any) => ({ channel: channel.slug })) ?? []
 		);
 	} else {
-		return [{ channel: "default-channel" }];
+		return [{ channel: 'default-channel' }];
 	}
 };
 

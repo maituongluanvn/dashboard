@@ -12,5 +12,5 @@ export const useProductStore = create(set => ({
       alt: '',
     },
   }],
-  increasePopulation: () => set(state => ({ bears: state.bears + 1 })),
+  increasePopulation: () => set((state: { bears: number; }) => ({ bears: state.bears + 1 })),
 }));

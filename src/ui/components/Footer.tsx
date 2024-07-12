@@ -1,12 +1,20 @@
 import Link from 'next/link';
 import Image from 'next/image';
+import {
+	type Key,
+	type ReactElement,
+	type JSXElementConstructor,
+	type ReactNode,
+	type ReactPortal,
+	type PromiseLikeOfReactNode,
+} from 'react';
 import { LinkWithChannel } from '../atoms/LinkWithChannel';
 import { ChannelSelect } from './ChannelSelect';
 import { ChannelsListDocument, MenuGetBySlugDocument } from '@/gql/graphql';
 import { executeGraphQL } from '@/lib/graphql';
 
 export async function Footer({ channel }: { channel: string }) {
-	const footerLinks = await executeGraphQL(MenuGetBySlugDocument, {
+	const footerLinks: any = await executeGraphQL(MenuGetBySlugDocument, {
 		variables: { slug: 'footer', channel },
 		revalidate: 60 * 60 * 24,
 	});
@@ -17,6 +25,7 @@ export async function Footer({ channel }: { channel: string }) {
 					// and use app token instead
 					Authorization: `Bearer ${process.env.SALEOR_APP_TOKEN}`,
 				},
+				variables: undefined,
 			})
 		: null;
 	const currentYear = new Date().getFullYear();
@@ -25,58 +34,128 @@ export async function Footer({ channel }: { channel: string }) {
 		<footer className="border-neutral-300 bg-neutral-50">
 			<div className="mx-auto max-w-7xl px-4 lg:px-8">
 				<div className="grid grid-cols-3 gap-8 py-16">
-					{footerLinks.menu?.items?.map(item => {
-						return (
-							<div key={item.id}>
-								<h3 className="text-sm font-semibold text-neutral-900">{item.name}</h3>
-								<ul className="mt-4 space-y-4 [&>li]:text-neutral-500">
-									{item.children?.map(child => {
-										if (child.category) {
-											return (
-												<li key={child.id} className="text-sm">
-													<LinkWithChannel href={`/categories/${child.category.slug}`}>
-														{child.category.name}
-													</LinkWithChannel>
-												</li>
-											);
-										}
-										if (child.collection) {
-											return (
-												<li key={child.id} className="text-sm">
-													<LinkWithChannel href={`/collections/${child.collection.slug}`}>
-														{child.collection.name}
-													</LinkWithChannel>
-												</li>
-											);
-										}
-										if (child.page) {
-											return (
-												<li key={child.id} className="text-sm">
-													<LinkWithChannel href={`/pages/${child.page.slug}`}>
-														{child.page.title}
-													</LinkWithChannel>
-												</li>
-											);
-										}
-										if (child.url) {
-											return (
-												<li key={child.id} className="text-sm">
-													<LinkWithChannel href={child.url}>{child.name}</LinkWithChannel>
-												</li>
-											);
-										}
-										return null;
-									})}
-								</ul>
-							</div>
-						);
-					})}
+					{(footerLinks ).menu?.items?.map(
+						(item: {
+							id: Key | null | undefined;
+							name:
+								| string
+								| number
+								| boolean
+								| ReactElement<any, string | JSXElementConstructor<any>>
+								| Iterable<ReactNode>
+								| ReactPortal
+								| PromiseLikeOfReactNode
+								| null
+								| undefined;
+							children: any[];
+						}) => {
+							return (
+								<div key={item.id}>
+									<h3 className="text-sm font-semibold text-neutral-900">{item.name}</h3>
+									<ul className="mt-4 space-y-4 [&>li]:text-neutral-500">
+										{item.children?.map(
+											(child: {
+												category: {
+													slug: any;
+													name:
+														| string
+														| number
+														| boolean
+														| ReactElement<any, string | JSXElementConstructor<any>>
+														| Iterable<ReactNode>
+														| ReactPortal
+														| PromiseLikeOfReactNode
+														| null
+														| undefined;
+												};
+												id: Key | null | undefined;
+												collection: {
+													slug: any;
+													name:
+														| string
+														| number
+														| boolean
+														| ReactElement<any, string | JSXElementConstructor<any>>
+														| Iterable<ReactNode>
+														| ReactPortal
+														| PromiseLikeOfReactNode
+														| null
+														| undefined;
+												};
+												page: {
+													slug: any;
+													title:
+														| string
+														| number
+														| boolean
+														| ReactElement<any, string | JSXElementConstructor<any>>
+														| Iterable<ReactNode>
+														| ReactPortal
+														| PromiseLikeOfReactNode
+														| null
+														| undefined;
+												};
+												url: string;
+												name:
+													| string
+													| number
+													| boolean
+													| ReactElement<any, string | JSXElementConstructor<any>>
+													| Iterable<ReactNode>
+													| ReactPortal
+													| PromiseLikeOfReactNode
+													| null
+													| undefined;
+											}) => {
+												if (child.category) {
+													return (
+														<li key={child.id} className="text-sm">
+															<LinkWithChannel href={`/categories/${child.category.slug}`}>
+																{child.category.name}
+															</LinkWithChannel>
+														</li>
+													);
+												}
+												if (child.collection) {
+													return (
+														<li key={child.id} className="text-sm">
+															<LinkWithChannel href={`/collections/${child.collection.slug}`}>
+																{child.collection.name}
+															</LinkWithChannel>
+														</li>
+													);
+												}
+												if (child.page) {
+													return (
+														<li key={child.id} className="text-sm">
+															<LinkWithChannel href={`/pages/${child.page.slug}`}>
+																{child.page.title}
+															</LinkWithChannel>
+														</li>
+													);
+												}
+												if (child.url) {
+													return (
+														<li key={child.id} className="text-sm">
+															<LinkWithChannel href={child.url}>{child.name}</LinkWithChannel>
+														</li>
+													);
+												}
+												return null;
+											},
+										)}
+									</ul>
+								</div>
+							);
+						},
+					)}
 				</div>
 
-				{channels?.channels && (
+				{(channels as any)?.channels && (
 					<div className="mb-4 text-neutral-500">
 						<label>
-							<span className="text-sm">Change currency:</span> <ChannelSelect channels={channels.channels} />
+							<span className="text-sm">Change currency:</span>{' '}
+							<ChannelSelect channels={(channels as any).channels} />
 						</label>
 					</div>
 				)}

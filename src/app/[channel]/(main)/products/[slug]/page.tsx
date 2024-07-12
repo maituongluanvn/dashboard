@@ -1,18 +1,23 @@
-import edjsHTML from "editorjs-html";
-import { revalidatePath } from "next/cache";
-import { notFound } from "next/navigation";
-import { type ResolvingMetadata, type Metadata } from "next";
-import xss from "xss";
-import { invariant } from "ts-invariant";
-import { type WithContext, type Product } from "schema-dts";
-import { AddButton } from "./AddButton";
-import { VariantSelector } from "@/ui/components/VariantSelector";
-import { ProductImageWrapper } from "@/ui/atoms/ProductImageWrapper";
-import { executeGraphQL } from "@/lib/graphql";
-import { formatMoney, formatMoneyRange } from "@/lib/utils";
-import { CheckoutAddLineDocument, ProductDetailsDocument, ProductListDocument } from "@/gql/graphql";
-import * as Checkout from "@/lib/checkout";
-import { AvailabilityMessage } from "@/ui/components/AvailabilityMessage";
+/* eslint-disable @typescript-eslint/no-unsafe-return */
+/* eslint-disable @typescript-eslint/no-unsafe-call */
+/* eslint-disable @typescript-eslint/no-unsafe-argument */
+/* eslint-disable @typescript-eslint/no-unsafe-member-access */
+/* eslint-disable @typescript-eslint/no-unsafe-assignment */
+import edjsHTML from 'editorjs-html';
+import { revalidatePath } from 'next/cache';
+import { notFound } from 'next/navigation';
+import { type ResolvingMetadata, type Metadata } from 'next';
+import xss from 'xss';
+import { invariant } from 'ts-invariant';
+import { type WithContext, type Product } from 'schema-dts';
+import { AddButton } from './AddButton';
+import { VariantSelector } from '@/ui/components/VariantSelector';
+import { ProductImageWrapper } from '@/ui/atoms/ProductImageWrapper';
+import { executeGraphQL } from '@/lib/graphql';
+import { formatMoney, formatMoneyRange } from '@/lib/utils';
+import { CheckoutAddLineDocument, ProductDetailsDocument, ProductListDocument } from '@/gql/graphql';
+import * as Checkout from '@/lib/checkout';
+import { AvailabilityMessage } from '@/ui/components/AvailabilityMessage';
 
 export async function generateMetadata(
 	{
@@ -24,7 +29,7 @@ export async function generateMetadata(
 	},
 	parent: ResolvingMetadata,
 ): Promise<Metadata> {
-	const { product } = await executeGraphQL(ProductDetailsDocument, {
+	const { product }: any = await executeGraphQL(ProductDetailsDocument, {
 		variables: {
 			slug: decodeURIComponent(params.slug),
 			channel: params.channel,
@@ -37,7 +42,7 @@ export async function generateMetadata(
 	}
 
 	const productName = product.seoTitle || product.name;
-	const variantName = product.variants?.find(({ id }) => id === searchParams.variant)?.name;
+	const variantName = product.variants?.find(({ id }: any) => id === searchParams.variant)?.name;
 	const productNameAndVariant = variantName ? `${productName} - ${variantName}` : productName;
 
 	return {
@@ -56,19 +61,19 @@ export async function generateMetadata(
 							alt: product.name,
 						},
 					],
-			  }
+				}
 			: null,
 	};
 }
 
 export async function generateStaticParams({ params }: { params: { channel: string } }) {
-	const { products } = await executeGraphQL(ProductListDocument, {
+	const { products }: any = await executeGraphQL(ProductListDocument, {
 		revalidate: 60,
 		variables: { first: 20, channel: params.channel },
 		withAuth: false,
 	});
 
-	const paths = products?.edges.map(({ node: { slug } }) => ({ slug })) || [];
+	const paths = products?.edges.map(({ node: { slug } }: any) => ({ slug })) || [];
 	return paths;
 }
 
@@ -81,7 +86,7 @@ export default async function Page({
 	params: { slug: string; channel: string };
 	searchParams: { variant?: string };
 }) {
-	const { product } = await executeGraphQL(ProductDetailsDocument, {
+	const { product }: any = await executeGraphQL(ProductDetailsDocument, {
 		variables: {
 			slug: decodeURIComponent(params.slug),
 			channel: params.channel,
@@ -98,16 +103,16 @@ export default async function Page({
 
 	const variants = product.variants;
 	const selectedVariantID = searchParams.variant;
-	const selectedVariant = variants?.find(({ id }) => id === selectedVariantID);
+	const selectedVariant = variants?.find(({ id }: any) => id === selectedVariantID);
 
 	async function addItem() {
-		"use server";
+		'use server';
 
 		const checkout = await Checkout.findOrCreate({
 			checkoutId: Checkout.getIdFromCookies(params.channel),
 			channel: params.channel,
 		});
-		invariant(checkout, "This should never happen");
+		invariant(checkout, 'This should never happen');
 
 		Checkout.saveIdToCookie(params.channel, checkout.id);
 
@@ -121,54 +126,57 @@ export default async function Page({
 				id: checkout.id,
 				productVariantId: decodeURIComponent(selectedVariantID),
 			},
-			cache: "no-cache",
+			cache: 'no-cache',
 		});
 
-		revalidatePath("/cart");
+		revalidatePath('/cart');
 	}
 
-	const isAvailable = variants?.some((variant) => variant.quantityAvailable) ?? false;
+	const isAvailable =
+		variants?.some((variant: { quantityAvailable: any }) => variant.quantityAvailable) ?? false;
 
 	const price = selectedVariant?.pricing?.price?.gross
 		? formatMoney(selectedVariant.pricing.price.gross.amount, selectedVariant.pricing.price.gross.currency)
 		: isAvailable
-		  ? formatMoneyRange({
+			? formatMoneyRange({
 					start: product?.pricing?.priceRange?.start?.gross,
 					stop: product?.pricing?.priceRange?.stop?.gross,
-		    })
-		  : "";
+				})
+			: '';
 
 	const productJsonLd: WithContext<Product> = {
-		"@context": "https://schema.org",
-		"@type": "Product",
+		'@context': 'https://schema.org',
+		'@type': 'Product',
 		image: product.thumbnail?.url,
 		...(selectedVariant
 			? {
 					name: `${product.name} - ${selectedVariant.name}`,
 					description: product.seoDescription || `${product.name} - ${selectedVariant.name}`,
 					offers: {
-						"@type": "Offer",
+						'@type': 'Offer',
 						availability: selectedVariant.quantityAvailable
-							? "https://schema.org/InStock"
-							: "https://schema.org/OutOfStock",
+							? 'https://schema.org/InStock'
+							: 'https://schema.org/OutOfStock',
 						priceCurrency: selectedVariant.pricing?.price?.gross.currency,
 						price: selectedVariant.pricing?.price?.gross.amount,
 					},
-			  }
+				}
 			: {
 					name: product.name,
 
 					description: product.seoDescription || product.name,
 					offers: {
-						"@type": "AggregateOffer",
-						availability: product.variants?.some((variant) => variant.quantityAvailable)
-							? "https://schema.org/InStock"
-							: "https://schema.org/OutOfStock",
+						'@type': 'AggregateOffer',
+						availability: product.variants?.some(
+							(variant: { quantityAvailable: any }) => variant.quantityAvailable,
+						)
+							? 'https://schema.org/InStock'
+							: 'https://schema.org/OutOfStock',
 						priceCurrency: product.pricing?.priceRange?.start?.gross.currency,
 						lowPrice: product.pricing?.priceRange?.start?.gross.amount,
 						highPrice: product.pricing?.priceRange?.stop?.gross.amount,
 					},
-			  }),
+				}),
 	};
 
 	return (
@@ -184,7 +192,7 @@ export default async function Page({
 					{firstImage && (
 						<ProductImageWrapper
 							priority={true}
-							alt={firstImage.alt ?? ""}
+							alt={firstImage.alt ?? ''}
 							width={1024}
 							height={1024}
 							src={firstImage.url}
@@ -214,7 +222,7 @@ export default async function Page({
 						</div>
 						{description && (
 							<div className="mt-8 space-y-6 text-sm text-neutral-500">
-								{description.map((content) => (
+								{description.map(content => (
 									<div key={content} dangerouslySetInnerHTML={{ __html: xss(content) }} />
 								))}
 							</div>
