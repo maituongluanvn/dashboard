@@ -1,27 +1,15 @@
 'use client';
-/* eslint-disable @typescript-eslint/no-unsafe-return */
-/* eslint-disable @typescript-eslint/no-unsafe-call */
-/* eslint-disable @typescript-eslint/no-unsafe-argument */
-/* eslint-disable @typescript-eslint/no-unsafe-member-access */
-/* eslint-disable @typescript-eslint/no-unsafe-assignment */
-import { useEffect, useState } from 'react';
-import edjsHTML from 'editorjs-html';
+import { useEffect } from 'react';
 import { notFound } from 'next/navigation';
-import { type ResolvingMetadata, type Metadata } from 'next';
 import xss from 'xss';
-import { invariant } from 'ts-invariant';
 import { type WithContext, type Product } from 'schema-dts';
 import { AddButton } from './AddButton';
 import { VariantSelector } from '@/ui/components/VariantSelector';
 import { ProductImageWrapper } from '@/ui/atoms/ProductImageWrapper';
-import { executeGraphQL } from '@/lib/graphql';
 import { formatMoney, formatMoneyRange } from '@/lib/utils';
-import * as Checkout from '@/lib/checkout';
 import { AvailabilityMessage } from '@/ui/components/AvailabilityMessage';
-import { useProductStore } from '@/zustand/useProductsStore';
 import { IProduct } from '@/definition/index';
 import useFetch from '@/hooks/useFetch';
-import { useSearchParams } from 'next/navigation';
 // export const generateMetadata = (
 // 	{
 // 		params,
@@ -83,8 +71,6 @@ import { useSearchParams } from 'next/navigation';
 // 	return paths;
 // }
 
-const parser = edjsHTML();
-
 export default function Page({
 	params,
 	searchParams,
@@ -92,30 +78,24 @@ export default function Page({
 	params: { slug: string; channel: string };
 	searchParams: { variant?: string };
 }) {
-	const { data: products, loading, error } = useFetch<IProduct[]>('/api/product');
-	console.log('🚀 ~ error:', error);
-	console.log('🚀 ~ loading:', loading);
-	console.log('🚀 ~ products:', products);
-	const [product, setProduct] = useState<IProduct>();
+	const { data: product, loading, error } = useFetch<IProduct>({ endpoint: `/api/product/${params.slug}` });
 
 	useEffect(() => {
-		const product: IProduct | undefined = products.find(product => product.slug === params?.slug);
-		console.log('🚀 ~ fetchProduct: ~ product:', product);
-		setProduct(product);
+		if (!loading) {
+		}
 	}, []);
-
-	const firstImage = product?.thumbnail;
-	const description = product?.description ? parser.parse(JSON.parse(product?.description)) : null;
-
-	const variants = product?.variants;
-	const selectedVariantID = searchParams.variant;
-	const selectedVariant = variants?.find(({ id }: any) => id === selectedVariantID);
 
 	if (loading) return <p>Loading...</p>;
 	if (error) return <p>Error: {error as any}</p>;
 	if (!product) {
 		notFound();
 	}
+
+	const firstImage = product?.thumbnail;
+	const description = product?.description;
+	const variants = product?.variants;
+	const selectedVariantID = searchParams.variant;
+	const selectedVariant = variants?.find(({ id }: any) => id === selectedVariantID);
 
 	// async function addItem() {
 	// 	'use server';
@@ -234,9 +214,7 @@ export default function Page({
 						</div>
 						{description && (
 							<div className="mt-8 space-y-6 text-sm text-neutral-500">
-								{description.map(content => (
-									<div key={content} dangerouslySetInnerHTML={{ __html: xss(content) }} />
-								))}
+								<div key={description} dangerouslySetInnerHTML={{ __html: xss(description) }} />
 							</div>
 						)}
 					</div>

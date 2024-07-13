@@ -26,13 +26,15 @@
 		],
 		"paths": {
 			"@/*": ["./src/*"],
-			"@ui/*": ["./src/components/*"]
+			"@ui/*": ["./src/components/*"],
+			"@definition/*": ["./src/definition/*"]
 		},
 		"types": ["react-dom/canary"]
 	},
 
 	"include": [
 		"next-env.d.ts",
+		"pages/**/*.ts",
 		"src/**/*.ts",
 		"src/**/*.tsx",
 		".next/types/**/*.ts",

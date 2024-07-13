@@ -32,9 +32,15 @@
 			"variants": [
 				{
 					"id": "UHJvZHVjdFZhcmlhbnQ6MzQ1",
-					"name": "UHJvZHVjdFZhcmlhbnQ6MzQ1",
+					"name": "Một chai",
 					"quantityAvailable": 50,
-					"pricing": { "price": { "gross": { "currency": "USD", "amount": 18 } } }
+					"pricing": { "price": { "gross": { "currency": "VND", "amount": 300 } } }
+				},
+				{
+					"id": "UHJvZHVjdFZhcmlhbnQ6MzQ3",
+					"name": "Một thùng",
+					"quantityAvailable": 50,
+					"pricing": { "price": { "gross": { "currency": "VND", "amount": 1000000 } } }
 				}
 			]
 		},
