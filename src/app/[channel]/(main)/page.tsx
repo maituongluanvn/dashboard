@@ -2,6 +2,7 @@
 import { Suspense, useEffect } from 'react';
 import { ProductList } from '@/ui/components/ProductList';
 import { useProductStore } from '@/zustand/useProductsStore';
+
 // export const metadata = {
 // 	title: 'Hoàng Phúc, powered by Hoang Phuc',
 // 	description:

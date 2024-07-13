@@ -1,10 +1,11 @@
+'use client';
 /* eslint-disable @typescript-eslint/no-unsafe-return */
 /* eslint-disable @typescript-eslint/no-unsafe-call */
 /* eslint-disable @typescript-eslint/no-unsafe-argument */
 /* eslint-disable @typescript-eslint/no-unsafe-member-access */
 /* eslint-disable @typescript-eslint/no-unsafe-assignment */
+import { useEffect, useState } from 'react';
 import edjsHTML from 'editorjs-html';
-import { revalidatePath } from 'next/cache';
 import { notFound } from 'next/navigation';
 import { type ResolvingMetadata, type Metadata } from 'next';
 import xss from 'xss';
@@ -15,122 +16,133 @@ import { VariantSelector } from '@/ui/components/VariantSelector';
 import { ProductImageWrapper } from '@/ui/atoms/ProductImageWrapper';
 import { executeGraphQL } from '@/lib/graphql';
 import { formatMoney, formatMoneyRange } from '@/lib/utils';
-import { CheckoutAddLineDocument, ProductDetailsDocument, ProductListDocument } from '@/gql/graphql';
 import * as Checkout from '@/lib/checkout';
 import { AvailabilityMessage } from '@/ui/components/AvailabilityMessage';
+import { useProductStore } from '@/zustand/useProductsStore';
+import { IProduct } from '@/definition/index';
+import useFetch from '@/hooks/useFetch';
+import { useSearchParams } from 'next/navigation';
+// export const generateMetadata = (
+// 	{
+// 		params,
+// 		searchParams,
+// 	}: {
+// 		params: { slug: string; channel: string };
+// 		searchParams: { variant?: string };
+// 	},
+// 	parent: ResolvingMetadata,
+// ): Promise<Metadata> => {
+// 	const { products } = useProductStore();
+// 	const product = products[1];
+// 	// const { product }: any = await executeGraphQL(ProductDetailsDocument, {
+// 	// 	variables: {
+// 	// 		slug: decodeURIComponent(params.slug),
+// 	// 		channel: params.channel,
+// 	// 	},
+// 	// 	revalidate: 60,
+// 	// });
 
-export async function generateMetadata(
-	{
-		params,
-		searchParams,
-	}: {
-		params: { slug: string; channel: string };
-		searchParams: { variant?: string };
-	},
-	parent: ResolvingMetadata,
-): Promise<Metadata> {
-	const { product }: any = await executeGraphQL(ProductDetailsDocument, {
-		variables: {
-			slug: decodeURIComponent(params.slug),
-			channel: params.channel,
-		},
-		revalidate: 60,
-	});
+// 	if (!product) {
+// 		notFound();
+// 	}
 
-	if (!product) {
-		notFound();
-	}
+// 	const productName = product.seoTitle || product.name;
+// 	const variantName = product.variants?.find(({ id }: any) => id === searchParams.variant)?.name;
+// 	const productNameAndVariant = variantName ? `${productName} - ${variantName}` : productName;
 
-	const productName = product.seoTitle || product.name;
-	const variantName = product.variants?.find(({ id }: any) => id === searchParams.variant)?.name;
-	const productNameAndVariant = variantName ? `${productName} - ${variantName}` : productName;
+// 	return {
+// 		title: `${product.name} | ${product.seoTitle}`,
+// 		description: product.seoDescription || productNameAndVariant,
+// 		alternates: {
+// 			canonical: process.env.NEXT_PUBLIC_STOREFRONT_URL
+// 				? process.env.NEXT_PUBLIC_STOREFRONT_URL + `/products/${encodeURIComponent(params.slug)}`
+// 				: undefined,
+// 		},
+// 		openGraph: product.thumbnail
+// 			? {
+// 					images: [
+// 						{
+// 							url: product.thumbnail.url,
+// 							alt: product.name,
+// 						},
+// 					],
+// 				}
+// 			: null,
+// 	};
+// };
 
-	return {
-		title: `${product.name} | ${product.seoTitle || (await parent).title?.absolute}`,
-		description: product.seoDescription || productNameAndVariant,
-		alternates: {
-			canonical: process.env.NEXT_PUBLIC_STOREFRONT_URL
-				? process.env.NEXT_PUBLIC_STOREFRONT_URL + `/products/${encodeURIComponent(params.slug)}`
-				: undefined,
-		},
-		openGraph: product.thumbnail
-			? {
-					images: [
-						{
-							url: product.thumbnail.url,
-							alt: product.name,
-						},
-					],
-				}
-			: null,
-	};
-}
+// export async function generateStaticParams({ params }: { params: { channel: string } }) {
+// 	const { products } = useProductStore();
+// const { products }: any = await executeGraphQL(ProductListDocument, {
+// 	revalidate: 60,
+// 	variables: { first: 20, channel: params.channel },
+// 	withAuth: false,
+// });
 
-export async function generateStaticParams({ params }: { params: { channel: string } }) {
-	const { products }: any = await executeGraphQL(ProductListDocument, {
-		revalidate: 60,
-		variables: { first: 20, channel: params.channel },
-		withAuth: false,
-	});
-
-	const paths = products?.edges.map(({ node: { slug } }: any) => ({ slug })) || [];
-	return paths;
-}
+// 	const paths = products?.edges.map(({ node: { slug } }: any) => ({ slug })) || [];
+// 	return paths;
+// }
 
 const parser = edjsHTML();
 
-export default async function Page({
+export default function Page({
 	params,
 	searchParams,
 }: {
 	params: { slug: string; channel: string };
 	searchParams: { variant?: string };
 }) {
-	const { product }: any = await executeGraphQL(ProductDetailsDocument, {
-		variables: {
-			slug: decodeURIComponent(params.slug),
-			channel: params.channel,
-		},
-		revalidate: 60,
-	});
+	const { data: products, loading, error } = useFetch<IProduct[]>('/api/product');
+	console.log('🚀 ~ error:', error);
+	console.log('🚀 ~ loading:', loading);
+	console.log('🚀 ~ products:', products);
+	const [product, setProduct] = useState<IProduct>();
 
+	useEffect(() => {
+		const product: IProduct | undefined = products.find(product => product.slug === params?.slug);
+		console.log('🚀 ~ fetchProduct: ~ product:', product);
+		setProduct(product);
+	}, []);
+
+	const firstImage = product?.thumbnail;
+	const description = product?.description ? parser.parse(JSON.parse(product?.description)) : null;
+
+	const variants = product?.variants;
+	const selectedVariantID = searchParams.variant;
+	const selectedVariant = variants?.find(({ id }: any) => id === selectedVariantID);
+
+	if (loading) return <p>Loading...</p>;
+	if (error) return <p>Error: {error as any}</p>;
 	if (!product) {
 		notFound();
 	}
 
-	const firstImage = product.thumbnail;
-	const description = product?.description ? parser.parse(JSON.parse(product?.description)) : null;
+	// async function addItem() {
+	// 	'use server';
 
-	const variants = product.variants;
-	const selectedVariantID = searchParams.variant;
-	const selectedVariant = variants?.find(({ id }: any) => id === selectedVariantID);
+	// 	const checkout = await Checkout.findOrCreate({
+	// 		checkoutId: Checkout.getIdFromCookies(params.channel),
+	// 		channel: params.channel,
+	// 	});
+	// 	invariant(checkout, 'This should never happen');
 
-	async function addItem() {
-		'use server';
+	// 	Checkout.saveIdToCookie(params.channel, checkout.id);
 
-		const checkout = await Checkout.findOrCreate({
-			checkoutId: Checkout.getIdFromCookies(params.channel),
-			channel: params.channel,
-		});
-		invariant(checkout, 'This should never happen');
+	// 	if (!selectedVariantID) {
+	// 		return;
+	// 	}
 
-		Checkout.saveIdToCookie(params.channel, checkout.id);
+	// 	// TODO: error handling
+	// 	await executeGraphQL(CheckoutAddLineDocument, {
+	// 		variables: {
+	// 			id: checkout.id,
+	// 			productVariantId: decodeURIComponent(selectedVariantID),
+	// 		},
+	// 		cache: 'no-cache',
+	// 	});
 
-		if (!selectedVariantID) {
-			return;
-		}
-
-		// TODO: error handling
-		await executeGraphQL(CheckoutAddLineDocument, {
-			variables: {
-				id: checkout.id,
-				productVariantId: decodeURIComponent(selectedVariantID),
-			},
-			cache: 'no-cache',
-		});
-
-		revalidatePath('/cart');
-	}
+	// 	revalidatePath('/cart');
+	// }
 
 	const isAvailable =
 		variants?.some((variant: { quantityAvailable: any }) => variant.quantityAvailable) ?? false;
@@ -187,7 +199,7 @@ export default async function Page({
 					__html: JSON.stringify(productJsonLd),
 				}}
 			/>
-			<form className="grid gap-2 sm:grid-cols-2 lg:grid-cols-8" action={addItem}>
+			<form className="grid gap-2 sm:grid-cols-2 lg:grid-cols-8">
 				<div className="md:col-span-1 lg:col-span-5">
 					{firstImage && (
 						<ProductImageWrapper
@@ -212,7 +224,7 @@ export default async function Page({
 							<VariantSelector
 								selectedVariant={selectedVariant}
 								variants={variants}
-								product={product}
+								product={product as any}
 								channel={params.channel}
 							/>
 						)}

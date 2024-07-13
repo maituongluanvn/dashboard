@@ -4,6 +4,7 @@
 			"id": "UHJvZHVjdDoxMjk=",
 			"name": "Nước muối sinh lý",
 			"slug": "nuoc-muoi-sinh-ly",
+			"description": "Đây là nước muối sinh lý",
 			"pricing": {
 				"priceRange": {
 					"start": {
@@ -27,7 +28,15 @@
 			"thumbnail": {
 				"url": "https://3ymzvofxaogcuowg.public.blob.vercel-storage.com/444470698_1124776635298415_5589469441042249899_n-y4eron1o0LUCjyioNNDqi4p1dXkw0k.webp",
 				"alt": ""
-			}
+			},
+			"variants": [
+				{
+					"id": "UHJvZHVjdFZhcmlhbnQ6MzQ1",
+					"name": "UHJvZHVjdFZhcmlhbnQ6MzQ1",
+					"quantityAvailable": 50,
+					"pricing": { "price": { "gross": { "currency": "USD", "amount": 18 } } }
+				}
+			]
 		},
 		{
 			"id": "UHJvZHVjdDoxNjQ=",
