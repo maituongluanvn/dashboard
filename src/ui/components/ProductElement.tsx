@@ -1,14 +1,14 @@
-import { LinkWithChannel } from "../atoms/LinkWithChannel";
-import { ProductImageWrapper } from "@/ui/atoms/ProductImageWrapper";
+import { LinkWithChannel } from '../atoms/LinkWithChannel';
+import { ProductImageWrapper } from '@/ui/atoms/ProductImageWrapper';
 
-import type { ProductListItemFragment } from "@/gql/graphql";
-import { formatMoneyRange } from "@/lib/utils";
+import { formatMoneyRange } from '@/lib/utils';
+import { type IProduct } from '@/definition';
 
 export function ProductElement({
 	product,
 	loading,
 	priority,
-}: { product: ProductListItemFragment } & { loading: "eager" | "lazy"; priority?: boolean }) {
+}: { product: IProduct } & { loading: 'eager' | 'lazy'; priority?: boolean }) {
 	return (
 		<li data-testid="ProductElement">
 			<LinkWithChannel href={`/products/${product.slug}`} key={product.id}>
@@ -17,10 +17,10 @@ export function ProductElement({
 						<ProductImageWrapper
 							loading={loading}
 							src={product.thumbnail.url}
-							alt={product.thumbnail.alt ?? ""}
+							alt={product.thumbnail.alt ?? ''}
 							width={512}
 							height={512}
-							sizes={"512px"}
+							sizes={'512px'}
 							priority={priority}
 						/>
 					)}

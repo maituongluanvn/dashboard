@@ -14,10 +14,10 @@ export function saveIdToCookie(channel: string, checkoutId: string) {
 	const shouldUseHttps =
 		process.env.NEXT_PUBLIC_STOREFRONT_URL?.startsWith("https") || !!process.env.NEXT_PUBLIC_VERCEL_URL;
 	const cookieName = `checkoutId-${channel}`;
-	cookies().set(cookieName, checkoutId, {
-		sameSite: "lax",
-		secure: shouldUseHttps,
-	});
+	// cookies().set(cookieName, checkoutId, {
+	// 	sameSite: "lax",
+	// 	secure: shouldUseHttps,
+	// });
 }
 
 export async function find(_checkoutId: string) {
