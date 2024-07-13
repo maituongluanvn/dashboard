@@ -1,8 +1,8 @@
 'use client';
-import { Suspense, useEffect } from 'react';
+import { Suspense } from 'react';
 import { ProductList } from '@/ui/components/ProductList';
-import { useProductStore } from '@/zustand/useProductsStore';
-
+import useFetch from '@/hooks/useFetch';
+import { type IProduct } from '@/definition';
 // export const metadata = {
 // 	title: 'Hoàng Phúc, powered by Hoang Phuc',
 // 	description:
@@ -11,15 +11,10 @@ import { useProductStore } from '@/zustand/useProductsStore';
 
 // const Page({ params }: { params: { channel: string } }) {
 const Page: React.FC = () => {
-	const { products, loading, error, fetchData } = useProductStore();
-
-	useEffect(() => {
-		void fetchData();
-		// eslint-disable-next-line react-hooks/exhaustive-deps
-	}, []);
+	const { data: products, loading, error } = useFetch<IProduct[]>({ endpoint: '/api/product' });
 
 	if (loading) return <p>Loading...</p>;
-	if (error) return <p>Error: {error}</p>;
+	if (error) return <p>Error: {error as any}</p>;
 	if (!products) return null;
 
 	return (
