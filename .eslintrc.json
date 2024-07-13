@@ -1,6 +1,11 @@
 {
 	"$schema": "https://json.schemastore.org/eslintrc.json",
 	"plugins": ["@typescript-eslint", "import"],
+	"parserOptions": {
+		"ecmaVersion": 2020,
+		"sourceType": "module",
+		"project": "./tsconfig.json"
+	},
 	"extends": [
 		"plugin:@typescript-eslint/recommended",
 		"plugin:@typescript-eslint/recommended-requiring-type-checking",

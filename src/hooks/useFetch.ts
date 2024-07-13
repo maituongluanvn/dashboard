@@ -6,14 +6,15 @@ interface ApiResponse<T> {
 	error: Error | null;
 }
 
-type FetchProps<T> = {
+type FetchProps = {
 	endpoint: string;
 	method?: string;
 	headers?: Record<string, string>;
 	body?: any;
 };
 
-const useFetch = <T>(props: FetchProps<T>): ApiResponse<T> => {
+const useFetch = <T>(props: FetchProps): ApiResponse<T> => {
+	// eslint-disable-next-line @typescript-eslint/no-unsafe-assignment
 	const { endpoint, method = 'GET', headers, body } = props;
 	const [data, setData] = useState(null as unknown as T);
 	const [loading, setLoading] = useState<boolean>(true);
@@ -40,13 +41,14 @@ const useFetch = <T>(props: FetchProps<T>): ApiResponse<T> => {
 			} catch (error: any) {
 				console.error('Got error when fetching', error);
 				setLoading(false);
+				// eslint-disable-next-line @typescript-eslint/no-unsafe-argument
 				setError(error);
 			} finally {
 				setLoading(false);
 			}
 		};
 
-		fetchData();
+		void fetchData();
 	}, [endpoint, method, headers, body]);
 
 	return { data, loading, error };

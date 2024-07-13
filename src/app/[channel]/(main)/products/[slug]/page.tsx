@@ -8,7 +8,7 @@ import { VariantSelector } from '@/ui/components/VariantSelector';
 import { ProductImageWrapper } from '@/ui/atoms/ProductImageWrapper';
 import { formatMoney, formatMoneyRange } from '@/lib/utils';
 import { AvailabilityMessage } from '@/ui/components/AvailabilityMessage';
-import { IProduct } from '@/definition/index';
+import { type IProduct } from '@/definition/index';
 import useFetch from '@/hooks/useFetch';
 // export const generateMetadata = (
 // 	{
@@ -204,6 +204,7 @@ export default function Page({
 							<VariantSelector
 								selectedVariant={selectedVariant}
 								variants={variants}
+								// eslint-disable-next-line @typescript-eslint/no-unsafe-assignment
 								product={product as any}
 								channel={params.channel}
 							/>

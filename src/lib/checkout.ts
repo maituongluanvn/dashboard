@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-unused-vars */
 /* eslint-disable @typescript-eslint/no-unsafe-return */
 /* eslint-disable @typescript-eslint/no-unsafe-member-access */
 import { cookies } from "next/headers";
@@ -10,10 +11,7 @@ export function getIdFromCookies(channel: string) {
 	return checkoutId;
 }
 
-export function saveIdToCookie(channel: string, checkoutId: string) {
-	const shouldUseHttps =
-		process.env.NEXT_PUBLIC_STOREFRONT_URL?.startsWith("https") || !!process.env.NEXT_PUBLIC_VERCEL_URL;
-	const cookieName = `checkoutId-${channel}`;
+export function saveIdToCookie(_channel: string) {
 	// cookies().set(cookieName, checkoutId, {
 	// 	sameSite: "lax",
 	// 	secure: shouldUseHttps,
