@@ -67,10 +67,10 @@
 		"@typescript-eslint/no-unused-vars": ["error", { "argsIgnorePattern": "^_", "varsIgnorePattern": "^_" }],
 
 		// numbers and booleans are fine in template strings
-		"@typescript-eslint/restrict-template-expressions": [
-			"error",
-			{ "allowNumber": true, "allowBoolean": true }
-		],
+		// "@typescript-eslint/restrict-template-expressions": [
+		// 	"error",
+		// 	{ "allowNumber": true, "allowBoolean": true }
+		// ],
 
 		// @todo
 		"@typescript-eslint/no-explicit-any": "off",

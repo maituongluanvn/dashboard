@@ -1,12 +1,13 @@
 'use server'
-// import { IProduct } from '@definition/index';
-import { NextApiRequest, NextApiResponse } from 'next';
+import { type NextApiRequest, type NextApiResponse } from 'next';
+import type { IProduct } from '@definition/index';
 
 type ResponseData = {
-	message: string;
+	message?: string;
+	product?: IProduct;
 };
 
-export default async function handler(req: NextApiRequest, res: NextApiResponse<ResponseData>) {
+export default async function handler(req: NextApiRequest, res: NextApiResponse<ResponseData | IProduct | undefined>) {
 	const { slug } = req.query;
 	const result = await fetch(process.env.PRODUCT_JSON_URL as string, {
 		headers: {
@@ -15,10 +16,11 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse<
 		},
 	});
 	const data: any = await result.json();
-	const product = data.products.find((product: { slug: any }) => product.slug === slug);
+	// eslint-disable-next-line @typescript-eslint/no-unsafe-assignment, @typescript-eslint/no-unsafe-call, @typescript-eslint/no-unsafe-member-access
+	const product: IProduct | undefined = data.products.find((product: { slug: any }) => product.slug === slug);
 	if (!product) {
-		res.status(400).json({ message: `Not found product with slug: ${slug}` });
-	}
+		res.status(400).json({ message: `Not found product with slug: ${slug as string}` });
+	} 
 
 	res.status(200).json(product);
 }
