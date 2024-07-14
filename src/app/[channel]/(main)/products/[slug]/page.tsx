@@ -1,5 +1,4 @@
 'use client';
-import { useEffect } from 'react';
 import { notFound } from 'next/navigation';
 import xss from 'xss';
 import { type WithContext, type Product } from 'schema-dts';
@@ -79,11 +78,6 @@ export default function Page({
 	searchParams: { variant?: string };
 }) {
 	const { data: product, loading, error } = useFetch<IProduct>({ endpoint: `/api/product/${params.slug}` });
-
-	useEffect(() => {
-		if (!loading) {
-		}
-	}, []);
 
 	if (loading) return <p>Loading...</p>;
 	if (error) return <p>Error: {error as any}</p>;
