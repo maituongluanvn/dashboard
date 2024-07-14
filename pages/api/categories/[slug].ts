@@ -17,7 +17,9 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
 	}
 
 	const result: ICategory = {
+		id: slug as string,
 		name: slug as string,
+		slug: slug as string,
 		description: 'description',
 		seoDescription: 'seoDescription',
 		seoTitle: 'seoTitle',
