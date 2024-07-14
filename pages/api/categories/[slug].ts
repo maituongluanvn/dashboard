@@ -6,12 +6,11 @@ import type { IProduct, ICategory, IEdges } from '@definition/index';
 export default async function handler(req: NextApiRequest, res: NextApiResponse) {
 	const { slug } = req.query;
 	const { products }: { products: IProduct[] } = data as unknown as { products: IProduct[] };
-	const filteredProducts: IEdges[] | undefined = products.map((product: IProduct) => {
-	    return {
-			node: product
-		};
-	});
-	console.log("🚀 ~ constfilteredProducts:IEdges[]|undefined=products.map ~ filteredProducts:", filteredProducts)
+	const filteredProducts: IEdges[] | undefined = products
+		.filter((product: IProduct) => product.category.name === slug)
+		.map((product: IProduct) => ({
+			node: product,
+		}));
 
 	if (!filteredProducts) {
 		res.status(400).json({ message: `Not found product with slug: ${slug as string}` });
@@ -23,9 +22,9 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
 		seoDescription: 'seoDescription',
 		seoTitle: 'seoTitle',
 		products: {
-			edges: [...filteredProducts]
-		}
-	}
+			edges: [...filteredProducts],
+		},
+	};
 
 	res.status(200).json(result);
 }

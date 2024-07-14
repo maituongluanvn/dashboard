@@ -77,7 +77,7 @@ export default function Page({
 	params: { slug: string; channel: string };
 	searchParams: { variant?: string };
 }) {
-	const { data: product, loading, error } = useFetch<IProduct>({ endpoint: `/api/product/${params.slug}` });
+	const { data: product, loading, error } = useFetch<IProduct>(`/api/product/${params.slug}`);
 
 	if (loading) return <p>Loading...</p>;
 	if (error) return <p>Error: {error as any}</p>;
