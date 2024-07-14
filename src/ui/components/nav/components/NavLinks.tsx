@@ -10,21 +10,22 @@ import {
 } from 'react';
 import navLinks from '../../../../../public/menu.json';
 import { NavLink } from './NavLink';
-import { executeGraphQL } from '@/lib/graphql';
-import { MenuGetBySlugDocument } from '@/gql/graphql';
 import type { Menu } from '@/definition';
 
-export const NavLinks = async ({ channel }: { channel: string }) => {
+// eslint-disable-next-line @typescript-eslint/no-unused-vars
+export const NavLinks = async ({}: { channel: string }) => {
 	// const navLinks: Menu = await executeGraphQL(MenuGetBySlugDocument, {
 	// 	variables: { slug: 'navbar', channel },
 	// 	revalidate: 60 * 60 * 24,
 	// });
-	console.log('🚀 ~ NavLinks ~ navLinks:', JSON.stringify(navLinks));
+	if (!navLinks) {
+		console.log('🚀 ~ NavLinks ~ navLinks:', JSON.stringify(navLinks));
+	}
 
 	return (
 		<>
 			<NavLink href="/">Trang Chủ</NavLink>
-			{navLinks.menu?.items?.map(
+			{(navLinks as unknown as Menu).menu?.items?.map(
 				(item: {
 					category: { slug: any; name: string | JSX.Element };
 					id: Key | null | undefined;
