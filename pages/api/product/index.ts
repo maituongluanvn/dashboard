@@ -1,7 +1,7 @@
 'use server';
 import { type NextApiRequest, type NextApiResponse } from 'next';
 import data from '../../../public/products.json';
-import type { IProduct } from '@definition/index';
+import type { IProduct } from '@/definition';
 // type ResponseData = {
 // 	message?: string;
 // 	products?: IProduct[];

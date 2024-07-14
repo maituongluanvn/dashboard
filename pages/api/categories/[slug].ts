@@ -1,7 +1,7 @@
 'use server';
 import { type NextApiRequest, type NextApiResponse } from 'next';
 import data from '../../../public/products.json';
-import type { IProduct, ICategory, IEdges } from '@definition/index';
+import type { IProduct, ICategory, IEdges } from '@/definition';
 
 export default async function handler(req: NextApiRequest, res: NextApiResponse) {
 	const { slug } = req.query;

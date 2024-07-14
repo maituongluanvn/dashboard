@@ -5,9 +5,11 @@ export interface IEdges {
 }
 
 export interface ICategory {
+	id: string;
 	name: string;
-	description: string;
-	seoDescription: string;
+	slug: string;
+	description?: string;
+	seoDescription?: string;
 	seoTitle: string;
 	products: {
 		edges: IEdges[];

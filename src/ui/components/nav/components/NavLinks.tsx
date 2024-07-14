@@ -1,5 +1,3 @@
-/* eslint-disable @typescript-eslint/no-unsafe-member-access */
-/* eslint-disable @typescript-eslint/no-unsafe-call */
 import { type UrlObject } from 'url';
 import Link from 'next/link';
 import {
@@ -10,19 +8,22 @@ import {
 	type ReactPortal,
 	type PromiseLikeOfReactNode,
 } from 'react';
+import navLinks from '../../../../../public/menu.json';
 import { NavLink } from './NavLink';
 import { executeGraphQL } from '@/lib/graphql';
 import { MenuGetBySlugDocument } from '@/gql/graphql';
+import type { Menu } from '@/definition';
 
 export const NavLinks = async ({ channel }: { channel: string }) => {
-	const navLinks: any = await executeGraphQL(MenuGetBySlugDocument, {
-		variables: { slug: 'navbar', channel },
-		revalidate: 60 * 60 * 24,
-	});
+	// const navLinks: Menu = await executeGraphQL(MenuGetBySlugDocument, {
+	// 	variables: { slug: 'navbar', channel },
+	// 	revalidate: 60 * 60 * 24,
+	// });
+	console.log('🚀 ~ NavLinks ~ navLinks:', JSON.stringify(navLinks));
 
 	return (
 		<>
-			<NavLink href="/products">All</NavLink>
+			<NavLink href="/">Trang Chủ</NavLink>
 			{navLinks.menu?.items?.map(
 				(item: {
 					category: { slug: any; name: string | JSX.Element };

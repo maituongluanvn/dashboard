@@ -1,0 +1,444 @@
+{
+	"products": [
+		{
+			"id": "UHJvZHVjdDoxMjk=",
+			"name": "Nước muối sinh lý",
+			"slug": "nuoc-muoi-sinh-ly",
+			"description": "Đây là nước muối sinh lý",
+			"pricing": {
+				"priceRange": {
+					"start": {
+						"gross": {
+							"amount": 100000,
+							"currency": "VND"
+						}
+					},
+					"stop": {
+						"gross": {
+							"amount": 50000,
+							"currency": "VND"
+						}
+					}
+				}
+			},
+			"category": {
+				"id": "Q2F0ZWdvcnk6NDU=",
+				"name": "Nước muối"
+			},
+			"thumbnail": {
+				"url": "/hoangphuc/nuocmuoi.webp",
+				"alt": ""
+			},
+			"variants": [
+				{
+					"id": "UHJvZHVjdFZhcmlhbnQ6MzQ1",
+					"name": "Một chai",
+					"quantityAvailable": 50,
+					"pricing": { "price": { "gross": { "currency": "VND", "amount": 300 } } }
+				},
+				{
+					"id": "UHJvZHVjdFZhcmlhbnQ6MzQ3",
+					"name": "Một thùng",
+					"quantityAvailable": 50,
+					"pricing": { "price": { "gross": { "currency": "VND", "amount": 1000000 } } }
+				}
+			]
+		},
+		{
+			"id": "UHJvZHVjdDoxNjQ=",
+			"name": "Saleor Card 50",
+			"slug": "gift-card-50",
+			"description": "Đây là nước muối sinh lý",
+			"pricing": {
+				"priceRange": {
+					"start": {
+						"gross": {
+							"amount": 54,
+							"currency": "VND"
+						}
+					},
+					"stop": {
+						"gross": {
+							"amount": 90,
+							"currency": "VND"
+						}
+					}
+				}
+			},
+			"category": {
+				"id": "Q2F0ZWdvcnk6NDQ=",
+				"name": "Gift cards"
+			},
+			"thumbnail": {
+				"url": "https://storefront1.saleor.cloud/media/thumbnails/products/saleor-gift-50_thumbnail_1024.webp",
+				"alt": ""
+			},
+			"variants": [
+				{
+					"id": "UHJvZHVjdFZhcmlhbnQ6MzQ1",
+					"name": "Một chai",
+					"quantityAvailable": 50,
+					"pricing": { "price": { "gross": { "currency": "VND", "amount": 300 } } }
+				},
+				{
+					"id": "UHJvZHVjdFZhcmlhbnQ6MzQ3",
+					"name": "Một thùng",
+					"quantityAvailable": 50,
+					"pricing": { "price": { "gross": { "currency": "VND", "amount": 1000000 } } }
+				}
+			]
+		},
+		{
+			"id": "UHJvZHVjdDoxMzE=",
+			"name": "Saleor Grey Hoodie",
+			"slug": "grey-hoodie",
+			"description": "Đây là nước muối sinh lý",
+			"pricing": {
+				"priceRange": {
+					"start": {
+						"gross": {
+							"amount": 54,
+							"currency": "VND"
+						}
+					},
+					"stop": {
+						"gross": {
+							"amount": 90,
+							"currency": "VND"
+						}
+					}
+				}
+			},
+			"category": {
+				"id": "Q2F0ZWdvcnk6NDU=",
+				"name": "Nước muối"
+			},
+			"thumbnail": {
+				"url": "https://storefront1.saleor.cloud/media/thumbnails/products/saleor-grey-hoodie_thumbnail_1024.webp",
+				"alt": ""
+			},
+			"variants": [
+				{
+					"id": "UHJvZHVjdFZhcmlhbnQ6MzQ1",
+					"name": "Một chai",
+					"quantityAvailable": 50,
+					"pricing": { "price": { "gross": { "currency": "VND", "amount": 300 } } }
+				},
+				{
+					"id": "UHJvZHVjdFZhcmlhbnQ6MzQ3",
+					"name": "Một thùng",
+					"quantityAvailable": 50,
+					"pricing": { "price": { "gross": { "currency": "VND", "amount": 1000000 } } }
+				}
+			]
+		},
+		{
+			"id": "UHJvZHVjdDoxNTAww=",
+			"name": "Saleor Mighty Mug",
+			"slug": "mighty-mug",
+			"description": "Đây là nước muối sinh lý",
+			"pricing": {
+				"priceRange": {
+					"start": {
+						"gross": {
+							"amount": 54,
+							"currency": "VND"
+						}
+					},
+					"stop": {
+						"gross": {
+							"amount": 90,
+							"currency": "VND"
+						}
+					}
+				}
+			},
+			"category": {
+				"id": "Q2F0ZWdvcnk6NDE=",
+				"name": "Homewares"
+			},
+			"thumbnail": {
+				"url": "https://storefront1.saleor.cloud/media/thumbnails/products/saleor-mighty-mug_thumbnail_1024.webp",
+				"alt": ""
+			},
+			"variants": [
+				{
+					"id": "UHJvZHVjdFZhcmlhbnQ6MzQ1",
+					"name": "Một chai",
+					"quantityAvailable": 50,
+					"pricing": { "price": { "gross": { "currency": "VND", "amount": 300 } } }
+				},
+				{
+					"id": "UHJvZHVjdFZhcmlhbnQ6MzQ3",
+					"name": "Một thùng",
+					"quantityAvailable": 50,
+					"pricing": { "price": { "gross": { "currency": "VND", "amount": 1000000 } } }
+				}
+			]
+		},
+		{
+			"id": "UHJvZHVjdDoxNTY=",
+			"name": "Saleor Dimmed Sunnies Sunglasses",
+			"slug": "monokai-dimmed-sunnies",
+			"description": "Đây là nước muối sinh lý",
+			"pricing": {
+				"priceRange": {
+					"start": {
+						"gross": {
+							"amount": 54,
+							"currency": "VND"
+						}
+					},
+					"stop": {
+						"gross": {
+							"amount": 90,
+							"currency": "VND"
+						}
+					}
+				}
+			},
+			"category": {
+				"id": "Q2F0ZWdvcnk6Mzc=",
+				"name": "Sunglasses"
+			},
+			"thumbnail": {
+				"url": "https://storefront1.saleor.cloud/media/thumbnails/products/saleor-sunnies-dark_thumbnail_1024.webp",
+				"alt": ""
+			},
+			"variants": [
+				{
+					"id": "UHJvZHVjdFZhcmlhbnQ6MzQ1",
+					"name": "Một chai",
+					"quantityAvailable": 50,
+					"pricing": { "price": { "gross": { "currency": "VND", "amount": 300 } } }
+				},
+				{
+					"id": "UHJvZHVjdFZhcmlhbnQ6MzQ3",
+					"name": "Một thùng",
+					"quantityAvailable": 50,
+					"pricing": { "price": { "gross": { "currency": "VND", "amount": 1000000 } } }
+				}
+			]
+		},
+		{
+			"id": "UHJvZHVjdDoxNDE=",
+			"name": "Saleor Beanie",
+			"slug": "pirates-beanie",
+			"description": "Đây là nước muối sinh lý",
+			"pricing": {
+				"priceRange": {
+					"start": {
+						"gross": {
+							"amount": 54,
+							"currency": "VND"
+						}
+					},
+					"stop": {
+						"gross": {
+							"amount": 90,
+							"currency": "VND"
+						}
+					}
+				}
+			},
+			"category": {
+				"id": "Q2F0ZWdvcnk6MzU=",
+				"name": "Beanies"
+			},
+			"thumbnail": {
+				"url": "https://storefront1.saleor.cloud/media/thumbnails/products/saleor-beanie-1_thumbnail_1024.webp",
+				"alt": ""
+			},
+			"variants": [
+				{
+					"id": "UHJvZHVjdFZhcmlhbnQ6MzQ1",
+					"name": "Một chai",
+					"quantityAvailable": 50,
+					"pricing": { "price": { "gross": { "currency": "VND", "amount": 300 } } }
+				},
+				{
+					"id": "UHJvZHVjdFZhcmlhbnQ6MzQ3",
+					"name": "Một thùng",
+					"quantityAvailable": 50,
+					"pricing": { "price": { "gross": { "currency": "VND", "amount": 1000000 } } }
+				}
+			]
+		},
+		{
+			"id": "UHJvZHVjdDoxNTc=",
+			"name": "Saleor Reversed T-shirt",
+			"slug": "reversed-monotype-tee",
+			"description": "Đây là nước muối sinh lý",
+			"pricing": {
+				"priceRange": {
+					"start": {
+						"gross": {
+							"amount": 54,
+							"currency": "VND"
+						}
+					},
+					"stop": {
+						"gross": {
+							"amount": 90,
+							"currency": "VND"
+						}
+					}
+				}
+			},
+			"category": {
+				"id": "Q2F0ZWdvcnk6Mzk=",
+				"name": "T-shirts"
+			},
+			"thumbnail": {
+				"url": "https://storefront1.saleor.cloud/media/thumbnails/products/saleor-monospace-white-tee-front_thumbnail_1024.webp",
+				"alt": ""
+			},
+			"variants": [
+				{
+					"id": "UHJvZHVjdFZhcmlhbnQ6MzQ1",
+					"name": "Một chai",
+					"quantityAvailable": 50,
+					"pricing": { "price": { "gross": { "currency": "VND", "amount": 300 } } }
+				},
+				{
+					"id": "UHJvZHVjdFZhcmlhbnQ6MzQ3",
+					"name": "Một thùng",
+					"quantityAvailable": 50,
+					"pricing": { "price": { "gross": { "currency": "VND", "amount": 1000000 } } }
+				}
+			]
+		},
+		{
+			"id": "UHJvZHVjdDoxNDM=",
+			"name": "Saleor Neck Warmer",
+			"slug": "tactical-neck-warmer",
+			"description": "Đây là nước muối sinh lý",
+			"pricing": {
+				"priceRange": {
+					"start": {
+						"gross": {
+							"amount": 54,
+							"currency": "VND"
+						}
+					},
+					"stop": {
+						"gross": {
+							"amount": 90,
+							"currency": "VND"
+						}
+					}
+				}
+			},
+			"category": {
+				"id": "Q2F0ZWdvcnk6MzY=",
+				"name": "Scarfs"
+			},
+			"thumbnail": {
+				"url": "https://storefront1.saleor.cloud/media/thumbnails/products/saleor-neck-warmer_thumbnail_1024.webp",
+				"alt": ""
+			},
+			"variants": [
+				{
+					"id": "UHJvZHVjdFZhcmlhbnQ6MzQ1",
+					"name": "Một chai",
+					"quantityAvailable": 50,
+					"pricing": { "price": { "gross": { "currency": "VND", "amount": 300 } } }
+				},
+				{
+					"id": "UHJvZHVjdFZhcmlhbnQ6MzQ3",
+					"name": "Một thùng",
+					"quantityAvailable": 50,
+					"pricing": { "price": { "gross": { "currency": "VND", "amount": 1000000 } } }
+				}
+			]
+		},
+		{
+			"id": "UHJvZHVjdDoxNTE=",
+			"name": "Saleor Cushion",
+			"slug": "the-dash-cushion",
+			"description": "Đây là nước muối sinh lý",
+			"pricing": {
+				"priceRange": {
+					"start": {
+						"gross": {
+							"amount": 54,
+							"currency": "VND"
+						}
+					},
+					"stop": {
+						"gross": {
+							"amount": 90,
+							"currency": "VND"
+						}
+					}
+				}
+			},
+			"category": {
+				"id": "Q2F0ZWdvcnk6MjU=",
+				"name": "Accessories"
+			},
+			"thumbnail": {
+				"url": "https://storefront1.saleor.cloud/media/thumbnails/products/saleor-cushion-blue_thumbnail_1024.webp",
+				"alt": ""
+			},
+			"variants": [
+				{
+					"id": "UHJvZHVjdFZhcmlhbnQ6MzQ1",
+					"name": "Một chai",
+					"quantityAvailable": 50,
+					"pricing": { "price": { "gross": { "currency": "VND", "amount": 300 } } }
+				},
+				{
+					"id": "UHJvZHVjdFZhcmlhbnQ6MzQ3",
+					"name": "Một thùng",
+					"quantityAvailable": 50,
+					"pricing": { "price": { "gross": { "currency": "VND", "amount": 1000000 } } }
+				}
+			]
+		},
+		{
+			"id": "UHJvZHVjdDoxNTA=",
+			"name": "Saleor Mighty Mug",
+			"slug": "mighty-mug",
+			"description": "Đây là nước muối sinh lý",
+			"pricing": {
+				"priceRange": {
+					"start": {
+						"gross": {
+							"amount": 54,
+							"currency": "VND"
+						}
+					},
+					"stop": {
+						"gross": {
+							"amount": 90,
+							"currency": "VND"
+						}
+					}
+				}
+			},
+			"category": {
+				"id": "Q2F0ZWdvcnk6NDE=",
+				"name": "Homewares"
+			},
+			"thumbnail": {
+				"url": "https://storefront1.saleor.cloud/media/thumbnails/products/saleor-mighty-mug_thumbnail_1024.webp",
+				"alt": ""
+			},
+			"variants": [
+				{
+					"id": "UHJvZHVjdFZhcmlhbnQ6MzQ1",
+					"name": "Một chai",
+					"quantityAvailable": 50,
+					"pricing": { "price": { "gross": { "currency": "VND", "amount": 300 } } }
+				},
+				{
+					"id": "UHJvZHVjdFZhcmlhbnQ6MzQ3",
+					"name": "Một thùng",
+					"quantityAvailable": 50,
+					"pricing": { "price": { "gross": { "currency": "VND", "amount": 1000000 } } }
+				}
+			]
+		}
+	]
+}
