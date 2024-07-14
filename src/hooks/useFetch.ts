@@ -1,3 +1,4 @@
+'use client'
 import { useState, useEffect } from 'react';
 
 interface ApiResponse<T> {
@@ -25,6 +26,7 @@ const useFetch = <T>(props: FetchProps): ApiResponse<T> => {
 			setLoading(true);
 			try {
 				const fetchUrl = `${process.env.NEXT_PUBLIC_API_BASE_URL}${endpoint}`;
+				console.log("🚀 ~ fetchData ~ fetchUrl:", fetchUrl)
 				const response = await fetch(fetchUrl, {
 					method,
 					headers: {
@@ -40,7 +42,6 @@ const useFetch = <T>(props: FetchProps): ApiResponse<T> => {
 				setData(result);
 			} catch (error: any) {
 				console.error('Got error when fetching', error);
-				setLoading(false);
 				// eslint-disable-next-line @typescript-eslint/no-unsafe-argument
 				setError(error);
 			} finally {
