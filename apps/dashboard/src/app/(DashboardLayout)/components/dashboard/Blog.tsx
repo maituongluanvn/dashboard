@@ -50,7 +50,8 @@ const Blog = () => {
 			{ecoCard.map((product, index) => (
 				<Grid item xs={12} md={4} lg={3} key={index}>
 					<BlankCard>
-						<Typography component={Link} href="/">
+						{/* eslint-disable-next-line @typescript-eslint/no-unsafe-assignment */}
+						<Typography component={Link as any} href="/">
 							<Avatar
 								src={product.photo}
 								variant="square"
