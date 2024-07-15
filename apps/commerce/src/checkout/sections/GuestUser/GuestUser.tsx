@@ -1,11 +1,13 @@
-import { SignInFormContainer, type SignInFormContainerProps } from "../Contact/SignInFormContainer";
-import { PasswordInput } from "@/checkout/components/PasswordInput";
-import { Checkbox } from "@/checkout/components/Checkbox";
-import { TextInput } from "@/checkout/components/TextInput";
-import { useGuestUserForm } from "@/checkout/sections/GuestUser/useGuestUserForm";
-import { FormProvider } from "@/checkout/hooks/useForm/FormProvider";
+/* eslint-disable @typescript-eslint/no-unsafe-member-access */
+/* eslint-disable @typescript-eslint/no-unsafe-argument */
+import { SignInFormContainer, type ISignInFormContainerProps } from '../Contact/SignInFormContainer';
+import { PasswordInput } from '@/checkout/components/PasswordInput';
+import { Checkbox } from '@/checkout/components/Checkbox';
+import { TextInput } from '@/checkout/components/TextInput';
+import { useGuestUserForm } from '@/checkout/sections/GuestUser/useGuestUserForm';
+import { FormProvider } from '@/checkout/hooks/useForm/FormProvider';
 
-type GuestUserProps = Pick<SignInFormContainerProps, "onSectionChange"> & {
+type GuestUserProps = Pick<ISignInFormContainerProps, 'onSectionChange'> & {
 	onEmailChange: (email: string) => void;
 	email: string;
 };
@@ -32,7 +34,7 @@ export const GuestUser: React.FC<GuestUserProps> = ({
 						required
 						name="email"
 						label="Email"
-						onChange={(event) => {
+						onChange={(event: any) => {
 							handleChange(event);
 							onEmailChange(event.currentTarget.value);
 						}}
@@ -40,7 +42,7 @@ export const GuestUser: React.FC<GuestUserProps> = ({
 					<Checkbox
 						name="createAccount"
 						label="I want to create account"
-						data-testid={"createAccountCheckbox"}
+						data-testid={'createAccountCheckbox'}
 					/>
 					{createAccount && (
 						<div className="mt-2">

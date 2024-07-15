@@ -1,6 +1,6 @@
-import { type Children } from '@/checkout/lib/globalTypes';
+import { type IChildren } from '@/checkout/lib/globalTypes';
 
-interface ICollapseSectionProps extends Children {
+interface ICollapseSectionProps extends IChildren {
 	collapse: boolean;
 }
 

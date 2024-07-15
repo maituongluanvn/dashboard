@@ -1,12 +1,13 @@
+/* eslint-disable @typescript-eslint/no-misused-promises */
 import { type CoreOptions } from "@adyen/adyen-web/dist/types/core/types";
 import {
 	type AdyenCheckoutInstanceOnAdditionalDetails,
 	type AdyenCheckoutInstanceOnSubmit,
-	type AdyenGatewayInitializePayload,
+	type IAdyenGatewayInitializePayload,
 	type ApplePayCallback,
 } from "@/checkout/sections/PaymentSection/AdyenDropIn/types";
 
-interface CreateAdyenCheckoutConfigProps extends AdyenGatewayInitializePayload {
+interface ICreateAdyenCheckoutConfigProps extends IAdyenGatewayInitializePayload {
 	onSubmit: AdyenCheckoutInstanceOnSubmit;
 	onAdditionalDetails: AdyenCheckoutInstanceOnAdditionalDetails;
 }
@@ -17,7 +18,7 @@ export const createAdyenCheckoutConfig = ({
 	environment,
 	onSubmit,
 	onAdditionalDetails,
-}: CreateAdyenCheckoutConfigProps): CoreOptions => ({
+}: ICreateAdyenCheckoutConfigProps): CoreOptions => ({
 	paymentMethodsResponse,
 	environment,
 	clientKey,

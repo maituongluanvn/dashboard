@@ -1,24 +1,24 @@
-import React from "react";
-import { camelCase } from "lodash-es";
-import { AddressSelectBox } from "../../components/AddressSelectBox";
-import { type AddressFragment } from "@/checkout/graphql";
-import { SelectBoxGroup } from "@/checkout/components/SelectBoxGroup";
-import { useAddressAvailability } from "@/checkout/hooks/useAddressAvailability";
-import { Button } from "@/checkout/components/Button";
-import { Title } from "@/checkout/components/Title";
-import { type UseFormReturn } from "@/checkout/hooks/useForm";
-import { type AddressListFormData } from "@/checkout/sections/AddressList/useAddressListForm";
-import { FormProvider } from "@/checkout/hooks/useForm/FormProvider";
+import React from 'react';
+import { camelCase } from 'lodash-es';
+import { AddressSelectBox } from '../../components/AddressSelectBox';
+import { type AddressFragment } from '@/checkout/graphql';
+import { SelectBoxGroup } from '@/checkout/components/SelectBoxGroup';
+import { useAddressAvailability } from '@/checkout/hooks/useAddressAvailability';
+import { Button } from '@/checkout/components/Button';
+import { Title } from '@/checkout/components/Title';
+import { type UseFormReturn } from '@/checkout/hooks/useForm';
+import { type IAddressListFormData } from '@/checkout/sections/AddressList/useAddressListForm';
+import { FormProvider } from '@/checkout/hooks/useForm/FormProvider';
 
-export interface AddressListProps {
+export interface IAddressListProps {
 	onEditChange: (id: string) => void;
 	onAddAddressClick: () => void;
 	checkAddressAvailability?: boolean;
 	title: string;
-	form: UseFormReturn<AddressListFormData>;
+	form: UseFormReturn<IAddressListFormData>;
 }
 
-export const AddressList: React.FC<AddressListProps> = ({
+export const AddressList: React.FC<IAddressListProps> = ({
 	onEditChange,
 	checkAddressAvailability = false,
 	title,

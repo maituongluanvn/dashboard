@@ -1,7 +1,7 @@
 import type { ICategory } from "./category";
 import type { IProduct } from "./product";
 
-export interface Items {
+export interface IItems {
     id: string;
     name: string;
     level: number;
@@ -12,8 +12,8 @@ export interface Items {
     children?: IProduct[];
 }
 
-export interface Menu {
+export interface IMenu {
     menu:{
-        items: Items[];
+        items: IItems[];
     }
 }

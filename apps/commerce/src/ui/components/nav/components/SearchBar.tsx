@@ -1,10 +1,10 @@
-import { redirect } from "next/navigation";
-import { SearchIcon } from "lucide-react";
+import { redirect } from 'next/navigation';
+import { SearchIcon } from 'lucide-react';
 
 export const SearchBar = ({ channel }: { channel: string }) => {
 	async function onSubmit(formData: FormData) {
-		"use server";
-		const search = formData.get("search") as string;
+		'use server';
+		const search = formData.get('search') as string;
 		if (search && search.trim().length > 0) {
 			redirect(`/${encodeURIComponent(channel)}/search?query=${encodeURIComponent(search)}`);
 		}
@@ -12,6 +12,7 @@ export const SearchBar = ({ channel }: { channel: string }) => {
 
 	return (
 		<form
+			// eslint-disable-next-line @typescript-eslint/no-misused-promises
 			action={onSubmit}
 			className="group relative my-2 flex w-full items-center justify-items-center text-sm lg:w-80"
 		>

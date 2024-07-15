@@ -1,25 +1,25 @@
-import React from "react";
-import { Button } from "@/checkout/components/Button";
-import { PasswordInput } from "@/checkout/components/PasswordInput";
-import { TextInput } from "@/checkout/components/TextInput";
-import { useSignInForm } from "@/checkout/sections/SignIn/useSignInForm";
-import { usePasswordResetRequest } from "@/checkout/sections/SignIn/usePasswordResetRequest";
-import { FormProvider } from "@/checkout/hooks/useForm/FormProvider";
+import React from 'react';
+import { Button } from '@/checkout/components/Button';
+import { PasswordInput } from '@/checkout/components/PasswordInput';
+import { TextInput } from '@/checkout/components/TextInput';
+import { useSignInForm } from '@/checkout/sections/SignIn/useSignInForm';
+import { usePasswordResetRequest } from '@/checkout/sections/SignIn/usePasswordResetRequest';
+import { FormProvider } from '@/checkout/hooks/useForm/FormProvider';
 import {
 	SignInFormContainer,
-	type SignInFormContainerProps,
-} from "@/checkout/sections/Contact/SignInFormContainer";
-import { isValidEmail } from "@/checkout/lib/utils/common";
-import { useErrorMessages } from "@/checkout/hooks/useErrorMessages";
-import { useCheckout } from "@/checkout/hooks/useCheckout";
+	type ISignInFormContainerProps,
+} from '@/checkout/sections/Contact/SignInFormContainer';
+import { isValidEmail } from '@/checkout/lib/utils/common';
+import { useErrorMessages } from '@/checkout/hooks/useErrorMessages';
+import { useCheckout } from '@/checkout/hooks/useCheckout';
 
-interface SignInProps extends Pick<SignInFormContainerProps, "onSectionChange"> {
+interface ISignInProps extends Pick<ISignInFormContainerProps, 'onSectionChange'> {
 	onSignInSuccess: () => void;
 	onEmailChange: (email: string) => void;
 	email: string;
 }
 
-export const SignIn: React.FC<SignInProps> = ({
+export const SignIn: React.FC<ISignInProps> = ({
 	onSectionChange,
 	onSignInSuccess,
 	onEmailChange,
@@ -32,7 +32,7 @@ export const SignIn: React.FC<SignInProps> = ({
 
 	const form = useSignInForm({
 		onSuccess: onSignInSuccess,
-		initialEmail: initialEmail || checkoutEmail || "",
+		initialEmail: initialEmail || checkoutEmail || '',
 	});
 
 	const {
@@ -74,8 +74,9 @@ export const SignIn: React.FC<SignInProps> = ({
 						required
 						name="email"
 						label="Email"
-						onChange={(event) => {
+						onChange={(event: any) => {
 							handleChange(event);
+							// eslint-disable-next-line @typescript-eslint/no-unsafe-argument, @typescript-eslint/no-unsafe-member-access
 							onEmailChange(event.currentTarget.value);
 						}}
 					/>
@@ -85,15 +86,16 @@ export const SignIn: React.FC<SignInProps> = ({
 							ariaDisabled={isSubmitting}
 							ariaLabel="send password reset link"
 							variant="tertiary"
-							label={passwordResetSent ? "Resend?" : "Forgot password?"}
+							label={passwordResetSent ? 'Resend?' : 'Forgot password?'}
 							className="ml-1 mr-4"
-							onClick={(e) => (isSubmitting ? e.preventDefault() : onPasswordResetRequest)}
+							// eslint-disable-next-line @typescript-eslint/no-unsafe-return, @typescript-eslint/no-unsafe-call, @typescript-eslint/no-unsafe-member-access
+							onClick={(e: any) => (isSubmitting ? e.preventDefault() : onPasswordResetRequest)}
 						/>
 						<Button
 							type="submit"
 							disabled={isSubmitting}
-							ariaLabel={"Sign in"}
-							label={isSubmitting ? "Processing…" : "Sign in"}
+							ariaLabel={'Sign in'}
+							label={isSubmitting ? 'Processing…' : 'Sign in'}
 						/>
 					</div>
 				</div>

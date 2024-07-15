@@ -72,6 +72,7 @@ export const extractMutationErrors = <
 	const graphqlErrors = result?.error ? [result.error] : [];
 
 	const apiErrors = Object.values(data ?? {}).reduce<ApiErrors<TData, TErrorCodes>>(
+		// eslint-disable-next-line @typescript-eslint/no-unsafe-return
 		(result, value) => [...result, ...(value?.errors ?? [])],
 		[],
 	);

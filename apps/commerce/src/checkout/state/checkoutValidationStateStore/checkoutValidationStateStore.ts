@@ -11,14 +11,14 @@ export type CheckoutValidationState = {
 	validationState: ValidationState;
 };
 
-interface UseCheckoutValidationStateStore extends CheckoutValidationState {
+interface IUseCheckoutValidationStateStore extends CheckoutValidationState {
 	actions: {
 		validateAllForms: (signedIn: boolean) => void;
 		setValidationState: (scope: CheckoutFormScope, status: CheckoutFormValidationStatus) => void;
 	};
 }
 
-const useCheckoutValidationStateStore = createWithEqualityFn<UseCheckoutValidationStateStore>(
+const useCheckoutValidationStateStore = createWithEqualityFn<IUseCheckoutValidationStateStore>(
 	(set) => ({
 		validationState: { shippingAddress: "valid", guestUser: "valid", billingAddress: "valid" },
 		actions: {

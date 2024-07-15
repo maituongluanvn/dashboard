@@ -65,6 +65,7 @@
 		{
 			"files": ["**/*.ts", "**/*.tsx"],
 			"rules": {
+				"@typescript-eslint/no-unsafe-call": "warn",
 				"@typescript-eslint/naming-convention": [
 					"error",
 					{

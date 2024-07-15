@@ -1,30 +1,30 @@
 type NonFalsy<T> = T extends false | 0 | "" | null | undefined | 0n ? never : T;
 
-interface Array<T> {
+interface IArray<T> {
 	includes(searchElement: unknown, fromIndex?: number): searchElement is T;
 }
 
-interface ReadonlyArray<T> {
+interface IReadonlyArray<T> {
 	includes(searchElement: unknown, fromIndex?: number): searchElement is T;
 }
 
-interface Body {
+interface IBody {
 	json(): Promise<unknown>;
 }
 
-interface Array<T> {
+interface IArray<T> {
 	filter(predicate: BooleanConstructor, thisArg?: unknown): NonFalsy<T>[];
 }
 
-interface ReadonlyArray<T> {
+interface IReadonlyArray<T> {
 	filter(predicate: BooleanConstructor, thisArg?: unknown): NonFalsy<T>[];
 }
 
-interface ArrayConstructor {
+interface IArrayConstructor {
 	isArray(arg: unknown): arg is unknown[];
 }
 
-interface JSON {
+interface IJSON {
 	/**
 	 * Converts a JavaScript Object Notation (JSON) string into an object.
 	 * @param text A valid JSON string.
@@ -34,6 +34,6 @@ interface JSON {
 	parse(text: string, reviver?: (this: unknown, key: string, value: unknown) => unknown): unknown;
 }
 
-interface Set<T> {
+interface ISet<T> {
 	has(value: unknown): value is T;
 }

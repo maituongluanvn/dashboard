@@ -10,7 +10,7 @@ import {
 } from 'react';
 import navLinks from '../../../../../public/menu.json';
 import { NavLink } from './NavLink';
-import type { Menu } from '@/definition';
+import type { IMenu } from '@/definition';
 
 // eslint-disable-next-line @typescript-eslint/no-unused-vars
 export const NavLinks = async ({}: { channel: string }) => {
@@ -25,7 +25,7 @@ export const NavLinks = async ({}: { channel: string }) => {
 	return (
 		<>
 			<NavLink href="/">Trang Chủ</NavLink>
-			{(navLinks as unknown as Menu).menu?.items?.map(
+			{(navLinks as unknown as IMenu).menu?.items?.map(
 				(item: {
 					category: { slug: any; name: string | JSX.Element };
 					id: Key | null | undefined;

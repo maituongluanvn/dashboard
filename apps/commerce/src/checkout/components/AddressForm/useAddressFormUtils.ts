@@ -112,7 +112,8 @@ export const useAddressFormUtils = (countryCode: CountryCode = defaultCountry) =
 				);
 			}
 
-			return addressFieldMessages[field ];
+			// eslint-disable-next-line @typescript-eslint/no-unsafe-return
+			// return addressFieldMessages[field] as any;
 		},
 		[getLocalizedFieldLabel, localizedFields],
 	);

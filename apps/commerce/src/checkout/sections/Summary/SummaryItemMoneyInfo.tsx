@@ -1,17 +1,17 @@
-import React from "react";
-import clsx from "clsx";
-import { Money } from "@/checkout/components";
-import { type Money as MoneyType } from "@/checkout/graphql";
-import { getFormattedMoney } from "@/checkout/lib/utils/money";
-import { type GrossMoney } from "@/checkout/lib/globalTypes";
+import React from 'react';
+import clsx from 'clsx';
+import { Money } from '@/checkout/components';
+import { type Money as MoneyType } from '@/checkout/graphql';
+import { getFormattedMoney } from '@/checkout/lib/utils/money';
+import { type GrossMoney } from '@/checkout/lib/globalTypes';
 
-interface SummaryItemMoneyInfoProps {
+interface ISummaryItemMoneyInfoProps {
 	unitPrice: GrossMoney;
 	undiscountedUnitPrice: MoneyType;
 	quantity: number;
 }
 
-export const SummaryItemMoneyInfo: React.FC<SummaryItemMoneyInfoProps> = ({
+export const SummaryItemMoneyInfo: React.FC<ISummaryItemMoneyInfoProps> = ({
 	unitPrice,
 	quantity,
 	undiscountedUnitPrice,
@@ -40,7 +40,7 @@ export const SummaryItemMoneyInfo: React.FC<SummaryItemMoneyInfoProps> = ({
 						amount: (piecePrice?.amount || 0) * quantity,
 					}}
 					className={clsx({
-						"!text-text-error": onSale,
+						'!text-text-error': onSale,
 					})}
 				/>
 			</div>

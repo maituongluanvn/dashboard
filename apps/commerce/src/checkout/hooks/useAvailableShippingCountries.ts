@@ -2,11 +2,11 @@ import { useMemo } from "react";
 import { type CountryCode, useChannelQuery } from "@/checkout/graphql";
 import { useCheckout } from "@/checkout/hooks/useCheckout";
 
-interface UseAvailableShippingCountries {
+interface IUseAvailableShippingCountries {
 	availableShippingCountries: CountryCode[];
 }
 
-export const useAvailableShippingCountries = (): UseAvailableShippingCountries => {
+export const useAvailableShippingCountries = (): IUseAvailableShippingCountries => {
 	const { checkout } = useCheckout();
 	const [{ data }] = useChannelQuery({
 		variables: { slug: checkout.channel.slug },

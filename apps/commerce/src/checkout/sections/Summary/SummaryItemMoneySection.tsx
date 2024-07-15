@@ -1,11 +1,11 @@
-import { type OrderLineFragment } from "@/checkout/graphql";
-import { SummaryItemMoneyInfo } from "@/checkout/sections/Summary/SummaryItemMoneyInfo";
+import { type OrderLineFragment } from '@/checkout/graphql';
+import { SummaryItemMoneyInfo } from '@/checkout/sections/Summary/SummaryItemMoneyInfo';
 
-interface LineItemQuantitySelectorProps {
+interface ILineItemQuantitySelectorProps {
 	line: OrderLineFragment;
 }
 
-export const SummaryItemMoneySection: React.FC<LineItemQuantitySelectorProps> = ({ line }) => {
+export const SummaryItemMoneySection: React.FC<ILineItemQuantitySelectorProps> = ({ line }) => {
 	return (
 		<div className="flex flex-col items-end">
 			<p>Qty: {line.quantity}</p>

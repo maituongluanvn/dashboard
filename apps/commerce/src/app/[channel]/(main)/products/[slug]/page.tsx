@@ -80,7 +80,7 @@ export default function Page({
 	const { data: product, loading, error } = useFetch<IProduct>(`/api/product/${params.slug}`);
 
 	if (loading) return <p>Loading...</p>;
-	if (error) return <p>Error: {error as any}</p>;
+	if (error) return <p>Error: {error}</p>;
 	if (!product) {
 		notFound();
 	}

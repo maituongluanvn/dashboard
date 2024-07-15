@@ -1,17 +1,17 @@
-"use client";
+'use client';
 
-import { useState, type AllHTMLAttributes } from "react";
-import clsx from "clsx";
-import { Field, type FieldProps } from "formik";
-import { EyeHiddenIcon, EyeIcon } from "@/checkout/ui-kit/icons";
-import { IconButton } from "@/checkout/components/IconButton";
+import { useState, type AllHTMLAttributes } from 'react';
+import clsx from 'clsx';
+import { Field, type FieldProps } from 'formik';
+import { EyeHiddenIcon, EyeIcon } from '@/checkout/ui-kit/icons';
+import { IconButton } from '@/checkout/components/IconButton';
 
-export interface PasswordInputProps<TName extends string> extends AllHTMLAttributes<HTMLInputElement> {
+export interface IPasswordInputProps<TName extends string> extends AllHTMLAttributes<HTMLInputElement> {
 	name: TName;
 	label: string;
 }
 
-export const PasswordInput = <TName extends string>(props: PasswordInputProps<TName>) => (
+export const PasswordInput = <TName extends string>(props: IPasswordInputProps<TName>) => (
 	<Field {...props} component={PasswordInputComponent} />
 );
 
@@ -21,7 +21,7 @@ export const PasswordInputComponent = <TName extends string>({
 	label,
 	required,
 	...props
-}: PasswordInputProps<TName> & FieldProps) => {
+}: IPasswordInputProps<TName> & FieldProps) => {
 	const error = touched[field.name] ? (errors[field.name] as string) : undefined;
 	const [passwordVisible, setPasswordVisible] = useState(false);
 
@@ -35,14 +35,14 @@ export const PasswordInputComponent = <TName extends string>({
 						<input
 							required={required}
 							spellCheck={false}
-							type={passwordVisible ? "text" : "password"}
+							type={passwordVisible ? 'text' : 'password'}
 							autoCapitalize="off"
 							autoComplete="off"
 							{...field}
 							{...props}
 							className={clsx(
-								"block w-full appearance-none rounded-md border-neutral-300 pr-10 transition-colors focus:border-neutral-300 focus:outline-none focus:ring focus:ring-neutral-200 focus:ring-opacity-50 active:border-neutral-200 active:outline-none",
-								{ "border-red-300": error },
+								'block w-full appearance-none rounded-md border-neutral-300 pr-10 transition-colors focus:border-neutral-300 focus:outline-none focus:ring focus:ring-neutral-200 focus:ring-opacity-50 active:border-neutral-200 active:outline-none',
+								{ 'border-red-300': error },
 								props.className,
 							)}
 						/>

@@ -1,21 +1,21 @@
 /* eslint-disable @typescript-eslint/no-unsafe-assignment */
-import React from "react";
-import { type AddressFormData } from "@/checkout/components/AddressForm/types";
-import { getEmptyAddressFormData, getAddressInputData } from "@/checkout/components/AddressForm/utils";
-import { type ChangeHandler, useForm } from "@/checkout/hooks/useForm";
-import { useFormSubmit } from "@/checkout/hooks/useFormSubmit";
-import { AddressFormActions } from "@/checkout/components/ManualSaveAddressForm";
-import { useAddressFormSchema } from "@/checkout/components/AddressForm/useAddressFormSchema";
-import { AddressForm, type AddressFormProps } from "@/checkout/components/AddressForm";
-import { type AddressFragment, type CountryCode, useUserAddressCreateMutation } from "@/checkout/graphql";
-import { FormProvider } from "@/checkout/hooks/useForm/FormProvider";
+import React from 'react';
+import { type IAddressFormData } from '@/checkout/components/AddressForm/types';
+import { getEmptyAddressFormData, getAddressInputData } from '@/checkout/components/AddressForm/utils';
+import { type ChangeHandler, useForm } from '@/checkout/hooks/useForm';
+import { useFormSubmit } from '@/checkout/hooks/useFormSubmit';
+import { AddressFormActions } from '@/checkout/components/ManualSaveAddressForm';
+import { useAddressFormSchema } from '@/checkout/components/AddressForm/useAddressFormSchema';
+import { AddressForm, type IAddressFormProps } from '@/checkout/components/AddressForm';
+import { type AddressFragment, type CountryCode, useUserAddressCreateMutation } from '@/checkout/graphql';
+import { FormProvider } from '@/checkout/hooks/useForm/FormProvider';
 
-export interface AddressCreateFormProps extends Pick<AddressFormProps, "availableCountries"> {
+export interface IAddressCreateFormProps extends Pick<IAddressFormProps, 'availableCountries'> {
 	onSuccess: (address: AddressFragment) => void;
 	onClose: () => void;
 }
 
-export const AddressCreateForm: React.FC<AddressCreateFormProps> = ({
+export const AddressCreateForm: React.FC<IAddressCreateFormProps> = ({
 	onSuccess,
 	onClose,
 	availableCountries,
@@ -23,17 +23,17 @@ export const AddressCreateForm: React.FC<AddressCreateFormProps> = ({
 	const [, userAddressCreate] = useUserAddressCreateMutation();
 	const { setCountryCode, validationSchema } = useAddressFormSchema();
 
-	const onSubmit = useFormSubmit<AddressFormData, typeof userAddressCreate>({
-		scope: "userAddressCreate",
+	const onSubmit = useFormSubmit<IAddressFormData, typeof userAddressCreate>({
+		scope: 'userAddressCreate',
 		onSubmit: userAddressCreate,
-		parse: (addressFormData) => ({ address: getAddressInputData(addressFormData) }),
+		parse: addressFormData => ({ address: getAddressInputData(addressFormData) }),
 		onSuccess: ({ data }) => {
 			onSuccess(data.address as AddressFragment);
 			onClose();
 		},
 	});
 
-	const form = useForm<AddressFormData>({
+	const form = useForm<IAddressFormData>({
 		validationSchema,
 		initialValues: getEmptyAddressFormData(),
 		onSubmit,
@@ -41,10 +41,10 @@ export const AddressCreateForm: React.FC<AddressCreateFormProps> = ({
 
 	const { handleSubmit, isSubmitting, handleChange } = form;
 
-	const onChange: ChangeHandler = (event) => {
+	const onChange: ChangeHandler = event => {
 		const { name, value } = event.target;
 
-		if (name === "countryCode") {
+		if (name === 'countryCode') {
 			setCountryCode(value as CountryCode);
 		}
 

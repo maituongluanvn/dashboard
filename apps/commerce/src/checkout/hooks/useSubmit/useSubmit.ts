@@ -20,12 +20,12 @@ import {
 import { type ApiErrors } from "@/checkout/hooks/useGetParsedErrors/types";
 import { extractMutationData, extractMutationErrors } from "@/checkout/hooks/useSubmit/utils";
 
-interface CallbackProps<TData> {
+interface ICallbackProps<TData> {
 	formData: TData;
 	formHelpers?: any;
 }
 
-export interface UseSubmitProps<
+export interface IUseSubmitProps<
 	TData extends FormDataBase,
 	TMutationFn extends MutationBaseFn,
 	TErrorCodes extends string = string,
@@ -34,21 +34,21 @@ export interface UseSubmitProps<
 	scope?: CheckoutUpdateStateScope;
 	onSubmit: (vars: MutationVars<TMutationFn>) => Promise<MutationData<TMutationFn>>;
 	parse?: ParserFunction<TData, TMutationFn>;
-	onAbort?: (props: CallbackProps<TData>) => void;
-	onSuccess?: (props: CallbackProps<TData> & { data: MutationSuccessData<TMutationFn> }) => void;
+	onAbort?: (props: ICallbackProps<TData>) => void;
+	onSuccess?: (props: ICallbackProps<TData> & { data: MutationSuccessData<TMutationFn> }) => void;
 	onFinished?: () => void;
 	onError?: (
-		props: CallbackProps<TData> & {
+		props: ICallbackProps<TData> & {
 			errors: ApiErrors<TData, TErrorCodes>;
 			customErrors: any[];
 			graphqlErrors: CombinedError[];
 		},
 	) => void;
 	extractCustomErrors?: (data: MutationData<TMutationFn>) => any[];
-	onStart?: (props: CallbackProps<TData>) => void;
+	onStart?: (props: ICallbackProps<TData>) => void;
 	shouldAbort?:
-		| ((props: CallbackProps<TData>) => Promise<boolean>)
-		| ((props: CallbackProps<TData>) => boolean);
+		| ((props: ICallbackProps<TData>) => Promise<boolean>)
+		| ((props: ICallbackProps<TData>) => boolean);
 }
 
 export const useSubmit = <
@@ -67,7 +67,7 @@ export const useSubmit = <
 	onFinished,
 	extractCustomErrors,
 	hideAlerts = false,
-}: UseSubmitProps<TData, TMutationFn, TErrorCodes>): SimpleSubmitFn<TData, TErrorCodes> => {
+}: IUseSubmitProps<TData, TMutationFn, TErrorCodes>): SimpleSubmitFn<TData, TErrorCodes> => {
 	const { setCheckoutUpdateState } = useCheckoutUpdateStateChange(
 		// @ts-expect-error -- something is fishy
 		scope,
@@ -77,7 +77,7 @@ export const useSubmit = <
 
 	const handleSubmit = useCallback(
 		async (formData: TData = {} as TData, formHelpers?: any) => {
-			const callbackProps: CallbackProps<TData> = { formData, formHelpers };
+			const callbackProps: ICallbackProps<TData> = { formData, formHelpers };
 
 			onStart?.(callbackProps);
 

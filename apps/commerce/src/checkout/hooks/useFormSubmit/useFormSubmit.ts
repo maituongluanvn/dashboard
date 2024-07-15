@@ -10,19 +10,19 @@ import {
 	type SubmitReturnWithErrors,
 } from "@/checkout/hooks/useSubmit/types";
 import { type ApiErrors } from "@/checkout/hooks/useGetParsedErrors/types";
-import { useSubmit, type UseSubmitProps } from "@/checkout/hooks/useSubmit/useSubmit";
+import { useSubmit, type IUseSubmitProps } from "@/checkout/hooks/useSubmit/useSubmit";
 
 export type FormSubmitFn<TData extends FormDataBase> = (
 	formData: TData,
 	formHelpers: FormHelpers<TData>,
 ) => SubmitReturnWithErrors<TData>;
 
-interface CallbackProps<TData extends FormDataBase> {
+interface ICallbackProps<TData extends FormDataBase> {
 	formHelpers: FormHelpers<TData>;
 	formData: TData;
 }
 
-interface UseFormSubmitProps<
+interface IUseFormSubmitProps<
 	TData extends FormDataBase,
 	TMutationFn extends MutationBaseFn,
 	TErrorCodes extends string = string,
@@ -31,21 +31,21 @@ interface UseFormSubmitProps<
 	scope: CheckoutUpdateStateScope;
 	onSubmit: (vars: MutationVars<TMutationFn>) => Promise<MutationData<TMutationFn>>;
 	parse?: ParserFunction<TData, TMutationFn>;
-	onAbort?: (props: CallbackProps<TData>) => void;
-	onSuccess?: (props: CallbackProps<TData> & { data: MutationSuccessData<TMutationFn> }) => void;
+	onAbort?: (props: ICallbackProps<TData>) => void;
+	onSuccess?: (props: ICallbackProps<TData> & { data: MutationSuccessData<TMutationFn> }) => void;
 	onFinished?: () => void;
 	onError?: (
-		props: CallbackProps<TData> & {
+		props: ICallbackProps<TData> & {
 			errors: ApiErrors<TData, TErrorCodes>;
 			customErrors: any[];
 			graphqlErrors: CombinedError[];
 		},
 	) => void;
 	extractCustomErrors?: (data: MutationData<TMutationFn>) => any[];
-	onStart?: (props: CallbackProps<TData>) => void;
+	onStart?: (props: ICallbackProps<TData>) => void;
 	shouldAbort?:
-		| ((props: CallbackProps<TData>) => Promise<boolean>)
-		| ((props: CallbackProps<TData>) => boolean);
+		| ((props: ICallbackProps<TData>) => Promise<boolean>)
+		| ((props: ICallbackProps<TData>) => boolean);
 }
 
 const useFormSubmit = <
@@ -53,10 +53,10 @@ const useFormSubmit = <
 	TMutationFn extends MutationBaseFn,
 	TErrorCodes extends string = string,
 >(
-	props: UseFormSubmitProps<TData, TMutationFn, TErrorCodes>,
+	props: IUseFormSubmitProps<TData, TMutationFn, TErrorCodes>,
 ): FormSubmitFn<TData> => {
 	const handleSubmit: FormSubmitFn<TData> = useSubmit<TData, TMutationFn, TErrorCodes>(
-		props as UseSubmitProps<TData, TMutationFn, TErrorCodes>,
+		props as IUseSubmitProps<TData, TMutationFn, TErrorCodes>,
 	);
 
 	return handleSubmit;

@@ -1,15 +1,15 @@
-import { Button } from "@/checkout/components/Button";
-import { IconButton } from "@/checkout/components/IconButton";
-import { TrashIcon } from "@/checkout/ui-kit/icons";
+import { Button } from '@/checkout/components/Button';
+import { IconButton } from '@/checkout/components/IconButton';
+import { TrashIcon } from '@/checkout/ui-kit/icons';
 
-interface AddressFormActionsProps {
+interface IAddressFormActionsProps {
 	onDelete?: () => void;
 	onCancel: () => void;
 	onSubmit: () => void;
 	loading: boolean;
 }
 
-export const AddressFormActions: React.FC<AddressFormActionsProps> = ({
+export const AddressFormActions: React.FC<IAddressFormActionsProps> = ({
 	onSubmit,
 	onDelete,
 	onCancel,
@@ -28,7 +28,8 @@ export const AddressFormActions: React.FC<AddressFormActionsProps> = ({
 				<Button
 					ariaDisabled
 					ariaLabel="Save address"
-					onClick={(e) => e.preventDefault()}
+					// eslint-disable-next-line @typescript-eslint/no-unsafe-return
+					onClick={(e: { preventDefault: () => any }) => e.preventDefault()}
 					label="Processing…"
 				/>
 			) : (

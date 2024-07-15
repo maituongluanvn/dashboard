@@ -10,13 +10,13 @@ import { type FormSubmitFn } from "@/checkout/hooks/useFormSubmit";
 import { useUser } from "@/checkout/hooks/useUser";
 import { getById, getByUnmatchingId } from "@/checkout/lib/utils/common";
 
-export interface AddressListFormData {
+export interface IAddressListFormData {
 	selectedAddressId: string | undefined;
 	addressList: AddressFragment[];
 }
 
-interface UseAddressListProps {
-	onSubmit: FormSubmitFn<AddressListFormData>;
+interface IUseAddressListProps {
+	onSubmit: FormSubmitFn<IAddressListFormData>;
 	checkoutAddress: OptionalAddress;
 	defaultAddress: OptionalAddress;
 	checkAddressAvailability?: boolean;
@@ -27,7 +27,7 @@ export const useAddressListForm = ({
 	checkoutAddress,
 	defaultAddress,
 	checkAddressAvailability = false,
-}: UseAddressListProps) => {
+}: IUseAddressListProps) => {
 	const { user } = useUser();
 
 	const { isAvailable } = useAddressAvailability(!checkAddressAvailability);
@@ -37,7 +37,7 @@ export const useAddressListForm = ({
 
 	const previousCheckoutAddress = useRef<OptionalAddress>(null);
 
-	const form = useForm<AddressListFormData>({
+	const form = useForm<IAddressListFormData>({
 		initialDirty: true,
 		initialValues: {
 			addressList: addresses,

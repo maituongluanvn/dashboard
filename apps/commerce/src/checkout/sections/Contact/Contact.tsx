@@ -1,24 +1,24 @@
-import React, { type FC, useCallback, useEffect, useState } from "react";
-import { SignedInUser } from "../SignedInUser/SignedInUser";
-import { ResetPassword } from "../ResetPassword/ResetPassword";
-import { useCustomerAttach } from "@/checkout/hooks/useCustomerAttach";
-import { getQueryParams } from "@/checkout/lib/utils/url";
-import { SignIn } from "@/checkout/sections/SignIn/SignIn";
-import { GuestUser } from "@/checkout/sections/GuestUser/GuestUser";
-import { useUser } from "@/checkout/hooks/useUser";
+import React, { type FC, useCallback, useEffect, useState } from 'react';
+import { SignedInUser } from '../SignedInUser/SignedInUser';
+import { ResetPassword } from '../ResetPassword/ResetPassword';
+import { useCustomerAttach } from '@/checkout/hooks/useCustomerAttach';
+import { getQueryParams } from '@/checkout/lib/utils/url';
+import { SignIn } from '@/checkout/sections/SignIn/SignIn';
+import { GuestUser } from '@/checkout/sections/GuestUser/GuestUser';
+import { useUser } from '@/checkout/hooks/useUser';
 
-type Section = "signedInUser" | "guestUser" | "signIn" | "resetPassword";
+type Section = 'signedInUser' | 'guestUser' | 'signIn' | 'resetPassword';
 
-const onlyContactShownSections: Section[] = ["signIn", "resetPassword"];
+const onlyContactShownSections: Section[] = ['signIn', 'resetPassword'];
 
-interface ContactProps {
+interface IContactProps {
 	setShowOnlyContact: (value: boolean) => void;
 }
 
-export const Contact: FC<ContactProps> = ({ setShowOnlyContact }) => {
+export const Contact: FC<IContactProps> = ({ setShowOnlyContact }) => {
 	useCustomerAttach();
 	const { user, authenticated } = useUser();
-	const [email, setEmail] = useState(user?.email || "");
+	const [email, setEmail] = useState(user?.email || '');
 
 	const [passwordResetShown, setPasswordResetShown] = useState(false);
 
@@ -26,10 +26,10 @@ export const Contact: FC<ContactProps> = ({ setShowOnlyContact }) => {
 		const shouldShowPasswordReset = passwordResetToken && !passwordResetShown;
 
 		if (shouldShowPasswordReset) {
-			return "resetPassword";
+			return 'resetPassword';
 		}
 
-		return user ? "signedInUser" : "guestUser";
+		return user ? 'signedInUser' : 'guestUser';
 	};
 
 	const passwordResetToken = getQueryParams().passwordResetToken;
@@ -47,7 +47,7 @@ export const Contact: FC<ContactProps> = ({ setShowOnlyContact }) => {
 	const shouldShowOnlyContact = onlyContactShownSections.includes(currentSection);
 
 	useEffect(() => {
-		if (isCurrentSection("resetPassword")) {
+		if (isCurrentSection('resetPassword')) {
 			setPasswordResetShown(true);
 		}
 	}, [isCurrentSection]);
@@ -57,39 +57,39 @@ export const Contact: FC<ContactProps> = ({ setShowOnlyContact }) => {
 	}, [currentSection, setShowOnlyContact, shouldShowOnlyContact]);
 
 	useEffect(() => {
-		if (authenticated && currentSection !== "signedInUser") {
-			setCurrentSection("signedInUser");
-		} else if (!authenticated && currentSection === "signedInUser") {
-			setCurrentSection("guestUser");
+		if (authenticated && currentSection !== 'signedInUser') {
+			setCurrentSection('signedInUser');
+		} else if (!authenticated && currentSection === 'signedInUser') {
+			setCurrentSection('guestUser');
 		}
 	}, [authenticated, currentSection]);
 
 	return (
 		<div>
-			{isCurrentSection("guestUser") && (
-				<GuestUser onSectionChange={handleChangeSection("signIn")} onEmailChange={setEmail} email={email} />
+			{isCurrentSection('guestUser') && (
+				<GuestUser onSectionChange={handleChangeSection('signIn')} onEmailChange={setEmail} email={email} />
 			)}
 
-			{isCurrentSection("signIn") && (
+			{isCurrentSection('signIn') && (
 				<SignIn
-					onSectionChange={handleChangeSection("guestUser")}
-					onSignInSuccess={handleChangeSection("signedInUser")}
+					onSectionChange={handleChangeSection('guestUser')}
+					onSignInSuccess={handleChangeSection('signedInUser')}
 					onEmailChange={setEmail}
 					email={email}
 				/>
 			)}
 
-			{isCurrentSection("signedInUser") && (
+			{isCurrentSection('signedInUser') && (
 				<SignedInUser
-					onSectionChange={handleChangeSection("guestUser")}
-					onSignOutSuccess={handleChangeSection("guestUser")}
+					onSectionChange={handleChangeSection('guestUser')}
+					onSignOutSuccess={handleChangeSection('guestUser')}
 				/>
 			)}
 
-			{isCurrentSection("resetPassword") && (
+			{isCurrentSection('resetPassword') && (
 				<ResetPassword
-					onSectionChange={handleChangeSection("signIn")}
-					onResetPasswordSuccess={handleChangeSection("signedInUser")}
+					onSectionChange={handleChangeSection('signIn')}
+					onResetPasswordSuccess={handleChangeSection('signedInUser')}
 				/>
 			)}
 		</div>

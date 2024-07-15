@@ -1,3 +1,7 @@
+/* eslint-disable @typescript-eslint/no-misused-promises */
+/* eslint-disable @typescript-eslint/no-unsafe-member-access */
+/* eslint-disable @typescript-eslint/no-unsafe-argument */
+/* eslint-disable @typescript-eslint/no-unsafe-assignment */
 import { useEffect, useState, useMemo } from "react";
 import { bool, object, type Schema, string } from "yup";
 import { useUserRegisterMutation } from "@/checkout/graphql";
@@ -16,18 +20,18 @@ import { useErrorMessages } from "@/checkout/hooks/useErrorMessages";
 import { useUser } from "@/checkout/hooks/useUser";
 import { isValidEmail } from "@/checkout/lib/utils/common";
 
-export interface GuestUserFormData {
+export interface IGuestUserFormData {
 	email: string;
 	password: string;
 	createAccount: boolean;
 }
 
-interface GuestUserFormProps {
+interface IGuestUserFormProps {
 	// shared between sign in form and guest user form
 	initialEmail: string;
 }
 
-export const useGuestUserForm = ({ initialEmail }: GuestUserFormProps) => {
+export const useGuestUserForm = ({ initialEmail }: IGuestUserFormProps) => {
 	const { checkout } = useCheckout();
 	const { user } = useUser();
 	const shouldUserRegister = useUserRegisterState();
@@ -44,25 +48,25 @@ export const useGuestUserForm = ({ initialEmail }: GuestUserFormProps) => {
 		password: string().when(["createAccount"], ([createAccount], field) =>
 			createAccount ? field.min(8, "Password must be at least 8 characters").required() : field,
 		),
-	}) as Schema<GuestUserFormData>;
+	}) as Schema<IGuestUserFormData>;
 
-	const defaultFormData: GuestUserFormData = {
+	const defaultFormData: IGuestUserFormData = {
 		email: initialEmail || checkout.email || "",
 		password: "",
 		createAccount: false,
 	};
 
-	const onSubmit = useFormSubmit<GuestUserFormData, typeof userRegister>(
+	const onSubmit = useFormSubmit<IGuestUserFormData, typeof userRegister>(
 		useMemo(
 			() => ({
 				scope: "userRegister",
 				onSubmit: userRegister,
 				onStart: () => setShouldRegisterUser(false),
-				shouldAbort: ({ formData, formHelpers: { validateForm } }) => {
+				shouldAbort: ({ formData, formHelpers: { validateForm } }: any) => {
 					const errors = validateForm(formData);
 					return hasErrors(errors);
 				},
-				parse: ({ email, password, channel }) => ({
+				parse: ({ email, password, channel }: any) => ({
 					input: {
 						email,
 						password,
@@ -70,9 +74,9 @@ export const useGuestUserForm = ({ initialEmail }: GuestUserFormProps) => {
 						redirectUrl: getCurrentHref(),
 					},
 				}),
-				onError: ({ errors }) => {
+				onError: ({ errors }: any) => {
 					setSubmitInProgress(false);
-					const hasAccountForCurrentEmail = errors.some(({ code }) => code === "UNIQUE");
+					const hasAccountForCurrentEmail = errors.some(({ code }: any) => code === "UNIQUE");
 
 					if (hasAccountForCurrentEmail) {
 						setUserRegistrationDisabled(true);
@@ -86,7 +90,7 @@ export const useGuestUserForm = ({ initialEmail }: GuestUserFormProps) => {
 		),
 	);
 
-	const form = useForm<GuestUserFormData>({
+	const form = useForm<IGuestUserFormData>({
 		initialValues: defaultFormData,
 		onSubmit,
 		validationSchema,

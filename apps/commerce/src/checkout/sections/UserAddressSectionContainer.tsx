@@ -1,6 +1,6 @@
-import { type ReactElement, useState } from "react";
+import { type ReactElement, useState } from 'react';
 
-interface ChildrenProps {
+interface IChildrenProps {
 	displayAddressList: boolean;
 	displayAddressEdit: boolean;
 	displayAddressCreate: boolean;
@@ -9,11 +9,11 @@ interface ChildrenProps {
 	editedAddressId: string | undefined;
 }
 
-interface UserAddressSectionProps {
-	children: (props: ChildrenProps) => ReactElement;
+interface IUserAddressSectionProps {
+	children: (props: IChildrenProps) => ReactElement;
 }
 
-export const UserAddressSectionContainer = ({ children }: UserAddressSectionProps) => {
+export const UserAddressSectionContainer = ({ children }: IUserAddressSectionProps) => {
 	const [displayAddressCreate, setDisplayAddressCreate] = useState(false);
 
 	const [editedAddressId, setDisplayAddressEdit] = useState<string | undefined>();

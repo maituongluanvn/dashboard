@@ -8,14 +8,14 @@ export type CheckoutUpdateStateStatus = "success" | "loading" | "error";
 
 export type CheckoutUpdateStateScope = Exclude<CheckoutScope, "checkoutPay" | "checkoutFinalize">;
 
-export interface CheckoutUpdateState {
+export interface ICheckoutUpdateState {
 	loadingCheckout: boolean;
 	updateState: Record<CheckoutUpdateStateScope, CheckoutUpdateStateStatus>;
 	submitInProgress: boolean;
 	changingBillingCountry: boolean;
 }
 
-export interface CheckoutUpdateStateStore extends CheckoutUpdateState {
+export interface ICheckoutUpdateStateStore extends ICheckoutUpdateState {
 	shouldRegisterUser: boolean;
 	actions: {
 		setChangingBillingCountry: (changingBillingCountry: boolean) => void;
@@ -26,7 +26,7 @@ export interface CheckoutUpdateStateStore extends CheckoutUpdateState {
 	};
 }
 
-const useCheckoutUpdateStateStore = createWithEqualityFn<CheckoutUpdateStateStore>(
+const useCheckoutUpdateStateStore = createWithEqualityFn<ICheckoutUpdateStateStore>(
 	(set) => ({
 		shouldRegisterUser: false,
 		submitInProgress: false,
@@ -75,7 +75,7 @@ const useCheckoutUpdateStateStore = createWithEqualityFn<CheckoutUpdateStateStor
 );
 // useCheckoutUpdateStateStore.subscribe(console.log);
 
-export const useCheckoutUpdateState = (): CheckoutUpdateState => {
+export const useCheckoutUpdateState = (): ICheckoutUpdateState => {
 	const { updateState, loadingCheckout, submitInProgress, changingBillingCountry } =
 		useCheckoutUpdateStateStore(
 			({ updateState, loadingCheckout, submitInProgress, changingBillingCountry }) => ({

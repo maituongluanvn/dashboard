@@ -27,15 +27,15 @@ type UnmappedQueryParam = keyof typeof queryParamsMap;
 
 type QueryParam = (typeof queryParamsMap)[UnmappedQueryParam];
 
-interface CustomTypedQueryParams {
+interface ICustomTypedQueryParams {
 	countryCode: CountryCode;
 	channel: string;
 	saleorApiUrl: string;
 }
 
-type RawQueryParams = Record<UnmappedQueryParam, ParamBasicValue> & CustomTypedQueryParams;
+type RawQueryParams = Record<UnmappedQueryParam, ParamBasicValue> & ICustomTypedQueryParams;
 
-export type QueryParams = Record<QueryParam, ParamBasicValue> & CustomTypedQueryParams;
+export type QueryParams = Record<QueryParam, ParamBasicValue> & ICustomTypedQueryParams;
 
 // this is intentional, we know what we'll get from the query but
 // queryString has no way to type this in such a specific way

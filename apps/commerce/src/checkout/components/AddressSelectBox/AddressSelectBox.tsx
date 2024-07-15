@@ -1,13 +1,13 @@
-import React from "react";
-import { SelectBox, type SelectBoxProps } from "@/checkout/components/SelectBox";
-import { Button } from "@/checkout/components/Button";
-import { Address } from "@/checkout/components/Address";
-import { type AddressFragment } from "@/checkout/graphql";
-import { type AddressField } from "@/checkout/components/AddressForm/types";
-import { EditIcon } from "@/checkout/assets/icons";
+import React from 'react';
+import { SelectBox, type ISelectBoxProps } from '@/checkout/components/SelectBox';
+import { Button } from '@/checkout/components/Button';
+import { Address } from '@/checkout/components/Address';
+import { type AddressFragment } from '@/checkout/graphql';
+import { type AddressField } from '@/checkout/components/AddressForm/types';
+import { EditIcon } from '@/checkout/assets/icons';
 
-interface AddressSelectBoxProps<TFieldName extends string>
-	extends Omit<SelectBoxProps<TFieldName>, "children"> {
+interface IAddressSelectBoxProps<TFieldName extends string>
+	extends Omit<ISelectBoxProps<TFieldName>, 'children'> {
 	// eslint-disable-next-line @typescript-eslint/no-explicit-any
 	address: Partial<Record<AddressField, any>>;
 	onEdit: () => void;
@@ -19,7 +19,7 @@ export const AddressSelectBox = <TFieldName extends string>({
 	onEdit,
 	unavailable,
 	...rest
-}: AddressSelectBoxProps<TFieldName>) => {
+}: IAddressSelectBoxProps<TFieldName>) => {
 	return (
 		<SelectBox {...rest} disabled={unavailable}>
 			<div className="flex w-full flex-col justify-between pe-8">
@@ -28,7 +28,7 @@ export const AddressSelectBox = <TFieldName extends string>({
 				</Address>
 				<Button
 					variant="tertiary"
-					onClick={(event) => {
+					onClick={(event: { stopPropagation: () => void }) => {
 						event.stopPropagation();
 						onEdit();
 					}}

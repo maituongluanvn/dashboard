@@ -1,15 +1,15 @@
-import React from "react";
-import { SignInFormContainer, type SignInFormContainerProps } from "../Contact/SignInFormContainer";
-import { Button } from "@/checkout/components/Button";
-import { PasswordInput } from "@/checkout/components/PasswordInput";
-import { useResetPasswordForm } from "@/checkout/sections/ResetPassword/useResetPasswordForm";
-import { FormProvider } from "@/checkout/hooks/useForm/FormProvider";
+import React from 'react';
+import { SignInFormContainer, type ISignInFormContainerProps } from '../Contact/SignInFormContainer';
+import { Button } from '@/checkout/components/Button';
+import { PasswordInput } from '@/checkout/components/PasswordInput';
+import { useResetPasswordForm } from '@/checkout/sections/ResetPassword/useResetPasswordForm';
+import { FormProvider } from '@/checkout/hooks/useForm/FormProvider';
 
-interface ResetPasswordProps extends Pick<SignInFormContainerProps, "onSectionChange"> {
+interface IResetPasswordProps extends Pick<ISignInFormContainerProps, 'onSectionChange'> {
 	onResetPasswordSuccess: () => void;
 }
 
-export const ResetPassword: React.FC<ResetPasswordProps> = ({ onSectionChange, onResetPasswordSuccess }) => {
+export const ResetPassword: React.FC<IResetPasswordProps> = ({ onSectionChange, onResetPasswordSuccess }) => {
 	const form = useResetPasswordForm({ onSuccess: onResetPasswordSuccess });
 
 	return (

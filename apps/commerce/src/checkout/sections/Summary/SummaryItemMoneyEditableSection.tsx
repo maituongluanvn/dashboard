@@ -1,17 +1,19 @@
-import { useMemo } from "react";
-import { type CheckoutLineFragment } from "@/checkout/graphql";
-import { TextInput } from "@/checkout/components/TextInput";
+import { useMemo } from 'react';
+import { type CheckoutLineFragment } from '@/checkout/graphql';
+import { TextInput } from '@/checkout/components/TextInput';
 
-import { Skeleton } from "@/checkout/components";
-import { SummaryItemMoneyInfo } from "@/checkout/sections/Summary/SummaryItemMoneyInfo";
-import { FormProvider } from "@/checkout/hooks/useForm/FormProvider";
-import { useSummaryItemForm } from "@/checkout/sections/Summary/useSummaryItemForm";
+import { Skeleton } from '@/checkout/components';
+import { SummaryItemMoneyInfo } from '@/checkout/sections/Summary/SummaryItemMoneyInfo';
+import { FormProvider } from '@/checkout/hooks/useForm/FormProvider';
+import { useSummaryItemForm } from '@/checkout/sections/Summary/useSummaryItemForm';
 
-interface SummaryItemMoneyEditableSectionProps {
+interface ISummaryItemMoneyEditableSectionProps {
 	line: CheckoutLineFragment;
 }
 
-export const SummaryItemMoneyEditableSection: React.FC<SummaryItemMoneyEditableSectionProps> = ({ line }) => {
+export const SummaryItemMoneyEditableSection: React.FC<ISummaryItemMoneyEditableSectionProps> = ({
+	line,
+}) => {
 	const { form, onLineDelete } = useSummaryItemForm({ line });
 
 	const {
@@ -34,8 +36,8 @@ export const SummaryItemMoneyEditableSection: React.FC<SummaryItemMoneyEditableS
 
 		const isQuantityValid = !Number.isNaN(quantity) && quantity >= 0;
 
-		if (quantityString === "" || !isQuantityValid) {
-			void setFieldValue("quantity", String(line.quantity));
+		if (quantityString === '' || !isQuantityValid) {
+			void setFieldValue('quantity', String(line.quantity));
 			return;
 		}
 

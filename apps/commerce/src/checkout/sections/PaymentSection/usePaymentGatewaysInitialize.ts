@@ -35,7 +35,8 @@ export const usePaymentGatewaysInitialize = () => {
 						data: config,
 					})),
 				}),
-				onSuccess: ({ data }) => {
+				onSuccess: ({ data }: any) => {
+					// eslint-disable-next-line @typescript-eslint/no-unsafe-member-access
 					const parsedConfigs = (data.gatewayConfigs || []) as ParsedPaymentGateways;
 
 					if (!parsedConfigs.length) {
@@ -44,8 +45,8 @@ export const usePaymentGatewaysInitialize = () => {
 
 					setGatewayConfigs(parsedConfigs);
 				},
-				onError: ({ errors }) => {
-					console.log({ errors });
+				onError: ({ errors }: any) => {
+					console.log(errors);
 				},
 			}),
 			[availablePaymentGateways, checkoutId, paymentGatewaysInitialize],

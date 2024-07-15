@@ -1,11 +1,13 @@
+/* eslint-disable @typescript-eslint/no-unsafe-return */
+/* eslint-disable @typescript-eslint/no-unsafe-assignment */
 import { camelCase } from "lodash-es";
 import { useCallback } from "react";
 import { useErrorMessages } from "../useErrorMessages";
 import {
-	type ApiError,
+	type IApiError,
 	type ApiErrors,
 	type FormErrors,
-	type ParsedApiError,
+	type IParsedApiError,
 	type ParsedApiErrors,
 } from "./types";
 import { type ErrorCode, type GenericErrorCode } from "@/checkout/lib/globalTypes";
@@ -15,7 +17,7 @@ export const useGetParsedErrors = <TFormData extends FormDataBase, TErrorCodes e
 	const { getMessageByErrorCode } = useErrorMessages();
 
 	const getParsedApiError = useCallback(
-		({ code, field }: ApiError<TFormData, TErrorCodes>): ParsedApiError<TFormData> => {
+		({ code, field }: IApiError<TFormData, TErrorCodes>): IParsedApiError<TFormData> => {
 			const errorCode = camelCase(code) as ErrorCode;
 
 			return {
@@ -29,6 +31,7 @@ export const useGetParsedErrors = <TFormData extends FormDataBase, TErrorCodes e
 
 	const getParsedApiErrors = useCallback(
 		(apiErrors: ApiErrors<TFormData, TErrorCodes>) =>
+			// eslint-disable-next-line @typescript-eslint/no-unsafe-return
 			apiErrors.map(getParsedApiError) as ParsedApiErrors<TFormData>,
 		[getParsedApiError],
 	);

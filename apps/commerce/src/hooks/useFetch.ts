@@ -3,13 +3,13 @@ import { useState, useEffect } from 'react';
 
 type HttpMethod = 'GET' | 'POST' | 'PUT';
 
-interface ApiResponse<T> {
+interface IApiResponse<T> {
 	data: T | null;
 	loading: boolean;
 	error: Error | null;
 }
 
-const useFetch = <T>(url: string, method: HttpMethod = 'GET', bodyData?: any): ApiResponse<T | null> => {
+const useFetch = <T>(url: string, method: HttpMethod = 'GET', bodyData?: any): IApiResponse<T | null> => {
 	const [data, setData] = useState<T | null>(null);
 	const [loading, setLoading] = useState<boolean>(true);
 	const [error, setError] = useState<Error | null>(null);

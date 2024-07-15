@@ -1,24 +1,24 @@
-import { type FC } from "react";
-import clsx from "clsx";
-import { SummaryItem, type SummaryLine } from "./SummaryItem";
-import { PromoCodeAdd } from "./PromoCodeAdd";
-import { SummaryMoneyRow } from "./SummaryMoneyRow";
-import { SummaryPromoCodeRow } from "./SummaryPromoCodeRow";
-import { SummaryItemMoneyEditableSection } from "./SummaryItemMoneyEditableSection";
-import { ChevronDownIcon } from "@/checkout/ui-kit/icons";
+import { type FC } from 'react';
+import clsx from 'clsx';
+import { SummaryItem, type SummaryLine } from './SummaryItem';
+import { PromoCodeAdd } from './PromoCodeAdd';
+import { SummaryMoneyRow } from './SummaryMoneyRow';
+import { SummaryPromoCodeRow } from './SummaryPromoCodeRow';
+import { SummaryItemMoneyEditableSection } from './SummaryItemMoneyEditableSection';
+import { ChevronDownIcon } from '@/checkout/ui-kit/icons';
 
-import { getFormattedMoney } from "@/checkout/lib/utils/money";
-import { Divider, Money, Title } from "@/checkout/components";
+import { getFormattedMoney } from '@/checkout/lib/utils/money';
+import { Divider, Money, Title } from '@/checkout/components';
 import {
 	type CheckoutLineFragment,
 	type GiftCardFragment,
 	type Money as MoneyType,
 	type OrderLineFragment,
-} from "@/checkout/graphql";
-import { SummaryItemMoneySection } from "@/checkout/sections/Summary/SummaryItemMoneySection";
-import { type GrossMoney, type GrossMoneyWithTax } from "@/checkout/lib/globalTypes";
+} from '@/checkout/graphql';
+import { SummaryItemMoneySection } from '@/checkout/sections/Summary/SummaryItemMoneySection';
+import { type GrossMoney, type GrossMoneyWithTax } from '@/checkout/lib/globalTypes';
 
-interface SummaryProps {
+interface ISummaryProps {
 	editable?: boolean;
 	lines: SummaryLine[];
 	totalPrice?: GrossMoneyWithTax;
@@ -29,7 +29,7 @@ interface SummaryProps {
 	shippingPrice: GrossMoney;
 }
 
-export const Summary: FC<SummaryProps> = ({
+export const Summary: FC<ISummaryProps> = ({
 	editable = true,
 	lines,
 	totalPrice,
@@ -42,7 +42,7 @@ export const Summary: FC<SummaryProps> = ({
 	return (
 		<div
 			className={clsx(
-				"z-0 flex h-fit w-full flex-col",
+				'z-0 flex h-fit w-full flex-col',
 				"before:fixed before:bottom-0 before:left-1/2 before:top-0 before:-z-10 before:w-1/2 before:border-l before:border-neutral-200 before:bg-neutral-50 before:content-none before:lg:content-['']",
 			)}
 		>
@@ -52,7 +52,7 @@ export const Summary: FC<SummaryProps> = ({
 					<ChevronDownIcon className="mb-2 group-open:rotate-180" />
 				</summary>
 				<ul className="py-2" data-testid="SummaryProductList">
-					{lines.map((line) => (
+					{lines.map(line => (
 						<SummaryItem line={line} key={line?.id}>
 							{editable ? (
 								<SummaryItemMoneyEditableSection line={line as CheckoutLineFragment} />

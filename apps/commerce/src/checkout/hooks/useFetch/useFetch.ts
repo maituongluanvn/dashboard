@@ -3,7 +3,7 @@ import {
 	type FetchFn,
 	type GetArgsType,
 	type GetDataType,
-	type UseFetchOptionalProps,
+	type IUseFetchOptionalProps,
 	type UseFetchResult,
 } from "./types";
 
@@ -14,7 +14,7 @@ export const useFetch = <
 	TArgs = GetArgsType<TFetchFn>,
 >(
 	fetchFn: TFetchFn,
-	optionalProps?: UseFetchOptionalProps<TArgs>,
+	optionalProps?: IUseFetchOptionalProps<TArgs>,
 ): UseFetchResult<TError, TData, TArgs> => {
 	const { args, skip = false } = optionalProps || {};
 

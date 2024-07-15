@@ -5,12 +5,12 @@ import { PhotoIcon } from '@/checkout/ui-kit/icons';
 
 export type SummaryLine = CheckoutLineFragment | OrderLineFragment;
 
-interface SummaryItemProps {
+interface ISummaryItemProps {
 	line: SummaryLine;
 	children: ReactNode;
 }
 
-export const SummaryItem = ({ line, children }: SummaryItemProps) => {
+export const SummaryItem = ({ line, children }: ISummaryItemProps) => {
 	const { productName, productImage } = getSummaryLineProps(line);
 
 	const attributesText = useSummaryLineLineAttributesText(line);

@@ -4,12 +4,12 @@ import { useAlerts } from "@/checkout/hooks/useAlerts";
 import { useSubmit } from "@/checkout/hooks/useSubmit/useSubmit";
 import { getCurrentHref } from "@/checkout/lib/utils/locale";
 
-interface PasswordResetFormData {
+interface IPasswordResetFormData {
 	email: string;
 	shouldAbort: () => Promise<boolean>;
 }
 
-export const usePasswordResetRequest = ({ email, shouldAbort }: PasswordResetFormData) => {
+export const usePasswordResetRequest = ({ email, shouldAbort }: IPasswordResetFormData) => {
 	const { showSuccess } = useAlerts();
 
 	const [, requestPasswordReset] = useRequestPasswordResetMutation();
@@ -24,7 +24,8 @@ export const usePasswordResetRequest = ({ email, shouldAbort }: PasswordResetFor
 			setPasswordResetSent(true);
 			showSuccess(`A magic link has been sent to ${email}`);
 		},
-		parse: ({ channel }) => ({ email, redirectUrl: getCurrentHref(), channel }),
+		// eslint-disable-next-line @typescript-eslint/no-unsafe-assignment
+		parse: ({ channel }: any) => ({ email, redirectUrl: getCurrentHref(), channel }),
 	});
 
 	useEffect(() => {

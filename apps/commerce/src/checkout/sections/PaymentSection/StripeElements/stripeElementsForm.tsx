@@ -1,31 +1,31 @@
-import { type FormEventHandler, useEffect, useState } from "react";
-import { PaymentElement, useStripe, useElements } from "@stripe/react-stripe-js";
-import { type StripePaymentElementOptions } from "@stripe/stripe-js";
-import { getUrlForTransactionInitialize } from "../utils";
-import { usePaymentProcessingScreen } from "../PaymentProcessingScreen";
+import { type FormEventHandler, useEffect, useState } from 'react';
+import { PaymentElement, useStripe, useElements } from '@stripe/react-stripe-js';
+import { type StripePaymentElementOptions } from '@stripe/stripe-js';
+import { getUrlForTransactionInitialize } from '../utils';
+import { usePaymentProcessingScreen } from '../PaymentProcessingScreen';
 import {
 	useCheckoutValidationActions,
 	useCheckoutValidationState,
 	anyFormsValidating,
 	areAllFormsValid,
-} from "@/checkout/state/checkoutValidationStateStore";
+} from '@/checkout/state/checkoutValidationStateStore';
 import {
 	useCheckoutUpdateState,
 	useCheckoutUpdateStateActions,
 	areAnyRequestsInProgress,
 	hasFinishedApiChangesWithNoError,
-} from "@/checkout/state/updateStateStore";
-import { useEvent } from "@/checkout/hooks/useEvent";
-import { useUser } from "@/checkout/hooks/useUser";
-import { useAlerts } from "@/checkout/hooks/useAlerts";
-import { useCheckout } from "@/checkout/hooks/useCheckout";
-import { useCheckoutComplete } from "@/checkout/hooks/useCheckoutComplete";
-import { getQueryParams } from "@/checkout/lib/utils/url";
+} from '@/checkout/state/updateStateStore';
+import { useEvent } from '@/checkout/hooks/useEvent';
+import { useUser } from '@/checkout/hooks/useUser';
+import { useAlerts } from '@/checkout/hooks/useAlerts';
+import { useCheckout } from '@/checkout/hooks/useCheckout';
+import { useCheckoutComplete } from '@/checkout/hooks/useCheckoutComplete';
+import { getQueryParams } from '@/checkout/lib/utils/url';
 
 const paymentElementOptions: StripePaymentElementOptions = {
-	layout: "tabs",
+	layout: 'tabs',
 	fields: {
-		billingDetails: "never",
+		billingDetails: 'never',
 	},
 };
 
@@ -49,7 +49,8 @@ export function CheckoutForm() {
 	const { onCheckoutComplete, completingCheckout } = useCheckoutComplete();
 
 	// handler for when user presses submit
-	const onSubmitInitialize: FormEventHandler<HTMLFormElement> = useEvent(async (e) => {
+	// eslint-disable-next-line @typescript-eslint/no-misused-promises
+	const onSubmitInitialize: FormEventHandler<HTMLFormElement> = useEvent(async e => {
 		e.preventDefault();
 
 		setIsLoading(true);
@@ -105,16 +106,16 @@ export function CheckoutForm() {
 					return_url: getUrlForTransactionInitialize().newUrl,
 					payment_method_data: {
 						billing_details: {
-							name: checkout.billingAddress?.firstName + " " + checkout.billingAddress?.lastName,
-							email: checkout.email ?? "",
-							phone: checkout.billingAddress?.phone ?? "",
+							name: checkout.billingAddress?.firstName + ' ' + checkout.billingAddress?.lastName,
+							email: checkout.email ?? '',
+							phone: checkout.billingAddress?.phone ?? '',
 							address: {
-								city: checkout.billingAddress?.city ?? "",
-								country: checkout.billingAddress?.country.code ?? "",
-								line1: checkout.billingAddress?.streetAddress1 ?? "",
-								line2: checkout.billingAddress?.streetAddress2 ?? "",
-								postal_code: checkout.billingAddress?.postalCode ?? "",
-								state: checkout.billingAddress?.countryArea ?? "",
+								city: checkout.billingAddress?.city ?? '',
+								country: checkout.billingAddress?.country.code ?? '',
+								line1: checkout.billingAddress?.streetAddress1 ?? '',
+								line2: checkout.billingAddress?.streetAddress2 ?? '',
+								postal_code: checkout.billingAddress?.postalCode ?? '',
+								state: checkout.billingAddress?.countryArea ?? '',
 							},
 						},
 					},
@@ -131,17 +132,17 @@ export function CheckoutForm() {
 					// your `return_url`. For some payment methods like iDEAL, your customer will
 					// be redirected to an intermediate site first to authorize the payment, then
 					// redirected to the `return_url`.
-					if (error.type === "card_error" || error.type === "validation_error") {
-						showCustomErrors([{ message: error.message ?? "Something went wrong" }]);
+					if (error.type === 'card_error' || error.type === 'validation_error') {
+						showCustomErrors([{ message: error.message ?? 'Something went wrong' }]);
 					} else {
-						showCustomErrors([{ message: "An unexpected error occurred." }]);
+						showCustomErrors([{ message: 'An unexpected error occurred.' }]);
 					}
 					return;
 				}
 
 				return onCheckoutComplete();
 			})
-			.catch((err) => {
+			.catch(err => {
 				console.error(err);
 				setIsLoading(false);
 				setIsProcessingPayment(false);
@@ -187,7 +188,7 @@ export function CheckoutForm() {
 				aria-disabled={isLoading || !stripe || !elements}
 				id="submit"
 			>
-				<span className="button-text">{isLoading ? <Loader /> : "Pay now"}</span>
+				<span className="button-text">{isLoading ? <Loader /> : 'Pay now'}</span>
 			</button>
 		</form>
 	);

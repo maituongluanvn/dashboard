@@ -3,7 +3,7 @@ import { type ErrorCode } from "@/checkout/lib/globalTypes";
 
 export type CustomErrors = any[];
 
-export interface ApiError<TFormData extends FormDataBase, TErrorCodes extends string = string> {
+export interface IApiError<TFormData extends FormDataBase, TErrorCodes extends string = string> {
 	field: keyof TFormData;
 	code: TErrorCodes;
 	message: string;
@@ -14,7 +14,7 @@ export type ApiErrors<TFormData extends FormDataBase, TErrorCodes extends string
 	TErrorCodes
 >[];
 
-export interface ParsedApiError<TFormData extends FormDataBase> {
+export interface IParsedApiError<TFormData extends FormDataBase> {
 	field: keyof TFormData;
 	code: ErrorCode;
 	message: string;

@@ -1,14 +1,14 @@
-import React from "react";
-import { useSaleorAuthContext } from "@saleor/auth-sdk/react";
-import { SignInFormContainer, type SignInFormContainerProps } from "../Contact/SignInFormContainer";
-import { Button } from "@/checkout/components/Button";
-import { useUser } from "@/checkout/hooks/useUser";
+import React from 'react';
+import { useSaleorAuthContext } from '@saleor/auth-sdk/react';
+import { SignInFormContainer, type ISignInFormContainerProps } from '../Contact/SignInFormContainer';
+import { Button } from '@/checkout/components/Button';
+import { useUser } from '@/checkout/hooks/useUser';
 
-interface SignedInUserProps extends Pick<SignInFormContainerProps, "onSectionChange"> {
+interface ISignedInUserProps extends Pick<ISignInFormContainerProps, 'onSectionChange'> {
 	onSignOutSuccess: () => void;
 }
 
-export const SignedInUser: React.FC<SignedInUserProps> = ({ onSectionChange, onSignOutSuccess }) => {
+export const SignedInUser: React.FC<ISignedInUserProps> = ({ onSectionChange, onSignOutSuccess }) => {
 	const { signOut } = useSaleorAuthContext();
 
 	const { user } = useUser();

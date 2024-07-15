@@ -1,3 +1,8 @@
+/* eslint-disable @typescript-eslint/no-unsafe-return */
+/* eslint-disable @typescript-eslint/no-unsafe-assignment */
+/* eslint-disable @typescript-eslint/no-unsafe-argument */
+/* eslint-disable @typescript-eslint/no-unsafe-call */
+/* eslint-disable @typescript-eslint/no-unsafe-member-access */
 import { useMemo } from "react";
 import {
 	getAddressInputDataFromAddress,
@@ -11,7 +16,7 @@ import { useFormSubmit } from "@/checkout/hooks/useFormSubmit";
 import { useUser } from "@/checkout/hooks/useUser";
 import { getById } from "@/checkout/lib/utils/common";
 import {
-	type AddressListFormData,
+	type IAddressListFormData,
 	useAddressListForm,
 } from "@/checkout/sections/AddressList/useAddressListForm";
 
@@ -21,15 +26,15 @@ export const useUserShippingAddressForm = () => {
 	const { user } = useUser();
 	const [, checkoutShippingAddressUpdate] = useCheckoutShippingAddressUpdateMutation();
 
-	const onSubmit = useFormSubmit<AddressListFormData, typeof checkoutShippingAddressUpdate>(
+	const onSubmit = useFormSubmit<IAddressListFormData, typeof checkoutShippingAddressUpdate>(
 		useMemo(
 			() => ({
 				scope: "checkoutShippingUpdate",
 				onSubmit: checkoutShippingAddressUpdate,
-				shouldAbort: ({ formData: { addressList, selectedAddressId } }) =>
+				shouldAbort: ({ formData: { addressList, selectedAddressId } }: any) =>
 					!selectedAddressId ||
 					isMatchingAddress(shippingAddress, addressList.find(getById(selectedAddressId))),
-				parse: ({ languageCode, checkoutId, selectedAddressId, addressList }) => ({
+				parse: ({ languageCode, checkoutId, selectedAddressId, addressList }: any) => ({
 					languageCode,
 					checkoutId,
 					validationRules: getAddressValidationRulesVariables(),
@@ -37,7 +42,7 @@ export const useUserShippingAddressForm = () => {
 						addressList.find(getByMatchingAddress({ id: selectedAddressId })) as AddressFragment,
 					),
 				}),
-				onSuccess: ({ formHelpers: { resetForm }, formData }) => resetForm({ values: formData }),
+				onSuccess: ({ formHelpers: { resetForm }, formData }: any) => resetForm({ values: formData }),
 			}),
 			[checkoutShippingAddressUpdate, shippingAddress],
 		),

@@ -8,18 +8,18 @@ import { type MightNotExist } from "@/checkout/lib/globalTypes";
 import { getById } from "@/checkout/lib/utils/common";
 import { useCheckoutUpdateStateChange } from "@/checkout/state/updateStateStore";
 
-interface DeliveryMethodsFormData {
+interface IDeliveryMethodsFormData {
 	selectedMethodId: string | undefined;
 }
 
-export const useDeliveryMethodsForm = (): UseFormReturn<DeliveryMethodsFormData> => {
+export const useDeliveryMethodsForm = (): UseFormReturn<IDeliveryMethodsFormData> => {
 	const { checkout } = useCheckout();
 	const { shippingMethods, shippingAddress, deliveryMethod } = checkout;
 	const [, updateDeliveryMethod] = useCheckoutDeliveryMethodUpdateMutation();
 	const { setCheckoutUpdateState } = useCheckoutUpdateStateChange("checkoutDeliveryMethodUpdate");
 
 	const previousShippingCountry = useRef<MightNotExist<CountryCode>>(
-		shippingAddress?.country?.code ,
+		// shippingAddress?.country?.code ,
 	);
 
 	const getAutoSetMethod = useCallback(() => {
@@ -36,11 +36,11 @@ export const useDeliveryMethodsForm = (): UseFormReturn<DeliveryMethodsFormData>
 		return cheapestMethod;
 	}, [shippingMethods]);
 
-	const defaultFormData: DeliveryMethodsFormData = {
+	const defaultFormData: IDeliveryMethodsFormData = {
 		selectedMethodId: deliveryMethod?.id || getAutoSetMethod()?.id,
 	};
 
-	const onSubmit = useFormSubmit<DeliveryMethodsFormData, typeof updateDeliveryMethod>(
+	const onSubmit = useFormSubmit<IDeliveryMethodsFormData, typeof updateDeliveryMethod>(
 		useMemo(
 			() => ({
 				scope: "checkoutDeliveryMethodUpdate",
@@ -62,7 +62,7 @@ export const useDeliveryMethodsForm = (): UseFormReturn<DeliveryMethodsFormData>
 
 	const debouncedSubmit = useDebouncedSubmit(onSubmit);
 
-	const form = useForm<DeliveryMethodsFormData>({
+	const form = useForm<IDeliveryMethodsFormData>({
 		initialValues: defaultFormData,
 		onSubmit: debouncedSubmit,
 		initialDirty: true,

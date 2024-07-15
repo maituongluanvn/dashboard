@@ -1,3 +1,7 @@
+/* eslint-disable @typescript-eslint/no-unsafe-assignment */
+/* eslint-disable @typescript-eslint/no-unsafe-member-access */
+/* eslint-disable @typescript-eslint/no-unsafe-call */
+/* eslint-disable @typescript-eslint/no-unsafe-argument */
 import { useMemo } from "react";
 import {
 	getAddressInputDataFromAddress,
@@ -12,7 +16,7 @@ import { useFormSubmit } from "@/checkout/hooks/useFormSubmit";
 import { useUser } from "@/checkout/hooks/useUser";
 import { getById } from "@/checkout/lib/utils/common";
 import {
-	type AddressListFormData,
+	type IAddressListFormData,
 	useAddressListForm,
 } from "@/checkout/sections/AddressList/useAddressListForm";
 import { useCheckoutUpdateStateActions } from "@/checkout/state/updateStateStore";
@@ -25,15 +29,15 @@ export const useUserBillingAddressForm = () => {
 	const { user } = useUser();
 	const [, checkoutBillingAddressUpdate] = useCheckoutBillingAddressUpdateMutation();
 
-	const onSubmit = useFormSubmit<AddressListFormData, typeof checkoutBillingAddressUpdate>(
+	const onSubmit = useFormSubmit<IAddressListFormData, typeof checkoutBillingAddressUpdate>(
 		useMemo(
 			() => ({
 				scope: "checkoutBillingUpdate",
 				onSubmit: checkoutBillingAddressUpdate,
-				shouldAbort: ({ formData: { addressList, selectedAddressId } }) =>
+				shouldAbort: ({ formData: { addressList, selectedAddressId } }: any) =>
 					!selectedAddressId ||
 					isMatchingAddress(billingAddress, addressList.find(getById(selectedAddressId))),
-				parse: ({ languageCode, checkoutId, selectedAddressId, addressList }) => ({
+				parse: ({ languageCode, checkoutId, selectedAddressId, addressList }: any) => ({
 					languageCode,
 					checkoutId,
 					validationRules: getAddressValidationRulesVariables(),

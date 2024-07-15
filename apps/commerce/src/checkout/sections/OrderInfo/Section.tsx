@@ -1,11 +1,11 @@
-import { type FC, type ReactNode } from "react";
+import { type FC, type ReactNode } from 'react';
 
-interface SectionProps {
+interface ISectionProps {
 	children: ReactNode;
 	title: string;
 }
 
-export const Section: FC<SectionProps> = ({ children, title }) => (
+export const Section: FC<ISectionProps> = ({ children, title }) => (
 	<div className="mb-6">
 		<p color="secondary" className="mb-2 font-bold">
 			{title}

@@ -1,18 +1,18 @@
 import { type ReactNode } from "react";
 import { type TaxedMoney } from "@/checkout/graphql";
 
-export interface Classes {
+export interface IClasses {
 	className?: string;
 }
 
-export interface Children {
+export interface IChildren {
 	children: ReactNode | ReactNode[];
 }
 
 export type GrossMoney = Pick<TaxedMoney, "gross">;
 export type GrossMoneyWithTax = Pick<TaxedMoney, "gross" | "tax">;
 
-export interface AriaLabel {
+export interface IAriaLabel {
 	ariaLabel: string;
 }
 
@@ -36,13 +36,13 @@ export type PasswordErrorCode =
 
 export type CheckoutFinalizeErrorCode = "missingFields";
 
-export interface ValidationError<TFormData> {
+export interface IValidationError<TFormData> {
 	type: ErrorCode;
 	path: keyof TFormData;
 	message: string;
 }
 
-export interface CommonSectionProps {
+export interface ICommonSectionProps {
 	collapsed: boolean;
 }
 

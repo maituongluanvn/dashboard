@@ -1,7 +1,7 @@
-import { type SelectHTMLAttributes, type ChangeEvent, type ReactNode, useState } from "react";
-import { useField } from "@/checkout/hooks/useForm/useField";
+import { type SelectHTMLAttributes, type ChangeEvent, type ReactNode, useState } from 'react';
+import { useField } from '@/checkout/hooks/useForm/useField';
 
-export interface Option<TData extends string = string> {
+export interface IOption<TData extends string = string> {
 	label: ReactNode;
 	value: TData;
 	disabled?: boolean;
@@ -9,12 +9,12 @@ export interface Option<TData extends string = string> {
 	[key: string]: unknown;
 }
 
-interface SelectProps<TName extends string, TData extends string>
+interface ISelectProps<TName extends string, TData extends string>
 	extends SelectHTMLAttributes<HTMLSelectElement> {
 	name: TName;
 	label?: ReactNode;
 	onChange?: (event: ChangeEvent<HTMLSelectElement>) => void;
-	options: Option<TData>[];
+	options: IOption<TData>[];
 }
 
 export const Select = <TName extends string, TData extends string>({
@@ -24,7 +24,7 @@ export const Select = <TName extends string, TData extends string>({
 	options,
 	label,
 	...rest
-}: SelectProps<TName, TData>) => {
+}: ISelectProps<TName, TData>) => {
 	const { error, handleBlur, ...fieldProps } = useField(name);
 
 	const [showPlaceholder, setShowPlaceholder] = useState(!!placeholder);
@@ -56,7 +56,7 @@ export const Select = <TName extends string, TData extends string>({
 						</option>
 					)}
 					{options.map(({ label, value, disabled = false }) => (
-						<option value={value} disabled={disabled} key={label?.toString() + "_" + value}>
+						<option value={value} disabled={disabled} key={label?.toString() + '_' + value}>
 							{label}
 						</option>
 					))}

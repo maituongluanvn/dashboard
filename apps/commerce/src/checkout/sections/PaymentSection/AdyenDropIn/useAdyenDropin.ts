@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-unsafe-member-access */
 /* eslint-disable @typescript-eslint/no-unsafe-assignment */
 /* eslint-disable @typescript-eslint/no-unsafe-return */
 import type DropinElement from "@adyen/adyen-web/dist/types/components/Dropin";
@@ -18,7 +19,7 @@ import {
 	type AdyenCheckoutInstanceOnAdditionalDetails,
 	type AdyenCheckoutInstanceOnSubmit,
 	type AdyenCheckoutInstanceState,
-	type AdyenPaymentResponse,
+	type IAdyenPaymentResponse,
 } from "@/checkout/sections/PaymentSection/AdyenDropIn/types";
 import {
 	anyFormsValidating,
@@ -42,11 +43,11 @@ import { useUser } from "@/checkout/hooks/useUser";
 import { getUrlForTransactionInitialize } from "@/checkout/sections/PaymentSection/utils";
 import { usePaymentProcessingScreen } from "@/checkout/sections/PaymentSection/PaymentProcessingScreen";
 
-export interface AdyenDropinProps {
+export interface IAdyenDropinProps {
 	config: ParsedAdyenGateway;
 }
 
-export const useAdyenDropin = (props: AdyenDropinProps) => {
+export const useAdyenDropin = (props: IAdyenDropinProps) => {
 	const { config } = props;
 	const { id } = config;
 
@@ -89,7 +90,7 @@ export const useAdyenDropin = (props: AdyenDropinProps) => {
 			paymentResponse,
 			transaction,
 		}: {
-			paymentResponse: AdyenPaymentResponse;
+			paymentResponse: IAdyenPaymentResponse;
 			transaction: MightNotExist<{ id: string }>;
 		}) => {
 			const { action, resultCode } = paymentResponse;
@@ -117,6 +118,7 @@ export const useAdyenDropin = (props: AdyenDropinProps) => {
 
 					adyenCheckoutSubmitParams?.component.setStatus("ready");
 
+					// eslint-disable-next-line no-case-declarations
 					const messageKey = camelCase(paymentResponse.refusalReason);
 
 					showCustomErrors([{ message: getMessageByErrorCode(messageKey) }]);
@@ -138,8 +140,8 @@ export const useAdyenDropin = (props: AdyenDropinProps) => {
 					showCustomErrors([{ message: commonErrorMessages.somethingWentWrong }]);
 					adyenCheckoutSubmitParams?.component.setStatus("ready");
 				},
-				extractCustomErrors: (result) => result?.data?.transactionInitialize?.data?.errors,
-				onSuccess: async ({ data }) => {
+				extractCustomErrors: (result: any) => result?.data?.transactionInitialize?.data?.errors,
+				onSuccess: async ({ data }: any) => {
 					if (!data) {
 						showCustomErrors([{ message: commonErrorMessages.somethingWentWrong }]);
 						return;
@@ -183,8 +185,8 @@ export const useAdyenDropin = (props: AdyenDropinProps) => {
 					showCustomErrors([{ message: commonErrorMessages.somethingWentWrong }]);
 					adyenCheckoutSubmitParams?.component.setStatus("ready");
 				},
-				extractCustomErrors: (result) => result?.data?.transactionProcess?.data?.errors,
-				onSuccess: ({ data }) => {
+				extractCustomErrors: (result: any) => result?.data?.transactionProcess?.data?.errors,
+				onSuccess: ({ data }: any) => {
 					if (!data?.data) {
 						showCustomErrors([{ message: commonErrorMessages.somethingWentWrong }]);
 						return;

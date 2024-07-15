@@ -7,7 +7,7 @@ import {
 	useCheckoutValidationState,
 } from "@/checkout/state/checkoutValidationStateStore";
 
-interface UseCheckoutFormValidationTriggerProps<TData extends FormDataBase> {
+interface IUseCheckoutFormValidationTriggerProps<TData extends FormDataBase> {
 	scope: CheckoutFormScope;
 	form: UseFormReturn<TData>;
 	skip?: boolean;
@@ -18,7 +18,7 @@ export const useCheckoutFormValidationTrigger = <TData extends FormDataBase>({
 	scope,
 	form,
 	skip = false,
-}: UseCheckoutFormValidationTriggerProps<TData>) => {
+}: IUseCheckoutFormValidationTriggerProps<TData>) => {
 	const { validationState } = useCheckoutValidationState();
 	const { setCheckoutFormValidationState } = useSetCheckoutFormValidationState(scope);
 	const { setValidationState } = useCheckoutValidationActions();

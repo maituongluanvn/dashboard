@@ -19,7 +19,7 @@ const PageWrapper = styled('div')(() => ({
 	backgroundColor: 'transparent',
 }));
 
-// interface Props {
+// interface IProps {
 //   children: React.ReactNode;
 // }
 

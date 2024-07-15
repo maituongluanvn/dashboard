@@ -1,7 +1,7 @@
 /* eslint-disable @typescript-eslint/no-unsafe-assignment */
 import { pick } from "lodash-es";
 import { useCallback } from "react";
-import { type AddressFormData } from "@/checkout/components/AddressForm/types";
+import { type IAddressFormData } from "@/checkout/components/AddressForm/types";
 import { useAddressFormSchema } from "@/checkout/components/AddressForm/useAddressFormSchema";
 import { type CountryCode } from "@/checkout/graphql";
 import { useDebouncedSubmit } from "@/checkout/hooks/useDebouncedSubmit";
@@ -19,7 +19,7 @@ import {
 	useCheckoutUpdateStateChange,
 } from "@/checkout/state/updateStateStore";
 
-export type AutoSaveAddressFormData = Partial<AddressFormData>;
+export type AutoSaveAddressFormData = Partial<IAddressFormData>;
 
 export const useAutoSaveAddressForm = ({
 	scope,

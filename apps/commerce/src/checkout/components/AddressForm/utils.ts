@@ -2,7 +2,7 @@ import { isEqual, omit, pick, reduce, uniq } from "lodash-es";
 import {
 	type OptionalAddress,
 	type AddressField,
-	type AddressFormData,
+	type IAddressFormData,
 	type ApiAddressField,
 } from "./types";
 import { getCountryName } from "@/checkout/lib/utils/locale";
@@ -15,7 +15,7 @@ import {
 } from "@/checkout/graphql";
 import { type MightNotExist } from "@/checkout/lib/globalTypes";
 
-export const getEmptyAddressFormData = (): AddressFormData => ({
+export const getEmptyAddressFormData = (): IAddressFormData => ({
 	firstName: "",
 	lastName: "",
 	streetAddress1: "",
@@ -49,7 +49,7 @@ export const getAddressInputData = ({
 	country,
 	...rest
 }: Partial<
-	AddressFormData & {
+	IAddressFormData & {
 		countryCode?: CountryCode;
 		country: CountryDisplay;
 	}
@@ -75,7 +75,7 @@ export const getAddressInputDataFromAddress = (
 	};
 };
 
-export const getAddressFormDataFromAddress = (address: OptionalAddress): AddressFormData => {
+export const getAddressFormDataFromAddress = (address: OptionalAddress): IAddressFormData => {
 	if (!address) {
 		return {
 			...getEmptyAddressFormData(),
@@ -86,7 +86,7 @@ export const getAddressFormDataFromAddress = (address: OptionalAddress): Address
 	const { country, ...rest } = address;
 
 	const parsedAddressBase = reduce(rest, (result, val, key) => ({ ...result, [key]: val || "" }), {}) as Omit<
-		AddressFormData,
+		IAddressFormData,
 		"countryCode"
 	>;
 
@@ -96,7 +96,7 @@ export const getAddressFormDataFromAddress = (address: OptionalAddress): Address
 			countryCode: country.code as CountryCode,
 		},
 		getAllAddressFieldKeys(),
-	) as AddressFormData;
+	) as IAddressFormData;
 };
 
 // checks for address related data and id
@@ -127,8 +127,8 @@ export const getByMatchingAddress =
 		isMatchingAddress(address, addressToMatch);
 
 export const isMatchingAddressFormData = (
-	address?: Partial<AddressFormData> | null,
-	addressToMatch?: Partial<AddressFormData> | null,
+	address?: Partial<IAddressFormData> | null,
+	addressToMatch?: Partial<IAddressFormData> | null,
 ) => {
 	const propsToOmit = ["id", "autoSave", "__typename"];
 

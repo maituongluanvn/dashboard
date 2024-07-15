@@ -1,13 +1,13 @@
-"use client";
+'use client';
 
-import { Fragment } from "react";
-import clsx from "clsx";
-import { Menu, Transition } from "@headlessui/react";
-import { UserInfo } from "./components/UserInfo";
-import { UserAvatar } from "./components/UserAvatar";
-import { type UserDetailsFragment } from "@/gql/graphql";
-import { logout } from "@/app/actions";
-import { LinkWithChannel } from "@/ui/atoms/LinkWithChannel";
+import { Fragment } from 'react';
+import clsx from 'clsx';
+import { Menu, Transition } from '@headlessui/react';
+import { UserInfo } from './components/UserInfo';
+import { UserAvatar } from './components/UserAvatar';
+import { type UserDetailsFragment } from '@/gql/graphql';
+import { logout } from '@/app/actions';
+import { LinkWithChannel } from '@/ui/atoms/LinkWithChannel';
 
 type Props = {
 	user: UserDetailsFragment;
@@ -37,8 +37,8 @@ export function UserMenu({ user }: Props) {
 								<LinkWithChannel
 									href="/orders"
 									className={clsx(
-										active && "bg-neutral-100",
-										"block px-4 py-2 text-sm font-medium text-neutral-500 hover:text-neutral-700",
+										active && 'bg-neutral-100',
+										'block px-4 py-2 text-sm font-medium text-neutral-500 hover:text-neutral-700',
 									)}
 								>
 									My orders
@@ -49,12 +49,13 @@ export function UserMenu({ user }: Props) {
 					<div className="flex flex-col px-1 py-1">
 						<Menu.Item>
 							{({ active }) => (
+								// eslint-disable-next-line @typescript-eslint/no-misused-promises
 								<form action={logout}>
 									<button
 										type="submit"
 										className={clsx(
-											active && "bg-neutral-100",
-											"block px-4 py-2 text-start text-sm font-medium text-neutral-500 hover:text-neutral-700",
+											active && 'bg-neutral-100',
+											'block px-4 py-2 text-start text-sm font-medium text-neutral-500 hover:text-neutral-700',
 										)}
 									>
 										Log Out

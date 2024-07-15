@@ -1,14 +1,14 @@
-import { BarLoader } from "react-spinners";
-import React, { type ReactNode, useState, useCallback, useMemo } from "react";
-import { Title } from "@/checkout/components";
-import { createSafeContext } from "@/checkout/providers/createSafeContext";
-import { getQueryParams } from "@/checkout/lib/utils/url";
+import { BarLoader } from 'react-spinners';
+import React, { type ReactNode, useState, useCallback, useMemo } from 'react';
+import { Title } from '@/checkout/components';
+import { createSafeContext } from '@/checkout/providers/createSafeContext';
+import { getQueryParams } from '@/checkout/lib/utils/url';
 
-interface PaymentProcessingContextConsumerProps {
+interface IPaymentProcessingContextConsumerProps {
 	setIsProcessingPayment: (processing: boolean) => void;
 }
 
-const [usePaymentProcessingScreen, Provider] = createSafeContext<PaymentProcessingContextConsumerProps>();
+const [usePaymentProcessingScreen, Provider] = createSafeContext<IPaymentProcessingContextConsumerProps>();
 
 export const PaymentProcessingScreen = ({ children }: { children: ReactNode }) => {
 	const getInitialProcessing = () => {

@@ -2,17 +2,17 @@ import { type StripeGatewayId } from "./StripeElements/types";
 import { type PaymentGatewayConfig } from "@/checkout/graphql";
 import {
 	type AdyenGatewayId,
-	type AdyenGatewayInitializePayload,
+	type IAdyenGatewayInitializePayload,
 } from "@/checkout/sections/PaymentSection/AdyenDropIn/types";
 
 export type PaymentGatewayId = AdyenGatewayId | StripeGatewayId;
 
-export type ParsedAdyenGateway = ParsedPaymentGateway<AdyenGatewayId, AdyenGatewayInitializePayload>;
-export type ParsedStripeGateway = ParsedPaymentGateway<StripeGatewayId, {}>;
+export type ParsedAdyenGateway = IParsedPaymentGateway<AdyenGatewayId, IAdyenGatewayInitializePayload>;
+export type ParsedStripeGateway = IParsedPaymentGateway<StripeGatewayId, {}>;
 
 export type ParsedPaymentGateways = ReadonlyArray<ParsedAdyenGateway | ParsedStripeGateway>;
 
-export interface ParsedPaymentGateway<ID extends string, TData extends Record<string, any>>
+export interface IParsedPaymentGateway<ID extends string, TData extends Record<string, any>>
 	extends Omit<PaymentGatewayConfig, "data" | "id"> {
 	data: TData;
 	id: ID;

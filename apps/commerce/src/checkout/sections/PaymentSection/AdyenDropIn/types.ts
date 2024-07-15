@@ -9,23 +9,23 @@ export type AdyenGatewayId = typeof adyenGatewayId;
 // because it's defined to these in the docs but it's a string in the response type
 type AdyenResultCode = "Authorised" | "Error" | "Pending" | "PresentToShopper" | "Refused" | "Received";
 
-export interface AdyenGatewayInitializePayload {
+export interface IAdyenGatewayInitializePayload {
 	paymentMethodsResponse: PaymentMethodsResponse;
 	clientKey: string;
 	environment: string;
 }
 
-export interface AdyenPaymentResponse extends Omit<PaymentResponse, "resultCode"> {
+export interface IAdyenPaymentResponse extends Omit<PaymentResponse, "resultCode"> {
 	resultCode: AdyenResultCode;
 	refusalReason?: string;
 }
 
-export interface AdyenTransactionInitializeResponse {
-	paymentResponse: AdyenPaymentResponse;
+export interface IAdyenTransactionInitializeResponse {
+	paymentResponse: IAdyenPaymentResponse;
 }
 
-export interface AdyenTransactionProcessResponse {
-	paymentDetailsResponse: AdyenPaymentResponse;
+export interface IAdyenTransactionProcessResponse {
+	paymentDetailsResponse: IAdyenPaymentResponse;
 }
 
 // -------

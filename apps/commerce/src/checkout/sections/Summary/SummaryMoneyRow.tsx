@@ -1,7 +1,7 @@
-import React, { type PropsWithChildren } from "react";
-import { Money, type MoneyProps } from "@/checkout/components/Money";
+import React, { type PropsWithChildren } from 'react';
+import { Money, type MoneyProps } from '@/checkout/components/Money';
 
-export interface SummaryMoneyRowProps extends MoneyProps {
+export interface ISummaryMoneyRowProps extends MoneyProps {
 	label: string;
 }
 

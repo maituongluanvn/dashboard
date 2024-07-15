@@ -17,7 +17,7 @@ export type GetDataType<TFetchFn> = TFetchFn extends (args: any) => FetchRespons
 
 export type FetchFn<TArgs extends Record<string, any>, TData> = (args: TArgs) => FetchResponse<TData>;
 
-export interface UseFetchOptionalProps<TArgs> {
+export interface IUseFetchOptionalProps<TArgs> {
 	args?: TArgs;
 	skip?: boolean;
 }

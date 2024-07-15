@@ -1,7 +1,7 @@
 import { type AddressFragment, type CountryCode } from "@/checkout/graphql";
 import { type MightNotExist } from "@/checkout/lib/globalTypes";
 
-export interface AddressFormData extends Omit<Record<AddressField, string>, "country" | "countryCode"> {
+export interface IAddressFormData extends Omit<Record<AddressField, string>, "country" | "countryCode"> {
 	countryCode: CountryCode;
 }
 

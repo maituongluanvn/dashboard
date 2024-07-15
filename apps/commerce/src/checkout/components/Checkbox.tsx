@@ -1,13 +1,13 @@
-import React from "react";
-import { useField } from "formik";
-import { useFormContext } from "@/checkout/hooks/useForm";
+import React from 'react';
+import { useField } from 'formik';
+import { useFormContext } from '@/checkout/hooks/useForm';
 
-interface CheckboxProps<TName extends string> {
+interface ICheckboxProps<TName extends string> {
 	name: TName;
 	label: string;
 }
 
-export const Checkbox = <TName extends string>({ name, label }: CheckboxProps<TName>) => {
+export const Checkbox = <TName extends string>({ name, label }: ICheckboxProps<TName>) => {
 	const { handleChange } = useFormContext<Record<TName, string>>();
 	const [field, { value }] = useField<boolean>(name);
 
@@ -18,7 +18,7 @@ export const Checkbox = <TName extends string>({ name, label }: CheckboxProps<TN
 				value={field.value as unknown as string}
 				name={name}
 				checked={value}
-				onChange={(event) => {
+				onChange={event => {
 					handleChange({ ...event, target: { ...event.target, name, value: !value } });
 				}}
 				type="checkbox"

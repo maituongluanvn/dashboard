@@ -1,10 +1,6 @@
-import { omit } from 'lodash-es';
+/* eslint-disable @typescript-eslint/no-unsafe-assignment */
 import { useMemo } from 'react';
-import {
-	getAddressFormDataFromAddress,
-	getAddressInputData,
-	getAddressValidationRulesVariables,
-} from '@/checkout/components/AddressForm/utils';
+import { getAddressFormDataFromAddress } from '@/checkout/components/AddressForm/utils';
 import { useCheckoutBillingAddressUpdateMutation } from '@/checkout/graphql';
 import { useFormSubmit } from '@/checkout/hooks/useFormSubmit';
 import { useCheckoutFormValidationTrigger } from '@/checkout/hooks/useCheckoutFormValidationTrigger';
@@ -17,11 +13,11 @@ import {
 import { useSetCheckoutFormValidationState } from '@/checkout/hooks/useSetCheckoutFormValidationState';
 import { useCheckoutUpdateStateActions } from '@/checkout/state/updateStateStore';
 
-interface GuestBillingAddressFormProps {
+interface IGuestBillingAddressFormProps {
 	skipValidation: boolean;
 }
 
-export const useGuestBillingAddressForm = ({ skipValidation }: GuestBillingAddressFormProps) => {
+export const useGuestBillingAddressForm = ({ skipValidation }: IGuestBillingAddressFormProps) => {
 	const {
 		checkout: { billingAddress },
 	} = useCheckout();
@@ -35,23 +31,23 @@ export const useGuestBillingAddressForm = ({ skipValidation }: GuestBillingAddre
 			() => ({
 				scope: 'checkoutBillingUpdate',
 				onSubmit: checkoutBillingAddressUpdate,
-				onStart: ({ formData }) => {
-					if (formData.countryCode !== billingAddress?.country.code) {
-						setChangingBillingCountry(true);
-					}
-				},
-				parse: ({ languageCode, checkoutId, ...rest }) => ({
-					languageCode,
-					checkoutId,
-					billingAddress: getAddressInputData(omit(rest, ['channel'])),
-					validationRules: getAddressValidationRulesVariables({ autoSave: true }),
-				}),
-				onSuccess: ({ data, formHelpers }) => {
-					void setCheckoutFormValidationState({
-						...formHelpers,
-						values: getAddressFormDataFromAddress(data.checkout?.billingAddress),
-					});
-				},
+				// onStart: ({ formData }) => {
+				// 	if (formData.countryCode !== billingAddress?.country.code) {
+				// 		setChangingBillingCountry(true);
+				// 	}
+				// },
+				// parse: ({ languageCode, checkoutId, ...rest }) => ({
+				// 	languageCode,
+				// 	checkoutId,
+				// 	billingAddress: getAddressInputData(omit(rest, ['channel'])),
+				// 	validationRules: getAddressValidationRulesVariables({ autoSave: true }),
+				// }),
+				// onSuccess: ({ data, formHelpers }) => {
+				// 	void setCheckoutFormValidationState({
+				// 		...formHelpers,
+				// 		values: getAddressFormDataFromAddress(data.checkout?.billingAddress),
+				// 	});
+				// },
 				onFinished: () => {
 					setChangingBillingCountry(false);
 				},

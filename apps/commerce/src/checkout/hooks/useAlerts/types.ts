@@ -2,7 +2,7 @@ import { type ErrorCode } from "@/checkout/lib/globalTypes";
 
 export type AlertType = "error" | "success";
 
-export interface AlertErrorData {
+export interface IAlertErrorData {
 	scope: CheckoutScope;
 	code: ErrorCode;
 	field: string;
@@ -13,7 +13,7 @@ export type CustomError =
 	| Pick<AlertErrorData, "code" | "field">
 	| { message: string };
 
-export interface Alert {
+export interface IAlert {
 	message: string;
 	id: string;
 	type: AlertType;

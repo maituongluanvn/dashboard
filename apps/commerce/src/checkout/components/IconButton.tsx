@@ -1,11 +1,11 @@
-import { type ButtonHTMLAttributes, type ReactNode } from "react";
+import { type ButtonHTMLAttributes, type ReactNode } from 'react';
 
-export interface IconButtonProps extends ButtonHTMLAttributes<HTMLButtonElement> {
+export interface IIconButtonProps extends ButtonHTMLAttributes<HTMLButtonElement> {
 	icon: ReactNode;
 	ariaLabel?: string;
 }
 
-export const IconButton = ({ icon, ariaLabel, ...rest }: IconButtonProps) => {
+export const IconButton = ({ icon, ariaLabel, ...rest }: IIconButtonProps) => {
 	return (
 		<button
 			aria-label={ariaLabel}
