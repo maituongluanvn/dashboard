@@ -8,7 +8,7 @@ export default function Page({ params }: { params: { slug: string; channel: stri
 	const { data: category, loading, error } = useFetch<ICategory>(`/api/categories/${params.slug}`);
 
 	if (loading) return <p>Loading...</p>;
-	if (error) return <p>Error: {error }</p>;
+	if (error as any) return <p>Error: {error as any}</p>;
 	if (!category) return notFound();
 
 	const { name, products } = category;

@@ -14,7 +14,7 @@ const Page: React.FC = () => {
 	const { data: products, loading, error } = useFetch<IProduct[]>('/api/product');
 
 	if (loading) return <p>Loading...</p>;
-	if (error) return <p>Error: {error }</p>;
+	if (error as any) return <p>Error: {error as any}</p>;
 	if (!products) return null;
 
 	return (

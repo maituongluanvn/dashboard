@@ -9,12 +9,11 @@ import {
 	type JSXElementConstructor,
 	type ReactNode,
 	type ReactPortal,
-} from 'react';
+type  PromiseLikeOfReactNode } from 'react';
 import { LinkWithChannel } from '../atoms/LinkWithChannel';
 import { ChannelSelect } from './ChannelSelect';
 import { ChannelsListDocument, MenuGetBySlugDocument } from '@/gql/graphql';
 import { executeGraphQL } from '@/lib/graphql';
-import type { PromiseLikeOfReactNode } from 'react';
 
 export async function Footer({ channel }: { channel: string }) {
 	const footerLinks: any = await executeGraphQL(MenuGetBySlugDocument, {

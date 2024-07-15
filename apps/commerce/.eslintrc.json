@@ -1,21 +1,27 @@
 {
-	"plugins": ["@typescript-eslint", "import", "@typescript-eslint/parser"],
+	"$schema": "https://json.schemastore.org/eslintrc.json",
+	"parser": "@typescript-eslint/parser",
 	"parserOptions": {
 		"ecmaVersion": 2020,
 		"sourceType": "module",
 		"project": "./tsconfig.json"
 	},
+	"plugins": ["@typescript-eslint/parser"],
 	"extends": [
-		"@commerce/eslint-config", "@commerce/eslint-config/react",
+		"eslint:recommended",
 		"plugin:@typescript-eslint/recommended",
 		"plugin:@typescript-eslint/recommended-requiring-type-checking",
 		"plugin:import/recommended",
 		"plugin:import/typescript",
-		"next/core-web-vitals"
+		"prettier",
+		"next/core-web-vitals",
+		"next"
 	],
 	"rules": {
+		// sort imports
 		"import/order": "error",
 
+		// no let exports
 		"import/no-mutable-exports": "error",
 
 		"import/no-cycle": "error",
@@ -23,6 +29,7 @@
 
 		"import/no-unresolved": "off",
 
+		// allow {} even though it's unsafe but comes handy
 		"@typescript-eslint/ban-types": [
 			"error",
 			{
@@ -43,20 +50,32 @@
 
 		"import/no-duplicates": ["error", { "prefer-inline": true }],
 
+		// false negatives
 		"import/namespace": ["off"],
 
+		// we allow empty interfaces
 		"no-empty-pattern": "off",
 		"@typescript-eslint/no-empty-interface": "off",
 
+		// we allow empty functions
 		"@typescript-eslint/no-empty-function": "off",
 
+		// we sometimes use async functions that don't await anything
 		"@typescript-eslint/require-await": "off",
 
+		// make sure to `await` inside try…catch
 		"@typescript-eslint/return-await": ["error", "in-try-catch"],
 
+		// allow unused vars prefixed with `_`
 		"@typescript-eslint/no-unused-vars": ["error", { "argsIgnorePattern": "^_", "varsIgnorePattern": "^_" }],
 
+		// numbers and booleans are fine in template strings
+		// "@typescript-eslint/restrict-template-expressions": [
+		// 	"error",
+		// 	{ "allowNumber": true, "allowBoolean": true }
+		// ],
 
+		// @todo
 		"@typescript-eslint/no-explicit-any": "off",
 
 		"@typescript-eslint/no-misused-promises": [
@@ -66,27 +85,82 @@
 			}
 		]
 	},
+	"settings": {
+		"import/resolver": {
+			"node": {
+				"extensions": [".js", ".ts", ".tsx"]
+			}
+		}
+	},
 	"overrides": [
 		{
-			"files": ["src/app/**/{page,layout,error,loading,not-found}.tsx", "*.ts"],
+			"files": ["**/*.ts", "**/*.tsx"],
 			"rules": {
-				"import/no-default-export": "off"
-			}
-		},
-		{
-			"files": ["src/checkout/**/*.{ts,tsx}"],
-			"rules": {
-				"no-restricted-imports": [
+				"@typescript-eslint/naming-convention": [
 					"error",
 					{
-						"patterns": [
-							{
-								"group": ["next/*", "@next/*", "next"],
-								"message": "Usage of Next.js-specific imports inside src/checkout is forbidden. Checkout is a standalone component and should not depend on Next.js."
-							}
-						]
+						"selector": ["function", "parameter", "variable"],
+						"modifiers": ["destructured"],
+						"format": null
+					},
+					{
+						"selector": ["variable"],
+						"format": ["camelCase", "UPPER_CASE", "PascalCase"],
+						"leadingUnderscore": "allowSingleOrDouble"
+					},
+					{
+						"selector": ["function"],
+						"format": ["camelCase", "PascalCase"],
+						"leadingUnderscore": "allowSingleOrDouble"
+					},
+					{
+						"selector": ["parameter"],
+						"format": ["PascalCase"],
+						"filter": {
+							"regex": "Component$",
+							"match": true
+						}
+					},
+					{
+						"selector": ["parameter"],
+						"format": ["camelCase"],
+						"leadingUnderscore": "allow"
+					},
+					{
+						"selector": ["parameter"],
+						"format": ["camelCase"],
+						"modifiers": ["unused"],
+						"leadingUnderscore": "require"
+					},
+					{
+						"selector": ["interface"],
+						"format": ["PascalCase"],
+						"custom": {
+							"regex": "^I[A-Z]",
+							"match": true
+						}
 					}
-				]
+				],
+				"@typescript-eslint/no-misused-promises": [
+					"error",
+					{
+						"checksVoidReturn": {
+							"arguments": false
+						}
+					}
+				],
+				"@typescript-eslint/no-floating-promises": "error",
+				"no-unreachable-loop": "error"
+			},
+			"parserOptions": {
+				"project": ["./tsconfig.json"]
+			},
+			"excludedFiles": [".scripts/*.ts"]
+		},
+		{
+			"files": ["./src/app/**/{page,layout,error,loading,not-found}.tsx", "*.ts"],
+			"rules": {
+				"import/no-default-export": "off"
 			}
 		},
 		{
