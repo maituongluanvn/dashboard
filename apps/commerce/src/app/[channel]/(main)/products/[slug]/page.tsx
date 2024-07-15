@@ -80,7 +80,7 @@ export default function Page({
 	const { data: product, loading, error } = useFetch<IProduct>(`/api/product/${params.slug}`);
 
 	if (loading) return <p>Loading...</p>;
-	if (error) return <p>Error: {error}</p>;
+	if (error) return <p>Error: {error.message}</p>;
 	if (!product) {
 		notFound();
 	}
@@ -199,7 +199,7 @@ export default function Page({
 								selectedVariant={selectedVariant}
 								variants={variants}
 								// eslint-disable-next-line @typescript-eslint/no-unsafe-assignment
-								product={product}
+								product={product as any}
 								channel={params.channel}
 							/>
 						)}

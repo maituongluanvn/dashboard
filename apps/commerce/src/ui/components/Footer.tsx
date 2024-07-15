@@ -9,7 +9,7 @@ import {
 	type JSXElementConstructor,
 	type ReactNode,
 	type ReactPortal,
-type  PromiseLikeOfReactNode } from 'react';
+} from 'react';
 import { LinkWithChannel } from '../atoms/LinkWithChannel';
 import { ChannelSelect } from './ChannelSelect';
 import { ChannelsListDocument, MenuGetBySlugDocument } from '@/gql/graphql';
@@ -46,13 +46,12 @@ export async function Footer({ channel }: { channel: string }) {
 								| ReactElement<any, string | JSXElementConstructor<any>>
 								| Iterable<ReactNode>
 								| ReactPortal
-								| PromiseLikeOfReactNode
 								| null
 								| undefined;
 							children: any[];
 						}) => {
 							return (
-								<div key={item.id}>
+								<div key={item.id as any}>
 									<h3 className="text-sm font-semibold text-neutral-900">{item.name}</h3>
 									<ul className="mt-4 space-y-4 [&>li]:text-neutral-500">
 										{item.children?.map(
@@ -66,7 +65,6 @@ export async function Footer({ channel }: { channel: string }) {
 														| ReactElement<any, string | JSXElementConstructor<any>>
 														| Iterable<ReactNode>
 														| ReactPortal
-														| PromiseLikeOfReactNode
 														| null
 														| undefined;
 												};
@@ -80,7 +78,6 @@ export async function Footer({ channel }: { channel: string }) {
 														| ReactElement<any, string | JSXElementConstructor<any>>
 														| Iterable<ReactNode>
 														| ReactPortal
-														| PromiseLikeOfReactNode
 														| null
 														| undefined;
 												};
@@ -93,7 +90,6 @@ export async function Footer({ channel }: { channel: string }) {
 														| ReactElement<any, string | JSXElementConstructor<any>>
 														| Iterable<ReactNode>
 														| ReactPortal
-														| PromiseLikeOfReactNode
 														| null
 														| undefined;
 												};
@@ -105,41 +101,40 @@ export async function Footer({ channel }: { channel: string }) {
 													| ReactElement<any, string | JSXElementConstructor<any>>
 													| Iterable<ReactNode>
 													| ReactPortal
-													| PromiseLikeOfReactNode
 													| null
 													| undefined;
 											}) => {
 												if (child.category) {
 													return (
-														<li key={child.id} className="text-sm">
+														<li key={child.id as any} className="text-sm">
 															<LinkWithChannel href={`/categories/${child.category.slug}`}>
-																{child.category.name}
+																{/* {child.category.name as any} */}
 															</LinkWithChannel>
 														</li>
 													);
 												}
 												if (child.collection) {
 													return (
-														<li key={child.id} className="text-sm">
+														<li key={child.id as any} className="text-sm">
 															<LinkWithChannel href={`/collections/${child.collection.slug}`}>
-																{child.collection.name}
+																{/* {child.collection.name} */}
 															</LinkWithChannel>
 														</li>
 													);
 												}
 												if (child.page) {
 													return (
-														<li key={child.id} className="text-sm">
+														<li key={child.id as any} className="text-sm">
 															<LinkWithChannel href={`/pages/${child.page.slug}`}>
-																{child.page.title}
+																{/* {child.page.title} */}
 															</LinkWithChannel>
 														</li>
 													);
 												}
 												if (child.url) {
 													return (
-														<li key={child.id} className="text-sm">
-															<LinkWithChannel href={child.url}>{child.name}</LinkWithChannel>
+														<li key={child.id as any} className="text-sm">
+															<LinkWithChannel href={child.url}>{/* {child.name} */}</LinkWithChannel>
 														</li>
 													);
 												}
@@ -153,11 +148,11 @@ export async function Footer({ channel }: { channel: string }) {
 					)}
 				</div>
 
-				{(channels )?.channels && (
+				{(channels as any).channels && (
 					<div className="mb-4 text-neutral-500">
 						<label>
 							<span className="text-sm">Change currency:</span>{' '}
-							<ChannelSelect channels={(channels ).channels} />
+							<ChannelSelect channels={(channels as any).channels} />
 						</label>
 					</div>
 				)}

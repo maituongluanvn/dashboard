@@ -39,6 +39,7 @@ export const NavLinks = async ({}: { channel: string }) => {
 						| ReactElement<any, string | JSXElementConstructor<any>>
 						| Iterable<ReactNode>
 						| ReactPortal
+						// eslint-disable-next-line @typescript-eslint/no-redundant-type-constituents
 						| PromiseLikeOfReactNode
 						| null
 						| undefined;

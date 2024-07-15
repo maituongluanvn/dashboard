@@ -20,7 +20,6 @@
 		"import/order": "error",
 		"import/no-mutable-exports": "error",
 		"import/no-cycle": "error",
-		"import/no-default-export": "error",
 		"import/no-unresolved": "off",
 		"@typescript-eslint/ban-types": [
 			"error",
