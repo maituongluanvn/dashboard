@@ -1,25 +1,29 @@
 {
-    "$schema": "https://turbo.build/schema.json",
-    "globalDependencies": ["tsconfig.base.json", "tsconfig.base.server.json", "tsconfig.base.client.json"],
-    "tasks": {
-      "build": {
-        "dependsOn": ["^build"],
-        "outputs": ["dist/**", ".next/**"]
-      },
-      "tsc": {
-        "outputs": []
-      },
-      "lint": {
-        "outputs": []
-      },
-      "lint:fix": {
-        "outputs": []
-      },
-      "dev": {
-        "cache": false
-      },
-      "start": {
-        "cache": false
-      }
-    }
-  }
+	"$schema": "https://turbo.build/schema.json",
+	"globalDependencies": ["tsconfig.base.json", "tsconfig.base.server.json", "tsconfig.base.client.json"],
+	"tasks": {
+		"build": {
+			"dependsOn": ["^build"],
+			"outputs": ["dist/**", ".next/**"]
+		},
+		"build:commerce": {
+			"dependsOn": ["^build"],
+			"outputs": ["dist/**", ".next/**"]
+		},
+		"tsc": {
+			"outputs": []
+		},
+		"lint": {
+			"outputs": []
+		},
+		"lint:fix": {
+			"outputs": []
+		},
+		"dev": {
+			"cache": false
+		},
+		"start": {
+			"cache": false
+		}
+	}
+}

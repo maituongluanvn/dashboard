@@ -6,7 +6,7 @@
 	"private": true,
 	"scripts": {
 		"build": "turbo run build",
-		"build:services": "turbo run build --filter=rocketchat-services...",
+		"build:commerce": "turbo run build --filter=@commerce/ui",
 		"build:ci": "turbo run build:ci",
 		"testunit": "turbo run testunit",
 		"dev": "turbo run dev",
