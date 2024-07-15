@@ -19,6 +19,9 @@
 		"lint:fix": {
 			"outputs": []
 		},
+		"dev:api": {
+			"cache": false
+		},
 		"dev": {
 			"cache": false
 		},

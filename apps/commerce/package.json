@@ -5,7 +5,7 @@
 	"type": "module",
 	"packageManager": "pnpm@9.5.0",
 	"scripts": {
-		"dev": "next dev",
+		"dev": "next dev -p 8500",
 		"build": "next build",
 		"start": "next start",
 		"predev": "pnpm run generate",

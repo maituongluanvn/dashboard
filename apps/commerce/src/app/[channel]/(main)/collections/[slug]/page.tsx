@@ -30,7 +30,7 @@ export default async function Page({ params }: { params: { slug: string; channel
 		revalidate: 60,
 	});
 
-	if (!collection || !collection.products) {
+	if (!collection?.products) {
 		notFound();
 	}
 

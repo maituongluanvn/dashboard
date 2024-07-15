@@ -1,6 +1,6 @@
-"use client";
+'use client';
 
-import { useTransition } from "react";
+import { useTransition } from 'react';
 // import { deleteLineFromCheckout } from "./actions";
 
 type Props = {
@@ -9,8 +9,8 @@ type Props = {
 };
 
 // export const DeleteLineButton = ({ lineId, checkoutId }: Props) => {
-export const DeleteLineButton = ({  }: Props) => {
-	const [isPending, _startTransition] = useTransition();
+export const DeleteLineButton = ({}: Props) => {
+	const [isPending] = useTransition();
 
 	return (
 		<button
@@ -22,7 +22,7 @@ export const DeleteLineButton = ({  }: Props) => {
 			// }}
 			aria-disabled={isPending}
 		>
-			{isPending ? "Removing" : "Remove"}
+			{isPending ? 'Removing' : 'Remove'}
 			<span className="sr-only">line from cart</span>
 		</button>
 	);

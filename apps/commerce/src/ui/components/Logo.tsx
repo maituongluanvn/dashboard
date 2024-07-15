@@ -1,14 +1,14 @@
-"use client";
+'use client';
 
-import { usePathname } from "next/navigation";
-import { LinkWithChannel } from "../atoms/LinkWithChannel";
+import { usePathname } from 'next/navigation';
+import { LinkWithChannel } from '../atoms/LinkWithChannel';
 
-const companyName = "ACME";
+const companyName = 'ACME';
 
 export const Logo = () => {
 	const pathname = usePathname();
 
-	if (pathname === "/") {
+	if (pathname === '/') {
 		return (
 			<h1 className="flex items-center font-bold" aria-label="homepage">
 				{companyName}

@@ -1,22 +1,25 @@
-"use server";
+'use server';
 
-import { revalidatePath } from "next/cache";
-import { executeGraphQL } from "@/lib/graphql";
-import { CheckoutDeleteLinesDocument } from "@/gql/graphql";
+import { revalidatePath } from 'next/cache';
+import { executeGraphQL } from '@/lib/graphql';
+import { CheckoutDeleteLinesDocument } from '@/gql/graphql';
 
 type deleteLineFromCheckoutArgs = {
 	lineId: string;
 	checkoutId: string;
 };
 
-export const deleteLineFromCheckout = async ({ lineId, checkoutId }: deleteLineFromCheckoutArgs): Promise<any> => {
+export const deleteLineFromCheckout = async ({
+	lineId,
+	checkoutId,
+}: deleteLineFromCheckoutArgs): Promise<any> => {
 	await executeGraphQL(CheckoutDeleteLinesDocument, {
 		variables: {
 			checkoutId,
 			lineIds: [lineId],
 		},
-		cache: "no-cache",
+		cache: 'no-cache',
 	});
 
-	revalidatePath("/cart");
+	revalidatePath('/cart');
 };

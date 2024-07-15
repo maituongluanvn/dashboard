@@ -1,4 +1,4 @@
-export type TParams = { channel: string, slug: string }
+export type TParams = { channel: string; slug: string };
 
 export interface IProductCategory {
 	id: string;
@@ -15,21 +15,21 @@ export interface IPriceRange {
 		gross: {
 			amount: number;
 			currency: string;
-		}
-	}
+		};
+	};
 	stop: {
 		gross: {
 			amount: number;
 			currency: string;
-		}
-	}
+		};
+	};
 }
 
 export interface IVariants {
-	id: string,
-	name: string,
-	quantityAvailable: number,
-	pricing: { price: { gross: { currency: string, amount: number } } }
+	id: string;
+	name: string;
+	quantityAvailable: number;
+	pricing: { price: { gross: { currency: string; amount: number } } };
 }
 
 export interface IProduct {
@@ -37,8 +37,8 @@ export interface IProduct {
 	name: string;
 	slug: string;
 	description: string;
-  	seoTitle: string,
-  	seoDescription: string,
+	seoTitle: string;
+	seoDescription: string;
 	pricing: { priceRange: IPriceRange };
 	category: IProductCategory;
 	thumbnail: IThumbnail;

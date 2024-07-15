@@ -9,6 +9,7 @@
 		"build:commerce": "turbo run build --filter=@commerce/ui",
 		"testunit": "turbo run testunit",
 		"dev": "turbo run dev",
+		"dev:api": "turbo run dev:api",
 		"lint": "turbo run lint",
 		"fuselage": "./fuselage.sh"
 	},

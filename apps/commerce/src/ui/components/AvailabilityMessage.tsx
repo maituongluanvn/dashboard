@@ -1,10 +1,10 @@
-import { XIcon } from "lucide-react";
+import { XIcon } from 'lucide-react';
 
 type Props = {
 	isAvailable: boolean;
 };
 
-const pClasses = "ml-1 text-sm font-semibold text-neutral-500";
+const pClasses = 'ml-1 text-sm font-semibold text-neutral-500';
 
 export const AvailabilityMessage = ({ isAvailable }: Props) => {
 	if (!isAvailable) {

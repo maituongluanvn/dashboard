@@ -26,13 +26,6 @@
 	"files": [
 		"/standard",
 		"/original",
-		"/best-practices",
-		"/errors",
-		"/es6",
-		"/imports",
-		"/node",
-		"/style",
-		"/variables",
-		"react.js"
+		"/best-practices"
 	]
 }

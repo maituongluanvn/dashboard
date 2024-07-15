@@ -1,5 +1,5 @@
-import { useEffect, useState, useCallback } from "react";
-import { usePathname, useSearchParams } from "next/navigation";
+import { useEffect, useState, useCallback } from 'react';
+import { usePathname, useSearchParams } from 'next/navigation';
 
 export const useMobileMenu = () => {
 	const [isOpen, setIsOpen] = useState(false);
@@ -18,8 +18,8 @@ export const useMobileMenu = () => {
 		};
 
 		const matchMedia = window.matchMedia(`(min-width: 768px)`);
-		matchMedia.addEventListener("change", handleResize, { passive: true });
-		return () => matchMedia.removeEventListener("change", handleResize);
+		matchMedia.addEventListener('change', handleResize, { passive: true });
+		return () => matchMedia.removeEventListener('change', handleResize);
 	}, []);
 
 	const closeMenu = useCallback(() => setIsOpen(false), []);

@@ -1,8 +1,8 @@
-import Image from "next/image";
-import { LinkWithChannel } from "../atoms/LinkWithChannel";
-import { formatDate, formatMoney, getHrefForVariant } from "@/lib/utils";
-import { type OrderDetailsFragment } from "@/gql/graphql";
-import { PaymentStatus } from "@/ui/components/PaymentStatus";
+import Image from 'next/image';
+import { LinkWithChannel } from '../atoms/LinkWithChannel';
+import { formatDate, formatMoney, getHrefForVariant } from '@/lib/utils';
+import { type OrderDetailsFragment } from '@/gql/graphql';
+import { PaymentStatus } from '@/ui/components/PaymentStatus';
 
 type Props = {
 	order: OrderDetailsFragment;
@@ -53,7 +53,7 @@ export const OrderListItem = ({ order }: Props) => {
 								</tr>
 							</thead>
 							<tbody className="md:divide-y">
-								{order.lines.map((item) => {
+								{order.lines.map(item => {
 									if (!item.variant) {
 										return null;
 									}
@@ -68,7 +68,7 @@ export const OrderListItem = ({ order }: Props) => {
 														<div className="mr-3 aspect-square h-16 w-16 flex-shrink-0 overflow-hidden rounded-md border bg-neutral-50 md:mr-6 md:h-24 md:w-24">
 															<Image
 																src={product.thumbnail.url}
-																alt={product.thumbnail.alt ?? ""}
+																alt={product.thumbnail.alt ?? ''}
 																width={200}
 																height={200}
 																className="h-full w-full object-contain object-center"
@@ -92,7 +92,7 @@ export const OrderListItem = ({ order }: Props) => {
 												</div>
 											</td>
 											<td className="py-6 pr-6 max-md:hidden">
-												{item.quantity} ×{" "}
+												{item.quantity} ×{' '}
 												{item.variant.pricing?.price &&
 													formatMoney(
 														item.variant.pricing.price.gross.amount,
@@ -108,7 +108,7 @@ export const OrderListItem = ({ order }: Props) => {
 														)}
 													{item.quantity > 1 && (
 														<span className="text-xs md:hidden">
-															{item.quantity} ×{" "}
+															{item.quantity} ×{' '}
 															{item.variant.pricing?.price &&
 																formatMoney(
 																	item.variant.pricing.price.gross.amount,

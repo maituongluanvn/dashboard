@@ -1,9 +1,9 @@
-"use client";
+'use client';
 
-import { SaleorAuthProvider, useAuthChange } from "@saleor/auth-sdk/react";
-import { invariant } from "ts-invariant";
-import { createSaleorAuthClient } from "@saleor/auth-sdk";
-import { useState, type ReactNode } from "react";
+import { SaleorAuthProvider, useAuthChange } from '@saleor/auth-sdk/react';
+import { invariant } from 'ts-invariant';
+import { createSaleorAuthClient } from '@saleor/auth-sdk';
+import { useState, type ReactNode } from 'react';
 import {
 	type Client,
 	Provider as UrqlProvider,
@@ -11,10 +11,10 @@ import {
 	createClient,
 	dedupExchange,
 	fetchExchange,
-} from "urql";
+} from 'urql';
 
 const saleorApiUrl = process.env.NEXT_PUBLIC_SALEOR_API_URL;
-invariant(saleorApiUrl, "Missing NEXT_PUBLIC_SALEOR_API_URL env variable");
+invariant(saleorApiUrl, 'Missing NEXT_PUBLIC_SALEOR_API_URL env variable');
 
 export const saleorAuthClient = createSaleorAuthClient({
 	saleorApiUrl,
@@ -31,7 +31,7 @@ const makeUrqlClient = () => {
 };
 
 export function AuthProvider({ children }: { children: ReactNode }) {
-	invariant(saleorApiUrl, "Missing NEXT_PUBLIC_SALEOR_API_URL env variable");
+	invariant(saleorApiUrl, 'Missing NEXT_PUBLIC_SALEOR_API_URL env variable');
 
 	const [urqlClient, setUrqlClient] = useState<Client>(() => makeUrqlClient());
 	useAuthChange({

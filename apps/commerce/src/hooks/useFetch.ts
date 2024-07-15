@@ -27,11 +27,11 @@ const useFetch = <T>(url: string, method: HttpMethod = 'GET', bodyData?: any): I
 				if (!response.ok) {
 					throw new Error('Network response was not ok');
 				}
-				const result = await response.json() as T;
+				const result = (await response.json()) as T;
 				setData(result);
 			} catch (error: any) {
 				// eslint-disable-next-line @typescript-eslint/no-unsafe-member-access, @typescript-eslint/no-unsafe-argument
-				setError(error.message );
+				setError(error.message);
 			} finally {
 				setLoading(false);
 			}
