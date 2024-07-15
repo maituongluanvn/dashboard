@@ -15,18 +15,18 @@ import { useFormSubmit } from "@/checkout/hooks/useFormSubmit";
 import { type MightNotExist } from "@/checkout/lib/globalTypes";
 import { useCheckoutUpdateStateActions } from "@/checkout/state/updateStateStore";
 
-interface BillingSameAsShippingFormData {
+interface IBillingSameAsShippingFormData {
 	billingSameAsShipping: boolean;
 	billingAddress: OptionalAddress;
 }
 
-interface BillingSameAsShippingFormProps {
+interface IBillingSameAsShippingFormProps {
 	autoSave: boolean;
 	onSetBillingSameAsShipping?: (address: OptionalAddress) => void;
 }
 
 export const useBillingSameAsShippingForm = (
-	{ autoSave, onSetBillingSameAsShipping }: BillingSameAsShippingFormProps = { autoSave: false },
+	{ autoSave, onSetBillingSameAsShipping }: IBillingSameAsShippingFormProps = { autoSave: false },
 ) => {
 	const { checkout } = useCheckout();
 	const { billingAddress, shippingAddress, isShippingRequired } = checkout;
@@ -38,7 +38,7 @@ export const useBillingSameAsShippingForm = (
 
 	const [, checkoutBillingAddressUpdate] = useCheckoutBillingAddressUpdateMutation();
 
-	const onSubmit = useFormSubmit<BillingSameAsShippingFormData, typeof checkoutBillingAddressUpdate>({
+	const onSubmit = useFormSubmit<IBillingSameAsShippingFormData, typeof checkoutBillingAddressUpdate>({
 		scope: "checkoutBillingUpdate",
 		onSubmit: checkoutBillingAddressUpdate,
 		shouldAbort: () => !formBillingAddress || !Object.keys(formBillingAddress).length,
@@ -76,7 +76,7 @@ export const useBillingSameAsShippingForm = (
 
 	const previousBillingSameAsShipping = useRef(initialValues.billingSameAsShipping);
 
-	const form = useForm<BillingSameAsShippingFormData>({
+	const form = useForm<IBillingSameAsShippingFormData>({
 		onSubmit,
 		initialValues,
 		initialDirty: true,

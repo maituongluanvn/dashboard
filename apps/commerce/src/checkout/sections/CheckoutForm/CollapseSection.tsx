@@ -1,10 +1,10 @@
-import { type Children } from "@/checkout/lib/globalTypes";
+import { type Children } from '@/checkout/lib/globalTypes';
 
-interface CollapseSectionProps extends Children {
+interface ICollapseSectionProps extends Children {
 	collapse: boolean;
 }
 
-export const CollapseSection = ({ collapse, children }: CollapseSectionProps) => {
+export const CollapseSection = ({ collapse, children }: ICollapseSectionProps) => {
 	if (collapse) {
 		return null;
 	}

@@ -1,8 +1,8 @@
-import React, { type PropsWithChildren } from "react";
-import { Button } from "@/checkout/components/Button";
-import { Title } from "@/checkout/components/Title";
+import React, { type PropsWithChildren } from 'react';
+import { Button } from '@/checkout/components/Button';
+import { Title } from '@/checkout/components/Title';
 
-export interface SignInFormContainerProps {
+export interface ISignInFormContainerProps {
 	title: string;
 	redirectSubtitle?: string;
 	redirectButtonLabel?: string;
@@ -10,7 +10,7 @@ export interface SignInFormContainerProps {
 	onSectionChange: () => void;
 }
 
-export const SignInFormContainer: React.FC<PropsWithChildren<SignInFormContainerProps>> = ({
+export const SignInFormContainer: React.FC<PropsWithChildren<ISignInFormContainerProps>> = ({
 	title,
 	redirectButtonLabel,
 	redirectSubtitle,

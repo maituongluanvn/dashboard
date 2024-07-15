@@ -4,7 +4,7 @@ import ContainerQueriesPlugin from "@tailwindcss/container-queries";
 import { type Config } from "tailwindcss";
 
 const config: Config = {
-	content: ["./apps/ui/**/*.{ts,tsx}"],
+	content: ["./src/**/*.{ts,tsx}"],
 	plugins: [TypographyPlugin, FormPlugin, ContainerQueriesPlugin],
 };
 
