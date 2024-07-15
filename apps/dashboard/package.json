@@ -21,7 +21,6 @@
 		"@tabler/icons-react": "2.30.0",
 		"@types/node": "20.4.5",
 		"@types/prop-types": "^15.7.12",
-		"@types/react": "18.2.18",
 		"@types/react-dom": "18.2.7",
 		"apexcharts": "3.41.1",
 		"eslint": "~8.45.0",
@@ -37,6 +36,7 @@
 	},
 	"devDependencies": {
 		"@types/lodash": "4.14.196",
+		"@types/react": "18.2.18",
 		"eslint-plugin-prettier": "~4.2.1"
 	}
 }

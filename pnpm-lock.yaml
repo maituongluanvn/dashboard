@@ -271,9 +271,6 @@ importers:
       '@types/prop-types':
         specifier: ^15.7.12
         version: 15.7.12
-      '@types/react':
-        specifier: 18.2.18
-        version: 18.2.18
       '@types/react-dom':
         specifier: 18.2.7
         version: 18.2.7
@@ -314,6 +311,9 @@ importers:
       '@types/lodash':
         specifier: 4.14.196
         version: 4.14.196
+      '@types/react':
+        specifier: 18.2.18
+        version: 18.2.18
       eslint-plugin-prettier:
         specifier: ~4.2.1
         version: 4.2.1(eslint@8.45.0)(prettier@3.1.1)

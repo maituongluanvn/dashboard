@@ -1,9 +1,9 @@
-import { Suspense } from "react";
-import { UserMenuContainer } from "./components/UserMenu/UserMenuContainer";
-import { CartNavItem } from "./components/CartNavItem";
-import { NavLinks } from "./components/NavLinks";
-import { MobileMenu } from "./components/MobileMenu";
-import { SearchBar } from "./components/SearchBar";
+import { Suspense } from 'react';
+import { UserMenuContainer } from './components/UserMenu/UserMenuContainer';
+import { CartNavItem } from './components/CartNavItem';
+import { NavLinks } from './components/NavLinks';
+import { MobileMenu } from './components/MobileMenu';
+import { SearchBar } from './components/SearchBar';
 
 export const Nav = ({ channel }: { channel: string }) => {
 	return (

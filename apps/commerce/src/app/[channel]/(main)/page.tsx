@@ -1,5 +1,4 @@
 'use client';
-import { Suspense } from 'react';
 import { ProductList } from '@/ui/components/ProductList';
 import useFetch from '@/hooks/useFetch';
 import { type IProduct } from '@/definition';
@@ -18,12 +17,10 @@ const Page: React.FC = () => {
 	if (!products) return null;
 
 	return (
-		<Suspense fallback={<p>Loading...</p>}>
-			<section className="mx-auto max-w-7xl p-8 pb-16">
-				<h2 className="sr-only">Product list</h2>
-				<ProductList products={products} />
-			</section>
-		</Suspense>
+		<section className="mx-auto max-w-7xl p-8 pb-16">
+			<h2 className="sr-only">Product list</h2>
+			<ProductList products={products} />
+		</section>
 	);
 };
 

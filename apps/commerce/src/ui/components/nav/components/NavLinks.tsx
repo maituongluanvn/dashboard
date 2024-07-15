@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-unsafe-assignment */
 import { type UrlObject } from 'url';
 import Link from 'next/link';
 import {
@@ -6,7 +7,6 @@ import {
 	type JSXElementConstructor,
 	type ReactNode,
 	type ReactPortal,
-	type PromiseLikeOfReactNode,
 } from 'react';
 import navLinks from '../../../../../public/menu.json';
 import { NavLink } from './NavLink';
@@ -39,35 +39,33 @@ export const NavLinks = async ({}: { channel: string }) => {
 						| ReactElement<any, string | JSXElementConstructor<any>>
 						| Iterable<ReactNode>
 						| ReactPortal
-						// eslint-disable-next-line @typescript-eslint/no-redundant-type-constituents
-						| PromiseLikeOfReactNode
 						| null
 						| undefined;
 				}) => {
 					if (item.category) {
 						return (
-							<NavLink key={item.id} href={`/categories/${item.category.slug}`}>
+							<NavLink key={item.id as any} href={`/categories/${item.category.slug}`}>
 								{item.category.name}
 							</NavLink>
 						);
 					}
 					if (item.collection) {
 						return (
-							<NavLink key={item.id} href={`/collections/${item.collection.slug}`}>
+							<NavLink key={item.id as any} href={`/collections/${item.collection.slug}`}>
 								{item.collection.name}
 							</NavLink>
 						);
 					}
 					if (item.page) {
 						return (
-							<NavLink key={item.id} href={`/pages/${item.page.slug}`}>
+							<NavLink key={item.id as any} href={`/pages/${item.page.slug}`}>
 								{item.page.title}
 							</NavLink>
 						);
 					}
 					if (item.url) {
 						return (
-							<Link key={item.id} href={item.url}>
+							<Link key={item.id as any} href={item.url}>
 								{item.name}
 							</Link>
 						);
