@@ -79,7 +79,7 @@ module.exports = {
 				'@typescript-eslint/prefer-optional-chain': 'warn',
 				'anti-trojan-source/no-bidi': 'error',
 				'func-call-spacing': 'off',
-				'indent': 'off',
+				indent: 'off',
 				'jsx-quotes': ['error', 'prefer-single'],
 				'no-dupe-class-members': 'off',
 				'no-empty-function': 'off',

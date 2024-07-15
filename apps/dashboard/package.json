@@ -1,7 +1,8 @@
 {
-  "name": "modernize-next-free",
+  "name": "@cores/dashboard",
   "version": "0.1.0",
   "private": true,
+  "type": "module",
   "scripts": {
     "dev": "next dev -p 8000",
     "build": "next build",
@@ -21,8 +22,8 @@
     "@types/react": "18.2.18",
     "@types/react-dom": "18.2.7",
     "apexcharts": "3.41.1",
-    "eslint": "8.46.0",
-    "eslint-config-next": "13.4.12",
+    "eslint": "~8.45.0",
+    "eslint-config-next": "14.0.4",
     "lodash": "4.17.21",
     "next": "14.2.3",
     "react": "18.2.0",
@@ -32,6 +33,8 @@
     "typescript": "5.1.6"
   },
   "devDependencies": {
-    "@types/lodash": "4.14.196"
+    "@commerce/eslint-config": "workspace:^",
+    "@types/lodash": "4.14.196",
+    "eslint-plugin-prettier": "~4.2.1"
   }
 }
