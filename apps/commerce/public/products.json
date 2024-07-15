@@ -46,20 +46,20 @@
 		},
 		{
 			"id": "UHJvZHVjdDoxNjQ=",
-			"name": "Saleor Card 50",
-			"slug": "gift-card-50",
-			"description": "Đây là nước muối sinh lý",
+			"name": "Vật tư y tế",
+			"slug": "vat-tu-y-te",
+			"description": "Đây là vật tư y tế",
 			"pricing": {
 				"priceRange": {
 					"start": {
 						"gross": {
-							"amount": 54,
+							"amount": 85000,
 							"currency": "VND"
 						}
 					},
 					"stop": {
 						"gross": {
-							"amount": 90,
+							"amount": 85000,
 							"currency": "VND"
 						}
 					}
@@ -67,7 +67,7 @@
 			},
 			"category": {
 				"id": "Q2F0ZWdvcnk6NDQ=",
-				"name": "Gift cards"
+				"name": "Dich truyền"
 			},
 			"thumbnail": {
 				"url": "https://storefront1.saleor.cloud/media/thumbnails/products/saleor-gift-50_thumbnail_1024.webp",
@@ -78,13 +78,19 @@
 					"id": "UHJvZHVjdFZhcmlhbnQ6MzQ1",
 					"name": "Một chai",
 					"quantityAvailable": 50,
-					"pricing": { "price": { "gross": { "currency": "VND", "amount": 300 } } }
+					"pricing": { "price": { "gross": { "currency": "VND", "amount": 26000 } } }
 				},
 				{
 					"id": "UHJvZHVjdFZhcmlhbnQ6MzQ3",
 					"name": "Một thùng",
 					"quantityAvailable": 50,
-					"pricing": { "price": { "gross": { "currency": "VND", "amount": 1000000 } } }
+					"pricing": { "price": { "gross": { "currency": "VND", "amount": 300000 } } }
+				},
+				{
+					"id": "UHJvZHVjdFZhcmlhbnQ6MzQ4",
+					"name": "Mười thùng",
+					"quantityAvailable": 50,
+					"pricing": { "price": { "gross": { "currency": "VND", "amount": 3000000 } } }
 				}
 			]
 		},
