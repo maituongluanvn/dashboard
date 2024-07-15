@@ -1,14 +1,14 @@
-/* eslint-disable @typescript-eslint/no-unsafe-call */
 /* eslint-disable @typescript-eslint/no-unsafe-assignment */
 /* eslint-disable @typescript-eslint/no-unsafe-member-access */
+/* eslint-disable @typescript-eslint/no-unsafe-call */
 import Link from 'next/link';
 import Image from 'next/image';
 import {
-	type Key,
 	type ReactElement,
 	type JSXElementConstructor,
 	type ReactNode,
 	type ReactPortal,
+	type Key,
 } from 'react';
 import { LinkWithChannel } from '../atoms/LinkWithChannel';
 import { ChannelSelect } from './ChannelSelect';
@@ -16,7 +16,7 @@ import { ChannelsListDocument, MenuGetBySlugDocument } from '@/gql/graphql';
 import { executeGraphQL } from '@/lib/graphql';
 
 export async function Footer({ channel }: { channel: string }) {
-	const footerLinks: any = await executeGraphQL(MenuGetBySlugDocument, {
+	const footerLinks = await executeGraphQL(MenuGetBySlugDocument, {
 		variables: { slug: 'footer', channel },
 		revalidate: 60 * 60 * 24,
 	});
@@ -36,7 +36,7 @@ export async function Footer({ channel }: { channel: string }) {
 		<footer className="border-neutral-300 bg-neutral-50">
 			<div className="mx-auto max-w-7xl px-4 lg:px-8">
 				<div className="grid grid-cols-3 gap-8 py-16">
-					{footerLinks.menu?.items?.map(
+					{(footerLinks as any).menu?.items?.map(
 						(item: {
 							id: Key | null | undefined;
 							name:
@@ -51,90 +51,49 @@ export async function Footer({ channel }: { channel: string }) {
 							children: any[];
 						}) => {
 							return (
-								<div key={item.id as any}>
+								<div key={item.id}>
 									<h3 className="text-sm font-semibold text-neutral-900">{item.name}</h3>
 									<ul className="mt-4 space-y-4 [&>li]:text-neutral-500">
 										{item.children?.map(
 											(child: {
-												category: {
-													slug: any;
-													name:
-														| string
-														| number
-														| boolean
-														| ReactElement<any, string | JSXElementConstructor<any>>
-														| Iterable<ReactNode>
-														| ReactPortal
-														| null
-														| undefined;
-												};
+												category: { slug: any; name: any };
 												id: Key | null | undefined;
-												collection: {
-													slug: any;
-													name:
-														| string
-														| number
-														| boolean
-														| ReactElement<any, string | JSXElementConstructor<any>>
-														| Iterable<ReactNode>
-														| ReactPortal
-														| null
-														| undefined;
-												};
-												page: {
-													slug: any;
-													title:
-														| string
-														| number
-														| boolean
-														| ReactElement<any, string | JSXElementConstructor<any>>
-														| Iterable<ReactNode>
-														| ReactPortal
-														| null
-														| undefined;
-												};
-												url: string;
-												name:
-													| string
-													| number
-													| boolean
-													| ReactElement<any, string | JSXElementConstructor<any>>
-													| Iterable<ReactNode>
-													| ReactPortal
-													| null
-													| undefined;
+												collection: { slug: any; name: any };
+												page: { slug: any; title: any };
+												url: any;
+												name: any;
 											}) => {
 												if (child.category) {
 													return (
-														<li key={child.id as any} className="text-sm">
+														<li key={child.id} className="text-sm">
 															<LinkWithChannel href={`/categories/${child.category.slug}`}>
-																{/* {child.category.name as any} */}
+																{child.category.name}
 															</LinkWithChannel>
 														</li>
 													);
 												}
 												if (child.collection) {
 													return (
-														<li key={child.id as any} className="text-sm">
+														<li key={child.id} className="text-sm">
 															<LinkWithChannel href={`/collections/${child.collection.slug}`}>
-																{/* {child.collection.name} */}
+																{child.collection.name}
 															</LinkWithChannel>
 														</li>
 													);
 												}
 												if (child.page) {
 													return (
-														<li key={child.id as any} className="text-sm">
+														<li key={child.id} className="text-sm">
 															<LinkWithChannel href={`/pages/${child.page.slug}`}>
-																{/* {child.page.title} */}
+																{child.page.title}
 															</LinkWithChannel>
 														</li>
 													);
 												}
 												if (child.url) {
 													return (
-														<li key={child.id as any} className="text-sm">
-															<LinkWithChannel href={child.url}>{/* {child.name} */}</LinkWithChannel>
+														<li key={child.id} className="text-sm">
+															<LinkWithChannel href={child.url}>{child.name}</LinkWithChannel>
 														</li>
 													);
 												}
@@ -148,7 +107,7 @@ export async function Footer({ channel }: { channel: string }) {
 					)}
 				</div>
 
-				{(channels as any).channels && (
+				{(channels as any)?.channels && (
 					<div className="mb-4 text-neutral-500">
 						<label>
 							<span className="text-sm">Change currency:</span>{' '}
