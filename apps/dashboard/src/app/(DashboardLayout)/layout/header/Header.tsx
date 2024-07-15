@@ -3,14 +3,14 @@ import { Box, AppBar, Toolbar, styled, Stack, IconButton, Badge, Button } from '
 import PropTypes from 'prop-types';
 import Link from 'next/link';
 // components
-import Profile from './Profile';
 import { IconBellRinging, IconMenu } from '@tabler/icons-react';
+import Profile from './Profile';
 
-interface ItemType {
+interface IItemType {
 	toggleMobileSidebar: (event: React.MouseEvent<HTMLElement>) => void;
 }
 
-const Header = ({ toggleMobileSidebar }: ItemType) => {
+const Header = ({ toggleMobileSidebar }: IItemType) => {
 	// const lgUp = useMediaQuery((theme) => theme.breakpoints.up('lg'));
 	// const lgDown = useMediaQuery((theme) => theme.breakpoints.down('lg'));
 

@@ -4,13 +4,13 @@ import Link from 'next/link';
 
 import CustomTextField from '@/app/(DashboardLayout)/components/forms/theme-elements/CustomTextField';
 
-interface IloginType {
+interface ILoginType {
 	title?: string;
 	subtitle?: JSX.Element | JSX.Element[];
 	subtext?: JSX.Element | JSX.Element[];
 }
 
-const AuthLogin = ({ title, subtitle, subtext }: loginType) => (
+const AuthLogin = ({ title, subtitle, subtext }: ILoginType) => (
 	<>
 		{title ? (
 			<Typography fontWeight="700" variant="h2" mb={1}>

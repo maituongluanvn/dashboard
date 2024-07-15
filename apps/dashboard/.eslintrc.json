@@ -1,3 +1,141 @@
 {
-	"extends": "next/core-web-vitals"
+	"$schema": "https://json.schemastore.org/eslintrc.json",
+	"parser": "@typescript-eslint/parser",
+	"parserOptions": {
+		"ecmaVersion": 2020,
+		"sourceType": "module",
+		"project": ["./tsconfig.json", "./apps/*/tsconfig.json"]
+	},
+	"plugins": ["@typescript-eslint"],
+	"extends": [
+		"eslint:recommended",
+		"plugin:@typescript-eslint/recommended",
+		"plugin:@typescript-eslint/recommended-requiring-type-checking",
+		"plugin:import/typescript",
+		"prettier",
+		"next/core-web-vitals",
+		"next"
+	],
+	"rules": {
+		"import/order": "error",
+		"import/no-mutable-exports": "error",
+		"import/no-cycle": "error",
+		"import/no-unresolved": "off",
+		"@typescript-eslint/ban-types": [
+			"error",
+			{
+				"types": {
+					"{}": false
+				}
+			}
+		],
+		"@typescript-eslint/consistent-type-imports": [
+			"error",
+			{
+				"prefer": "type-imports",
+				"fixStyle": "inline-type-imports",
+				"disallowTypeAnnotations": false
+			}
+		],
+		"import/no-duplicates": ["error", { "prefer-inline": true }],
+		"import/namespace": ["off"],
+		"no-empty-pattern": "off",
+		"@typescript-eslint/no-empty-interface": "off",
+		"@typescript-eslint/no-empty-function": "off",
+		"@typescript-eslint/require-await": "off",
+		"@typescript-eslint/return-await": ["error", "in-try-catch"],
+		"@typescript-eslint/no-unused-vars": ["error", { "argsIgnorePattern": "^_", "varsIgnorePattern": "^_" }],
+		"@typescript-eslint/no-explicit-any": "off",
+		"@typescript-eslint/no-misused-promises": [
+			"error",
+			{
+				"checksVoidReturn": false
+			}
+		]
+	},
+	"settings": {
+		"import/resolver": {
+			"node": {
+				"extensions": [".js", ".ts", ".tsx"]
+			}
+		}
+	},
+	"overrides": [
+		{
+			"files": ["**/*.ts", "**/*.tsx"],
+			"rules": {
+				"@typescript-eslint/no-unsafe-call": "warn",
+				"@typescript-eslint/naming-convention": [
+					"error",
+					{
+						"selector": ["function", "parameter", "variable"],
+						"modifiers": ["destructured"],
+						"format": null
+					},
+					{
+						"selector": ["variable"],
+						"format": ["camelCase", "UPPER_CASE", "PascalCase"],
+						"leadingUnderscore": "allowSingleOrDouble"
+					},
+					{
+						"selector": ["function"],
+						"format": ["camelCase", "PascalCase"],
+						"leadingUnderscore": "allowSingleOrDouble"
+					},
+					{
+						"selector": ["parameter"],
+						"format": ["PascalCase"],
+						"filter": {
+							"regex": "Component$",
+							"match": true
+						}
+					},
+					{
+						"selector": ["parameter"],
+						"format": ["camelCase"],
+						"leadingUnderscore": "allow"
+					},
+					{
+						"selector": ["parameter"],
+						"format": ["camelCase"],
+						"modifiers": ["unused"],
+						"leadingUnderscore": "require"
+					},
+					{
+						"selector": ["interface"],
+						"format": ["PascalCase"],
+						"custom": {
+							"regex": "^I[A-Z]",
+							"match": true
+						}
+					}
+				],
+				"@typescript-eslint/no-misused-promises": [
+					"error",
+					{
+						"checksVoidReturn": {
+							"arguments": false
+						}
+					}
+				],
+				"@typescript-eslint/no-floating-promises": "error",
+				"no-unreachable-loop": "error"
+			},
+			"parserOptions": {
+				"project": ["./tsconfig.json"]
+			},
+			"excludedFiles": [".scripts/*.ts"]
+		},
+		{
+			"files": ["./src/app/**/{page,layout,error,loading,not-found}.tsx", "*.ts"],
+			"rules": {
+				"import/no-default-export": "off"
+			}
+		},
+		{
+			"files": ["__tests__/**/*.{ts,tsx}"],
+			"extends": ["plugin:playwright/recommended"]
+		}
+	],
+	"ignorePatterns": ["*.js", "*.jsx", "*.cjs", "src/checkout/src/graphql"]
 }

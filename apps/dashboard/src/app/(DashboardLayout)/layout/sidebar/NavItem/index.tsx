@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-unsafe-assignment */
 import React from 'react';
 // mui imports
 import { ListItemIcon, ListItem, List, styled, ListItemText, useTheme, ListItemButton } from '@mui/material';
@@ -14,15 +15,16 @@ type NavGroup = {
 	onClick?: React.MouseEvent<HTMLButtonElement, MouseEvent>;
 };
 
-interface ItemType {
+interface IItemType {
 	item: NavGroup;
 	onClick: (event: React.MouseEvent<HTMLElement>) => void;
 	hideMenu?: any;
+	// eslint-disable-next-line @typescript-eslint/no-redundant-type-constituents
 	level?: number | any;
 	pathDirect: string;
 }
 
-const NavItem = ({ item, level, pathDirect, onClick }: ItemType) => {
+const NavItem = ({ item, level, pathDirect, onClick }: IItemType) => {
 	const Icon = item.icon;
 	const theme = useTheme();
 	const itemIcon = <Icon stroke={1.5} size="1.3rem" />;

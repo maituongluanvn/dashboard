@@ -1,15 +1,18 @@
+/* eslint-disable @typescript-eslint/no-unsafe-call */
+/* eslint-disable @typescript-eslint/no-unsafe-member-access */
 import { useMediaQuery, Box, Drawer } from '@mui/material';
 import Logo from '../shared/logo/Logo';
 import SidebarItems from './SidebarItems';
 import { Upgrade } from './Updrade';
 
-interface ItemType {
+interface IItemType {
 	isMobileSidebarOpen: boolean;
 	onSidebarClose: (event: React.MouseEvent<HTMLElement>) => void;
 	isSidebarOpen: boolean;
 }
 
-const Sidebar = ({ isMobileSidebarOpen, onSidebarClose, isSidebarOpen }: ItemType) => {
+const Sidebar = ({ isMobileSidebarOpen, onSidebarClose, isSidebarOpen }: IItemType) => {
+	// eslint-disable-next-line @typescript-eslint/no-unsafe-return
 	const lgUp = useMediaQuery((theme: any) => theme.breakpoints.up('lg'));
 
 	const sidebarWidth = '270px';
