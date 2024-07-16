@@ -8,7 +8,7 @@ import type { IProduct } from '@/definition';
 // };
 
 export default async function handler(_req: NextApiRequest, res: NextApiResponse) {
-    // const result = await fetch(`${process.env.NEXT_PUBLIC_API_BASE_URL}/products.json`);
+	// const result = await fetch(`${process.env.NEXT_PUBLIC_API_BASE_URL}/products.json`);
 	// const result = await fetch(process.env.PRODUCT_JSON_URL as string, {
 	// 	headers: {
 	// 		'Content-Type': 'application/json',
@@ -16,10 +16,10 @@ export default async function handler(_req: NextApiRequest, res: NextApiResponse
 	// 	},
 	// });
 
-	const { products }: { products: IProduct[] } = data as unknown  as { products: IProduct[] } ;
+	const { products }: { products: IProduct[] } = data as unknown as { products: IProduct[] };
 	if (!products) {
 		res.status(400).json({ message: `Not found products` });
 	}
 
-	res.status(200).json(products );
+	res.status(200).json(products);
 }
