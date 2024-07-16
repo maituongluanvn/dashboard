@@ -87,8 +87,5 @@
 		"tailwindcss": "3.4.0",
 		"typescript": "5.3.3",
 		"wonka": "6.3.4"
-	},
-	"engines": {
-		"node": ">=18"
 	}
 }
