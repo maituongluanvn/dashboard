@@ -10,6 +10,10 @@
 			"dependsOn": ["^build"],
 			"outputs": ["dist/**", ".next/**"]
 		},
+		"build:definition": {
+			"dependsOn": ["^build"],
+			"outputs": ["dist/**", ".next/**"]
+		},
 		"tsc": {
 			"outputs": []
 		},

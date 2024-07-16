@@ -1,23 +1,14 @@
 import { NestFactory } from '@nestjs/core';
 import { AppModule } from './app.module';
 import { SwaggerModule, DocumentBuilder } from '@nestjs/swagger';
-import type { ValidationError } from '@nestjs/common';
-import { Logger, ValidationPipe, BadRequestException } from '@nestjs/common';
+import { Logger } from '@nestjs/common';
 
 // import env from '@config';
 
 async function bootstrap() {
 	const app = await NestFactory.create(AppModule);
 
-	app.setGlobalPrefix('backend/api/v1');
-	app.useGlobalPipes(
-		new ValidationPipe({
-			exceptionFactory: (errors: ValidationError[]) => {
-				Logger.error(`ExceptionFactory: ${errors}`);
-				return new BadRequestException(`Validation error ${errors} `);
-			},
-		}),
-	);
+	app.setGlobalPrefix('api');
 	if (process.env.NODE_ENV) {
 		const config = new DocumentBuilder()
 			.setTitle('Backend API')
@@ -26,7 +17,7 @@ async function bootstrap() {
 			// .addTag('cats')
 			.build();
 		const document = SwaggerModule.createDocument(app, config);
-		SwaggerModule.setup('backend/api/swagger', app, document);
+		SwaggerModule.setup('api/swagger', app, document);
 	}
 
 	await app.listen(8888, () => {

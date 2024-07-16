@@ -7,6 +7,7 @@
 	"scripts": {
 		"build": "turbo run build",
 		"build:commerce": "turbo run build --filter=@commerce/ui",
+		"build:definition": "turbo run build --filter=@cores/definition",
 		"testunit": "turbo run testunit",
 		"dev": "turbo run dev",
 		"dev:api": "turbo run dev:api",
@@ -24,5 +25,9 @@
 		"packages/*"
 	],
 	"license": "MIT",
+	"engines": {
+		"pnpm": "9.5.0",
+		"node": "^20.15.0"
+	},
 	"packageManager": "pnpm@9.5.0"
 }
