@@ -25,6 +25,8 @@ RUN pnpm run build:definition
 # Stage 2: Production
 FROM --platform=$TARGETPLATFORM node:20.15.0-slim AS production
 
+ENV MONGO_URI=""
+
 # Install pnpm
 RUN npm install -g pnpm
 
@@ -40,7 +42,7 @@ COPY --from=builder app/packages ./packages
 RUN pnpm install --production
 
 # Expose the port the app runs on
-EXPOSE 3000
+EXPOSE 8888
 
 # Command to run the API
 CMD ["node", "apps/api/dist/main.js"]
