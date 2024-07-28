@@ -6,6 +6,10 @@
 			"dependsOn": ["^build"],
 			"outputs": ["dist/**", ".next/**"]
 		},
+		"build:api": {
+			"dependsOn": ["^build"],
+			"outputs": ["dist/**"]
+		},
 		"build:commerce": {
 			"dependsOn": ["^build"],
 			"outputs": ["dist/**", ".next/**"]

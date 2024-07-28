@@ -192,11 +192,11 @@ const TypographyPage = () => {
 							<Grid item sm={12}>
 								<BlankCard>
 									<CardContent>
-										<Typography variant='h5' sx={{ color: theme => theme.palette.info.main }}>
+										<Typography variant="h5" sx={{ color: theme => theme.palette.info.main }}>
 											Text Info
 										</Typography>
 
-										<Typography variant='body1' sx={{ color: theme => theme.palette.info.main }}>
+										<Typography variant="body1" sx={{ color: theme => theme.palette.info.main }}>
 											Lorem ipsum dolor sit amet, consectetur adipisicing elit. Quos blanditiis tenetur
 										</Typography>
 									</CardContent>
@@ -205,11 +205,11 @@ const TypographyPage = () => {
 							<Grid item sm={12}>
 								<BlankCard>
 									<CardContent>
-										<Typography variant='h5' sx={{ color: theme => theme.palette.primary.main }}>
+										<Typography variant="h5" sx={{ color: theme => theme.palette.primary.main }}>
 											Text Primary
 										</Typography>
 
-										<Typography variant='body1' sx={{ color: theme => theme.palette.primary.main }}>
+										<Typography variant="body1" sx={{ color: theme => theme.palette.primary.main }}>
 											Lorem ipsum dolor sit amet, consectetur adipisicing elit. Quos blanditiis tenetur
 										</Typography>
 									</CardContent>
@@ -218,11 +218,11 @@ const TypographyPage = () => {
 							<Grid item sm={12}>
 								<BlankCard>
 									<CardContent>
-										<Typography variant='h5' sx={{ color: theme => theme.palette.warning.main }}>
+										<Typography variant="h5" sx={{ color: theme => theme.palette.warning.main }}>
 											Text Warning
 										</Typography>
 
-										<Typography variant='body1' sx={{ color: theme => theme.palette.warning.main }}>
+										<Typography variant="body1" sx={{ color: theme => theme.palette.warning.main }}>
 											Lorem ipsum dolor sit amet, consectetur adipisicing elit. Quos blanditiis tenetur
 										</Typography>
 									</CardContent>
@@ -231,11 +231,11 @@ const TypographyPage = () => {
 							<Grid item sm={12}>
 								<BlankCard>
 									<CardContent>
-										<Typography variant='h5' sx={{ color: theme => theme.palette.error.main }}>
+										<Typography variant="h5" sx={{ color: theme => theme.palette.error.main }}>
 											Text Error
 										</Typography>
 
-										<Typography variant='body1' sx={{ color: theme => theme.palette.error.main }}>
+										<Typography variant="body1" sx={{ color: theme => theme.palette.error.main }}>
 											Lorem ipsum dolor sit amet, consectetur adipisicing elit. Quos blanditiis tenetur
 										</Typography>
 									</CardContent>
@@ -244,11 +244,11 @@ const TypographyPage = () => {
 							<Grid item sm={12}>
 								<BlankCard>
 									<CardContent>
-										<Typography variant='h5' sx={{ color: theme => theme.palette.success.main }}>
+										<Typography variant="h5" sx={{ color: theme => theme.palette.success.main }}>
 											Text Success
 										</Typography>
 
-										<Typography variant='body1' sx={{ color: theme => theme.palette.success.main }}>
+										<Typography variant="body1" sx={{ color: theme => theme.palette.success.main }}>
 											Lorem ipsum dolor sit amet, consectetur adipisicing elit. Quos blanditiis tenetur
 										</Typography>
 									</CardContent>

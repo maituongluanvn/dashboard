@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-unsafe-call */
 /* eslint-disable @typescript-eslint/no-unsafe-assignment */
 /* eslint-disable @typescript-eslint/no-unsafe-member-access */
 /* eslint-disable @typescript-eslint/no-unsafe-return */
@@ -6,13 +7,13 @@ import PropTypes from 'prop-types';
 // mui imports
 import { ListSubheader, styled, type Theme } from '@mui/material';
 
-type NavGroup = {
+type NavGroupType = {
 	navlabel?: boolean;
 	subheader?: string;
 };
 
 interface IItemType {
-	item: NavGroup;
+	item: NavGroupType;
 }
 
 const NavGroup = ({ item }: IItemType) => {
