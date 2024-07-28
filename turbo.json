@@ -30,6 +30,9 @@
 		"dev:api": {
 			"cache": false
 		},
+		"dev:dashboard": {
+			"cache": false
+		},
 		"dev": {
 			"cache": false
 		},
