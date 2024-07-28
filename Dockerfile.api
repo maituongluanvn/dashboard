@@ -1,0 +1,52 @@
+# Stage 1: Build
+FROM --platform=$BUILDPLATFORM node:20.15.0-slim AS builder
+
+# Set environment variables
+ENV NEXT_PUBLIC_SALEOR_API_URL="https://storefront1.saleor.cloud/graphql/"
+ENV NEXT_PUBLIC_API_BASE_URL="http://localhost:3000"
+ENV PRODUCT_JSON_URL="https://3ymzvofxaogcuowg.public.blob.vercel-storage.com/products-bC1qc1cXEi9tDRsYgrZDBotfPOyAg2.json"
+
+# Install pnpm
+RUN npm install -g pnpm
+
+# Set working directory
+WORKDIR /app
+
+# Copy package.json, pnpm-lock.yaml, and turbo.json for the whole monorepo
+COPY package.json pnpm-lock.yaml turbo.json ./
+
+# Install dependencies for the whole monorepo
+RUN pnpm install
+
+# Copy the entire source code
+COPY . .
+
+# Run Turborepo build for the specific project (api)
+RUN pnpm turbo run build:api
+
+# Stage 2: Production
+FROM --platform=$TARGETPLATFORM node:20.15.0-slim AS production
+
+# Install pnpm
+RUN npm install -g pnpm
+ 
+WORKDIR /usr/src/app
+ 
+# Copy root package.json and lockfile
+COPY package.json pnpm-lock.yaml turbo.json pnpm-workspace.yaml ./
+ 
+# Copy the needed folder
+COPY apps/api/dist ./apps/api/dist
+COPY packages/definition ./packages/definition
+
+RUN pnpm install
+RUN pnpm run build:definition
+
+# Copy app source
+COPY . .
+ 
+# Expose the port the app runs on
+EXPOSE 3000
+
+# Command to run the API
+CMD ["node", "apps/api/dist/main.js"]
