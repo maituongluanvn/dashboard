@@ -12,39 +12,33 @@ RUN npm install -g pnpm
 # Set working directory
 WORKDIR /app
 
-# Copy package.json, pnpm-lock.yaml, and turbo.json for the whole monorepo
-COPY package.json pnpm-lock.yaml turbo.json ./
+# Copy the entire source code
+COPY . .
 
 # Install dependencies for the whole monorepo
 RUN pnpm install
 
-# Copy the entire source code
-COPY . .
-
 # Run Turborepo build for the specific project (api)
-RUN pnpm turbo run build:api
+RUN pnpm run build:api
+RUN pnpm run build:definition
 
 # Stage 2: Production
 FROM --platform=$TARGETPLATFORM node:20.15.0-slim AS production
 
 # Install pnpm
 RUN npm install -g pnpm
- 
-WORKDIR /usr/src/app
+
+WORKDIR /app
  
 # Copy root package.json and lockfile
 COPY package.json pnpm-lock.yaml turbo.json pnpm-workspace.yaml ./
  
 # Copy the needed folder
-COPY apps/api/dist ./apps/api/dist
-COPY packages/definition ./packages/definition
+COPY --from=builder app/apps/api ./apps/api
+COPY --from=builder app/packages ./packages
 
-RUN pnpm install
-RUN pnpm run build:definition
+RUN pnpm install --production
 
-# Copy app source
-COPY . .
- 
 # Expose the port the app runs on
 EXPOSE 3000
 

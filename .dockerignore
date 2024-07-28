@@ -1,0 +1,25 @@
+# Exclude unnecessary directories and files
+
+# Exclude node_modules directories and build output
+node_modules
+.turbo
+**/node_modules
+**/dist
+**/build
+**/.turbo
+*.log
+
+# Exclude configuration files and binaries not needed for Docker build
+*.md
+*.git
+*.gitignore
+*.npmrc
+*.yarnrc
+*.pnpmfile.cjs
+*.dockerignore
+
+# Exclude temporary and cache directories
+tmp
+temp
+.cache
+.DS_Store
