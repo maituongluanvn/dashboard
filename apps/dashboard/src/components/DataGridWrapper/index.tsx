@@ -1,29 +1,32 @@
-// DataGridWrapper.tsx
 import React from 'react';
-import type { GridColDef, GridRowsProp } from '@mui/x-data-grid';
-import { DataGrid } from '@mui/x-data-grid';
+import type { GridColDef, GridRowModel } from '@mui/x-data-grid';
+import { DataGrid, GridValidRowModel } from '@mui/x-data-grid';
 
-interface IDataGridWrapperProps {
-	data: GridRowsProp;
-	setData: (data: GridRowsProp) => void;
-	addNew: (newRow: any) => void;
+interface IDataGridWrapperProps<T extends GridRowModel> {
+	data: T[]; // Generic data array
+	setData: (data: T[]) => void; // Function to update data
+	addNew: (newRow: T) => void; // Function to add a new row
 	columnsConfig: GridColDef[];
+	getRowId: (row: T) => string; // Function to get row id
 }
 
-const DataGridWrapper: React.FC<IDataGridWrapperProps> = ({ data, setData, addNew, columnsConfig }) => {
-	const processRowUpdate = (newRow: any, oldRow: any) => {
-		const updatedRows = data.map(row => (row.id === newRow.id ? { ...row, ...newRow } : row));
-		setData(updatedRows);
-		return newRow;
+const DataGridWrapper = <T extends GridRowModel>({
+	data,
+	setData,
+	addNew,
+	columnsConfig,
+	getRowId,
+}: IDataGridWrapperProps<T>) => {
+	const processRowUpdate = (newRow: GridRowModel, oldRow: GridRowModel) => {
+		// Type assertion to align with generic type T
+		const updatedRow = { ...(newRow as T) };
+		const updatedRows = data.map(row => (getRowId(row) === newRow.id ? updatedRow : row));
+		setData(updatedRows as T[]);
+		return updatedRow;
 	};
 
 	const handleProcessRowUpdateError = (error: Error) => {
 		console.error('Row update failed:', error);
-	};
-
-	const handleAddNew = () => {
-		const newRow = { id: Date.now().toString(), name: '', description: '' };
-		addNew(newRow);
 	};
 
 	return (
@@ -31,12 +34,37 @@ const DataGridWrapper: React.FC<IDataGridWrapperProps> = ({ data, setData, addNe
 			<DataGrid
 				rows={data}
 				columns={columnsConfig}
-				getRowId={row => row._id}
+				getRowId={getRowId} // Use getRowId to define row id
 				processRowUpdate={processRowUpdate}
 				onProcessRowUpdateError={handleProcessRowUpdateError}
-				checkboxSelection
+				checkboxSelection={false}
 			/>
-			<button onClick={handleAddNew}>Add New</button>
+			{/* <button
+				onClick={() =>
+					addNew({
+						_id: Date.now().toString(), // Replace with actual default values
+						name: '',
+						slug: '',
+						description: '',
+						seoTitle: '',
+						seoDescription: '',
+						pricing: {
+							priceRange: {
+								start: { gross: { amount: 0, currency: '' } },
+								stop: { gross: { amount: 0, currency: '' } },
+							},
+						},
+						category: { id: '', name: '' },
+						thumbnail: { url: '', alt: '' },
+						variants: [],
+						belongTo: '',
+						createdAt: '',
+						updatedAt: '',
+					} as T)
+				}
+			>
+				Add New Product
+			</button> */}
 		</div>
 	);
 };
