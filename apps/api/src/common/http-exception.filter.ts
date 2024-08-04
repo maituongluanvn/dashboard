@@ -15,9 +15,12 @@ export class HttpExceptionFilter implements ExceptionFilter {
 		const message = exception.message || 'Something went wrong';
 		const stack = exception.stack || '';
 
-		// Log the error details
-		// this.logger.error(`HTTP Status: ${status} | ${message}`, stack);
-		this.logger.error(`HTTP Status: ${status} | ${message}`);
+		// Determine logging level based on status or exception type
+		if (status <= HttpStatus.INTERNAL_SERVER_ERROR) {
+			this.logger.error(`HTTP Status: ${status} | ${message}`, stack);
+		} else {
+			this.logger.warn(`HTTP Status: ${status} | ${message}`);
+		}
 
 		// const apiResponse: IApiResponse = {
 		// 	status: status,
