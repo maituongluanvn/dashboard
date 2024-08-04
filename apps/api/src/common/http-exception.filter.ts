@@ -1,24 +1,29 @@
-import type { ExceptionFilter, ArgumentsHost } from '@nestjs/common';
-import { HttpException } from '@nestjs/common';
-import { Catch, HttpStatus } from '@nestjs/common';
+import { ExceptionFilter, ArgumentsHost, Catch, HttpException, HttpStatus, Logger } from '@nestjs/common';
 import type { Request, Response } from 'express';
 import type { IApiResponse } from '@common/api-responese.interface';
 
 @Catch()
 export class HttpExceptionFilter implements ExceptionFilter {
+	private readonly logger = new Logger(HttpExceptionFilter.name);
+
 	catch(exception: any, host: ArgumentsHost) {
 		const ctx = host.switchToHttp();
 		const response = ctx.getResponse<Response>();
-		// eslint-disable-next-line @typescript-eslint/no-unused-vars
 		const request = ctx.getRequest<Request>();
 
 		const status = exception instanceof HttpException ? exception.getStatus() : HttpStatus.BAD_REQUEST;
+		const message = exception.message || 'Something went wrong';
+		const stack = exception.stack || '';
 
-		const apiResponse: IApiResponse = {
-			status: status,
-			message: exception.message || 'Something went wrong',
-		};
+		// Log the error details
+		// this.logger.error(`HTTP Status: ${status} | ${message}`, stack);
+		this.logger.error(`HTTP Status: ${status} | ${message}`);
 
-		response.status(status).json(apiResponse);
+		// const apiResponse: IApiResponse = {
+		// 	status: status,
+		// 	message: message,
+		// };
+
+		// response.status(status).json(apiResponse);
 	}
 }
