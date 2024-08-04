@@ -7,7 +7,7 @@
 		"project": ["./tsconfig.json", "./apps/*/tsconfig.json"]
 	},
 	"plugins": ["@typescript-eslint"],
-	"extends": ["@cores/eslint-config", "next/core-web-vitals", "next"],
+	"extends": ["@cores/eslint", "next/core-web-vitals", "next"],
 	"settings": {
 		"import/resolver": {
 			"node": {

@@ -16587,6 +16587,7 @@ export type OrderFilterInput = {
   channels?: InputMaybe<Array<Scalars['ID']['input']>>;
   chargeStatus?: InputMaybe<Array<OrderChargeStatusEnum>>;
   checkoutIds?: InputMaybe<Array<Scalars['ID']['input']>>;
+  checkoutTokens?: InputMaybe<Array<Scalars['UUID']['input']>>;
   created?: InputMaybe<DateRangeInput>;
   customer?: InputMaybe<Scalars['String']['input']>;
   giftCardBought?: InputMaybe<Scalars['Boolean']['input']>;

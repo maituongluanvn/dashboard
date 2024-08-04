@@ -72,10 +72,6 @@ export class Thumbnail {
 }
 
 export class CreateProductDto {
-	@IsOptional()
-	@IsString()
-	id?: string;
-
 	@IsNotEmpty()
 	@IsString()
 	name: string;

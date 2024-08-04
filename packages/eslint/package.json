@@ -1,5 +1,5 @@
 {
-	"name": "@cores/eslint-config",
+	"name": "@cores/eslint",
 	"version": "0.7.0",
 	"description": "Cores's JS/TS ESLint config",
 	"dependencies": {

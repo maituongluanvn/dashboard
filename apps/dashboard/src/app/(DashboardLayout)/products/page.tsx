@@ -11,6 +11,7 @@ const Products: React.FC = () => {
 		data: products = [],
 		loading,
 		error,
+		// eslint-disable-next-line @typescript-eslint/no-unsafe-call
 	} = useFetch<IProduct[]>(`${process.env.NEXT_PUBLIC_API_URL}/dashboard/product`);
 
 	const [data, setData] = useState<IProduct[]>(products || []);
@@ -51,6 +52,7 @@ const Products: React.FC = () => {
 			<PageContainer title="Products Page" description="This is the Products page">
 				<DashboardCard title="Product List">
 					<DataGridWrapper<IProduct>
+						addNewButtonTo="/products/new"
 						data={data}
 						setData={setData}
 						addNew={addNew}

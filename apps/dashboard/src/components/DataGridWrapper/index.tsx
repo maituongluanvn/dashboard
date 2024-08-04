@@ -1,13 +1,17 @@
+'use client';
 import React from 'react';
 import type { GridColDef, GridRowModel } from '@mui/x-data-grid';
 import { DataGrid, GridValidRowModel } from '@mui/x-data-grid';
+import Button from '@mui/material/Button';
+import { useRouter } from 'next/navigation';
 
 interface IDataGridWrapperProps<T extends GridRowModel> {
-	data: T[]; // Generic data array
-	setData: (data: T[]) => void; // Function to update data
-	addNew: (newRow: T) => void; // Function to add a new row
+	data: T[];
+	setData: (data: T[]) => void;
+	addNew: (newRow: T) => void;
 	columnsConfig: GridColDef[];
-	getRowId: (row: T) => string; // Function to get row id
+	getRowId: (row: T) => string;
+	addNewButtonTo: string;
 }
 
 const DataGridWrapper = <T extends GridRowModel>({
@@ -16,9 +20,11 @@ const DataGridWrapper = <T extends GridRowModel>({
 	addNew,
 	columnsConfig,
 	getRowId,
+	addNewButtonTo,
 }: IDataGridWrapperProps<T>) => {
+	const router = useRouter();
+
 	const processRowUpdate = (newRow: GridRowModel, oldRow: GridRowModel) => {
-		// Type assertion to align with generic type T
 		const updatedRow = { ...(newRow as T) };
 		const updatedRows = data.map(row => (getRowId(row) === newRow.id ? updatedRow : row));
 		setData(updatedRows as T[]);
@@ -31,40 +37,17 @@ const DataGridWrapper = <T extends GridRowModel>({
 
 	return (
 		<div style={{ height: 400, width: '100%' }}>
+			<Button onClick={() => router.push(addNewButtonTo)} variant="contained">
+				Add new product
+			</Button>
 			<DataGrid
 				rows={data}
 				columns={columnsConfig}
-				getRowId={getRowId} // Use getRowId to define row id
+				getRowId={getRowId}
 				processRowUpdate={processRowUpdate}
 				onProcessRowUpdateError={handleProcessRowUpdateError}
 				checkboxSelection={false}
 			/>
-			{/* <button
-				onClick={() =>
-					addNew({
-						_id: Date.now().toString(), // Replace with actual default values
-						name: '',
-						slug: '',
-						description: '',
-						seoTitle: '',
-						seoDescription: '',
-						pricing: {
-							priceRange: {
-								start: { gross: { amount: 0, currency: '' } },
-								stop: { gross: { amount: 0, currency: '' } },
-							},
-						},
-						category: { id: '', name: '' },
-						thumbnail: { url: '', alt: '' },
-						variants: [],
-						belongTo: '',
-						createdAt: '',
-						updatedAt: '',
-					} as T)
-				}
-			>
-				Add New Product
-			</button> */}
 		</div>
 	);
 };

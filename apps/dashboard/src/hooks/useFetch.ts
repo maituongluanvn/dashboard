@@ -30,7 +30,6 @@ const useFetch = <T>(url: string, method: HttpMethod = 'GET', bodyData?: any): I
 				const result = (await response.json()) as T;
 				setData(result);
 			} catch (err) {
-				// Type the error as unknown to enforce type-checking
 				if (err instanceof Error) {
 					setError(err);
 				} else {

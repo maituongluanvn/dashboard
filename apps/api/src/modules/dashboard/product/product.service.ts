@@ -18,6 +18,7 @@ export class ProductService {
 
 	async createProduct(product: CreateProductDto): Promise<void> {
 		(await this.products.create(product)).save();
+			
 	}
 
 	async updateProduct(id: string, updatedProduct: Partial<IProduct>): Promise<IProduct | null> {

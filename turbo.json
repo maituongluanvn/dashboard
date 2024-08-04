@@ -18,6 +18,10 @@
 			"dependsOn": ["^build"],
 			"outputs": ["dist/**", ".next/**"]
 		},
+		"build:eslint": {
+			"dependsOn": ["^build"],
+			"outputs": ["dist/**", ".next/**"]
+		},
 		"tsc": {
 			"outputs": []
 		},

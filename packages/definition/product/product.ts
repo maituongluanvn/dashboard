@@ -32,6 +32,8 @@ export interface IVariants {
 	pricing: { price: { gross: { currency: string; amount: number } } };
 }
 
+export interface IProductWithoutID extends Omit<IProduct, 'id'> {}
+
 export interface IProduct {
 	id: string;
 	name: string;
