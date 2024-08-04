@@ -34,8 +34,13 @@ export interface IVariants {
 
 export interface IProductWithoutID extends Omit<IProduct, 'id'> {}
 
+export interface ObjectId {
+	toHexString(): string;
+	// You can add more methods as needed, but this is the most commonly used one
+}
+
 export interface IProduct {
-	id: string;
+	_id: ObjectId | string;
 	name: string;
 	slug: string;
 	description: string;
@@ -47,6 +52,8 @@ export interface IProduct {
 	variants: IVariants[];
 	belongTo: string;
 }
+
+
 
 export interface IProductStore {
 	products: IProduct[] | null;

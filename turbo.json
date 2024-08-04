@@ -16,7 +16,8 @@
 		},
 		"build:definition": {
 			"dependsOn": ["^build"],
-			"outputs": ["dist/**", ".next/**"]
+			"outputs": ["dist/**", ".next/**"],
+			"cache": false
 		},
 		"build:eslint": {
 			"dependsOn": ["^build"],

@@ -10,7 +10,11 @@ import { type IProduct } from '@/definition';
 
 // const Page({ params }: { params: { channel: string } }) {
 const Page: React.FC = () => {
-	const { data: products, loading, error } = useFetch<IProduct[]>('/api/product');
+	const {
+		data: products = [],
+		loading,
+		error,
+	} = useFetch<IProduct[]>(`${process.env.NEXT_PUBLIC_API_URL}/dashboard/product`);
 
 	if (loading) return <p>Loading...</p>;
 	if (error as any) return <p>Error: {error as any}</p>;

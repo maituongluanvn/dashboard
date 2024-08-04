@@ -16,6 +16,15 @@ export class ProductService {
 		return await this.products.findById(id);
 	}
 
+	// todo: need update promise<any>
+	async getProductBySlug(slug: string): Promise<any> {
+		const product = await this.products.findOne({ slug }).exec();
+		if (!product) {
+			return null; 
+		}
+		return product;
+	}
+
 	async createProduct(product: CreateProductDto): Promise<void> {
 		(await this.products.create(product)).save();
 			

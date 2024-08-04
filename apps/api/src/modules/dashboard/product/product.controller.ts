@@ -17,8 +17,8 @@ export class ProductController {
 	}
 
 	@Get(':id')
-	async getProductById(@Param('id') id: string): Promise<IProduct | undefined> {
-		return this.productService.getProductById(id);
+	async getProductBySlug(@Param('id') id: string): Promise<IProduct | undefined> {
+		return this.productService.getProductBySlug(id);
 	}
 
 	@Post()
