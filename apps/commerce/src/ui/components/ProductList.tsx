@@ -1,5 +1,5 @@
 import { ProductElement } from './ProductElement';
-import { type IProduct } from '@/definition';
+import { type IProduct } from '@cores/definition';
 
 export const ProductList = ({ products }: { products: IProduct[] }) => {
 	return (
@@ -10,7 +10,7 @@ export const ProductList = ({ products }: { products: IProduct[] }) => {
 		>
 			{products.map((product, index) => (
 				<ProductElement
-					key={product.id}
+					key={product._id as string}
 					product={product}
 					priority={index < 2}
 					loading={index < 3 ? 'eager' : 'lazy'}

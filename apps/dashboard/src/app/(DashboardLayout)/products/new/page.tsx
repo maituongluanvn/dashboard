@@ -1,8 +1,9 @@
 'use client';
 import React, { useState } from 'react';
-import { TextField, Button, Grid, Box } from '@mui/material';
+import { TextField, Button, Grid, Box, CircularProgress } from '@mui/material';
 import { useFormik } from 'formik';
 import * as Yup from 'yup';
+import { useRouter } from 'next/navigation'; // Đối với Next.js 13 hoặc mới hơn
 import type { IProduct, IProductWithoutID } from '@cores/definition';
 
 // Define flattened form values type
@@ -40,7 +41,46 @@ const validationSchema = Yup.object({
 
 const NewProductForm: React.FC = () => {
 	const [imagePreview, setImagePreview] = useState<string | null>(null);
+	const [imageFile, setImageFile] = useState<File | null>(null);
+	const [loading, setLoading] = useState(false);
 	const [submitStatus, setSubmitStatus] = useState<string | null>(null);
+	const router = useRouter(); // Hook để điều hướng
+
+	const handleImageChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+		const file = event.target.files?.[0];
+		if (file) {
+			setImageFile(file);
+			const reader = new FileReader();
+			reader.onloadend = () => {
+				setImagePreview(reader.result as string);
+			};
+			reader.readAsDataURL(file);
+		}
+	};
+
+	const uploadImage = async (file: File) => {
+		const formData = new FormData();
+		formData.append('file', file);
+		console.log('🚀 ~ uploadImage ~ formData:', formData);
+
+		try {
+			const response = await fetch('/api/upload', {
+				method: 'POST',
+				body: formData,
+			});
+
+			const result = await response.json();
+			if (response.ok) {
+				return result.url;
+			} else {
+				console.error('Upload failed:', result.error);
+				throw new Error(result.error || 'Upload failed');
+			}
+		} catch (error) {
+			console.error('An unexpected error occurred:', error);
+			throw error;
+		}
+	};
 
 	const useSubmitProduct = async (product: IProductWithoutID) => {
 		const url = `${process.env.NEXT_PUBLIC_API_URL}/dashboard/product`;
@@ -82,46 +122,48 @@ const NewProductForm: React.FC = () => {
 		},
 		validationSchema,
 		onSubmit: async values => {
-			const product: IProductWithoutID = {
-				name: values.name,
-				slug: values.slug,
-				description: values.description,
-				seoTitle: values.seoTitle,
-				seoDescription: values.seoDescription,
-				pricing: {
-					priceRange: {
-						start: { gross: { amount: values.pricingStartAmount, currency: 'VND' } },
-						stop: { gross: { amount: values.pricingStopAmount, currency: 'VND' } },
+			try {
+				setLoading(true);
+				let thumbnailUrl = '';
+
+				if (imageFile) {
+					thumbnailUrl = await uploadImage(imageFile);
+				}
+
+				const product: IProductWithoutID = {
+					name: values.name,
+					slug: values.slug,
+					description: values.description,
+					seoTitle: values.seoTitle,
+					seoDescription: values.seoDescription,
+					pricing: {
+						priceRange: {
+							start: { gross: { amount: values.pricingStartAmount, currency: 'VND' } },
+							stop: { gross: { amount: values.pricingStopAmount, currency: 'VND' } },
+						},
 					},
-				},
-				category: { id: '', name: values.categoryName }, // Adjust category id if needed
-				thumbnail: { url: values.thumbnailUrl, alt: '' }, // Handle thumbnail alt text if needed
-				variants: [], // Adjust if you have variants
-				belongTo: 'hoangphuc', // Adjust if needed
-			};
+					category: { id: '', name: values.categoryName }, // Adjust category id if needed
+					thumbnail: { url: thumbnailUrl, alt: '' }, // Handle thumbnail alt text if needed
+					variants: [], // Adjust if you have variants
+					belongTo: values.belongTo, // Use formik value for belongTo
+				};
 
-			setSubmitStatus('Submitting...');
-			const { data, error } = await useSubmitProduct(product);
+				setSubmitStatus('Submitting...');
+				const { data, error } = await useSubmitProduct(product);
 
-			if (error) {
-				setSubmitStatus(`Error: ${error.message}`);
-			} else if (data) {
-				setSubmitStatus('Submission successful!');
+				if (error) {
+					setSubmitStatus(`Error: ${error.message}`);
+				} else if (data) {
+					setSubmitStatus('Submission successful!');
+					router.push('/products'); // Chuyển hướng sau khi submit thành công
+				}
+			} catch (error) {
+				setSubmitStatus('An error occurred during submission');
+			} finally {
+				setLoading(false);
 			}
 		},
 	});
-
-	const handleImageChange = (event: React.ChangeEvent<HTMLInputElement>) => {
-		const file = event.target.files?.[0];
-		if (file) {
-			const reader = new FileReader();
-			reader.onloadend = () => {
-				setImagePreview(reader.result as string);
-				void formik.setFieldValue('thumbnailUrl', reader.result);
-			};
-			reader.readAsDataURL(file);
-		}
-	};
 
 	return (
 		<Box component="form" onSubmit={formik.handleSubmit} sx={{ maxWidth: '700px', margin: 'auto' }}>
@@ -246,8 +288,8 @@ const NewProductForm: React.FC = () => {
 					)}
 				</Grid>
 				<Grid item xs={12}>
-					<Button color="primary" variant="contained" fullWidth type="submit">
-						Submit
+					<Button color="primary" variant="contained" fullWidth type="submit" disabled={loading}>
+						{loading ? <CircularProgress size={24} /> : 'Submit'}
 					</Button>
 					{submitStatus && <p>{submitStatus}</p>}
 				</Grid>

@@ -1,9 +1,22 @@
-import NextImage, { type ImageProps } from 'next/image';
+import React from 'react';
+import NextImage from 'next/image';
 
-export const ProductImageWrapper = (props: ImageProps) => {
+const ProductImageWrapper = () => {
+	const imageName = 'bf4fb9cabecae802cb8684005'; // Tên hình ảnh trong bucket
+	const imageUrl = `https://storage.googleapis.com/hoangphuc/uploads/${imageName}`;
+
 	return (
-		<div className="aspect-square overflow-hidden bg-neutral-50">
-			<NextImage {...props} className="h-full w-full object-contain object-center p-2" />
+		<div>
+			<NextImage
+				src={imageUrl}
+				alt="Product Image"
+				layout="responsive"
+				width={600}
+				height={400}
+				loading="lazy"
+			/>
 		</div>
 	);
 };
+
+export default ProductImageWrapper;

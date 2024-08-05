@@ -32,7 +32,7 @@ export interface IVariants {
 	pricing: { price: { gross: { currency: string; amount: number } } };
 }
 
-export interface IProductWithoutID extends Omit<IProduct, 'id'> {}
+export interface IProductWithoutID extends Omit<IProduct, '_id'> {}
 
 export interface ObjectId {
 	toHexString(): string;

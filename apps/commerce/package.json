@@ -17,6 +17,7 @@
 	"dependencies": {
 		"@adyen/adyen-web": "5.53.3",
 		"@adyen/api-library": "15.0.0-beta",
+		"@google-cloud/storage": "^7.12.0",
 		"@headlessui/react": "1.7.18",
 		"@saleor/auth-sdk": "1.0.1",
 		"@stripe/react-stripe-js": "2.6.2",
@@ -49,6 +50,7 @@
 		"zustand": "4.4.6"
 	},
 	"devDependencies": {
+		"@cores/definition": "workspace:^",
 		"@cores/eslint": "workspace:^",
 		"@graphql-codegen/cli": "5.0.0",
 		"@graphql-codegen/client-preset": "4.1.0",
