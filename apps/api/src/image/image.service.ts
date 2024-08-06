@@ -1,18 +1,17 @@
 import { Injectable } from '@nestjs/common';
 import { Storage } from '@google-cloud/storage';
 import { Readable } from 'stream';
-import path from 'path';
+import * as path from 'path';
 import { v4 as uuidv4 } from 'uuid';
 
 @Injectable()
 export class ImageService {
   private readonly storage: Storage;
-  private readonly bucketName: string = 'your-bucket-name'; // Thay thế với tên bucket của bạn
+  private readonly bucketName: string = 'hoangphuc'; // Thay thế với tên bucket của bạn
 
   constructor() {
-    console.log("🚀 ~ ImageService ~ constructor ~ __dirname:", __dirname)
     this.storage = new Storage({
-      keyFilename: path.join(__dirname, '..', '..', 'service-account-keyfile.json'), // Đường dẫn đến tệp khóa
+      keyFilename: path.join(__dirname, '..', '..', '..', 'service-account-keyfile.json'), // Đường dẫn đến tệp khóa
     });
   }
 
@@ -31,6 +30,21 @@ export class ImageService {
           const publicUrl = `https://storage.googleapis.com/${this.bucketName}/${blob.name}`;
           resolve(publicUrl);
         });
+    });
+  }
+
+  async fetchImage(filename: string): Promise<Buffer> {
+    const bucket = this.storage.bucket(this.bucketName);
+    const file = bucket.file(filename);
+
+    return new Promise((resolve, reject) => {
+      file.download((err, data) => {
+        if (err) {
+          reject(err);
+        } else {
+          resolve(data);
+        }
+      });
     });
   }
 }

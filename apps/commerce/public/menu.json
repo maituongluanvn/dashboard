@@ -1,0 +1,127 @@
+{
+	"menu": {
+		"items": [
+			{
+				"id": "TWVudUl0ZW06MjI1",
+				"name": "Nước muối",
+				"level": 0,
+				"category": {
+					"id": "Q2F0ZWdvcnk6NDU=",
+					"slug": "Nước muối",
+					"name": "Nước muối"
+				},
+				"collection": null,
+				"page": null,
+				"url": null,
+				"children": [
+					{
+						"id": "TWVudUl0ZW06MjM4",
+						"name": "Shirts",
+						"level": 1,
+						"category": {
+							"id": "Q2F0ZWdvcnk6Mzg=",
+							"slug": "shirts",
+							"name": "Shirts"
+						},
+						"collection": null,
+						"page": null,
+						"url": null
+					},
+					{
+						"id": "TWVudUl0ZW06MjMy",
+						"name": "Headware",
+						"level": 1,
+						"category": {
+							"id": "Q2F0ZWdvcnk6MzM=",
+							"slug": "headware",
+							"name": "Headware"
+						},
+						"collection": null,
+						"page": null,
+						"url": null
+					},
+					{
+						"id": "TWVudUl0ZW06MjI2",
+						"name": "Sneakers",
+						"level": 1,
+						"category": {
+							"id": "Q2F0ZWdvcnk6Mjg=",
+							"slug": "sneakers",
+							"name": "Sneakers"
+						},
+						"collection": null,
+						"page": null,
+						"url": null
+					},
+					{
+						"id": "TWVudUl0ZW06MjI3",
+						"name": "Sweatshirts",
+						"level": 1,
+						"category": {
+							"id": "Q2F0ZWdvcnk6Mjk=",
+							"slug": "sweatshirts",
+							"name": "Sweatshirts"
+						},
+						"collection": null,
+						"page": null,
+						"url": null
+					}
+				]
+			},
+			{
+				"id": "TWVudUl0ZW06MjIz",
+				"name": "Dịch truyền",
+				"level": 0,
+				"category": {
+					"id": "Q2F0ZWdvcnk6MjU=",
+					"slug": "dịch truyền",
+					"name": "Dịch truyền"
+				},
+				"collection": null,
+				"page": null,
+				"url": null,
+				"children": [
+					{
+						"id": "TWVudUl0ZW06MjQw",
+						"name": "Homewares",
+						"level": 1,
+						"category": {
+							"id": "Q2F0ZWdvcnk6NDE=",
+							"slug": "homewares",
+							"name": "Homewares"
+						},
+						"collection": null,
+						"page": null,
+						"url": null
+					},
+					{
+						"id": "TWVudUl0ZW06MjI0",
+						"name": "Audiobooks",
+						"level": 1,
+						"category": {
+							"id": "Q2F0ZWdvcnk6MjY=",
+							"slug": "audiobooks",
+							"name": "Audiobooks"
+						},
+						"collection": null,
+						"page": null,
+						"url": null
+					},
+					{
+						"id": "TWVudUl0ZW06MjQ2",
+						"name": "Gift cards",
+						"level": 1,
+						"category": {
+							"id": "Q2F0ZWdvcnk6NDQ=",
+							"slug": "gift-cards",
+							"name": "Gift cards"
+						},
+						"collection": null,
+						"page": null,
+						"url": null
+					}
+				]
+			}
+		]
+	}
+}
