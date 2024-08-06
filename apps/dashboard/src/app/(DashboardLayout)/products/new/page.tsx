@@ -24,7 +24,12 @@ interface IFormikValues {
 // Define validation schema
 const validationSchema = Yup.object({
 	name: Yup.string().required('Name is required'),
-	slug: Yup.string().required('Slug is required'),
+	slug: Yup.string()
+		.required('Slug is required')
+		.matches(
+			/^[a-z0-9]+(-[a-z0-9]+)*$/,
+			'Slug must be lowercase and can only contain letters, numbers, and hyphens',
+		),
 	description: Yup.string().required('Description is required'),
 	seoTitle: Yup.string().required('SEO Title is required'),
 	seoDescription: Yup.string().required('SEO Description is required'),
@@ -64,7 +69,7 @@ const NewProductForm: React.FC = () => {
 		console.log('🚀 ~ uploadImage ~ formData:', formData);
 
 		try {
-			const response = await fetch('/api/upload', {
+			const response = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/images/upload`, {
 				method: 'POST',
 				body: formData,
 			});
@@ -271,12 +276,31 @@ const NewProductForm: React.FC = () => {
 						id="categoryName"
 						name="categoryName"
 						label="Category"
+						select
+						SelectProps={{ native: true }}
 						value={formik.values.categoryName}
 						onChange={formik.handleChange}
 						onBlur={formik.handleBlur}
 						error={formik.touched.categoryName && Boolean(formik.errors.categoryName)}
 						helperText={formik.touched.categoryName && formik.errors.categoryName}
-					/>
+					>
+						<option value="" disabled>
+							Select category
+						</option>
+						<option value="Vitamin - khoáng chất">Vitamin - khoáng chất</option>
+						<option value="Amino acid">Amino acid</option>
+						<option value="Bù nước - điện giải">Bù nước - điện giải</option>
+						<option value="Giảm đau - hạ sốt">Giảm đau - hạ sốt</option>
+						<option value="Kháng sinh">Kháng sinh</option>
+						<option value="Dạ dày">Dạ dày</option>
+						<option value="Miễn dịch - NSAID">Miễn dịch - NSAID</option>
+						<option value="Cảm cúm - giảm đau - hạ sốt - kháng viêm">
+							Cảm cúm - giảm đau - hạ sốt - kháng viêm
+						</option>
+						<option value="Huyết áp">Huyết áp</option>
+						<option value="Đường huyết">Đường huyết</option>
+						<option value="Thần kinh">Thần kinh</option>
+					</TextField>
 				</Grid>
 				<Grid item xs={12}>
 					<Button variant="contained" component="label">
