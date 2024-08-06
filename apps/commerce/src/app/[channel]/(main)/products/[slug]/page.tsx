@@ -4,71 +4,11 @@ import xss from 'xss';
 import { type WithContext, type Product } from 'schema-dts';
 import { AddButton } from './AddButton';
 import { VariantSelector } from '@/ui/components/VariantSelector';
-import { ProductImageWrapper } from '@/ui/atoms/ProductImageWrapper';
+import ProductImageWrapper from '@/ui/atoms/ProductImageWrapper';
 import { formatMoney, formatMoneyRange } from '@/lib/utils';
 import { AvailabilityMessage } from '@/ui/components/AvailabilityMessage';
-import { type IProduct } from '@/definition/index';
+import { type IProduct } from '@cores/definition';
 import useFetch from '@/hooks/useFetch';
-// export const generateMetadata = (
-// 	{
-// 		params,
-// 		searchParams,
-// 	}: {
-// 		params: { slug: string; channel: string };
-// 		searchParams: { variant?: string };
-// 	},
-// 	parent: ResolvingMetadata,
-// ): Promise<Metadata> => {
-// 	const { products } = useProductStore();
-// 	const product = products[1];
-// 	// const { product }: any = await executeGraphQL(ProductDetailsDocument, {
-// 	// 	variables: {
-// 	// 		slug: decodeURIComponent(params.slug),
-// 	// 		channel: params.channel,
-// 	// 	},
-// 	// 	revalidate: 60,
-// 	// });
-
-// 	if (!product) {
-// 		notFound();
-// 	}
-
-// 	const productName = product.seoTitle || product.name;
-// 	const variantName = product.variants?.find(({ id }: any) => id === searchParams.variant)?.name;
-// 	const productNameAndVariant = variantName ? `${productName} - ${variantName}` : productName;
-
-// 	return {
-// 		title: `${product.name} | ${product.seoTitle}`,
-// 		description: product.seoDescription || productNameAndVariant,
-// 		alternates: {
-// 			canonical: process.env.NEXT_PUBLIC_STOREFRONT_URL
-// 				? process.env.NEXT_PUBLIC_STOREFRONT_URL + `/products/${encodeURIComponent(params.slug)}`
-// 				: undefined,
-// 		},
-// 		openGraph: product.thumbnail
-// 			? {
-// 					images: [
-// 						{
-// 							url: product.thumbnail.url,
-// 							alt: product.name,
-// 						},
-// 					],
-// 				}
-// 			: null,
-// 	};
-// };
-
-// export async function generateStaticParams({ params }: { params: { channel: string } }) {
-// 	const { products } = useProductStore();
-// const { products }: any = await executeGraphQL(ProductListDocument, {
-// 	revalidate: 60,
-// 	variables: { first: 20, channel: params.channel },
-// 	withAuth: false,
-// });
-
-// 	const paths = products?.edges.map(({ node: { slug } }: any) => ({ slug })) || [];
-// 	return paths;
-// }
 
 export default function Page({
 	params,
@@ -94,33 +34,6 @@ export default function Page({
 	const variants = product?.variants;
 	const selectedVariantID = searchParams.variant;
 	const selectedVariant = variants?.find(({ id }: any) => id === selectedVariantID);
-
-	// async function addItem() {
-	// 	'use server';
-
-	// 	const checkout = await Checkout.findOrCreate({
-	// 		checkoutId: Checkout.getIdFromCookies(params.channel),
-	// 		channel: params.channel,
-	// 	});
-	// 	invariant(checkout, 'This should never happen');
-
-	// 	Checkout.saveIdToCookie(params.channel, checkout.id);
-
-	// 	if (!selectedVariantID) {
-	// 		return;
-	// 	}
-
-	// 	// TODO: error handling
-	// 	await executeGraphQL(CheckoutAddLineDocument, {
-	// 		variables: {
-	// 			id: checkout.id,
-	// 			productVariantId: decodeURIComponent(selectedVariantID),
-	// 		},
-	// 		cache: 'no-cache',
-	// 	});
-
-	// 	revalidatePath('/cart');
-	// }
 
 	const isAvailable =
 		variants?.some((variant: { quantityAvailable: any }) => variant.quantityAvailable) ?? false;
@@ -153,7 +66,6 @@ export default function Page({
 				}
 			: {
 					name: product.name,
-
 					description: product.seoDescription || product.name,
 					offers: {
 						'@type': 'AggregateOffer',
