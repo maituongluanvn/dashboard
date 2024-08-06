@@ -11,13 +11,13 @@ export class ImageService {
 
   constructor() {
     this.storage = new Storage({
-      keyFilename: path.join(__dirname, '..', '..', 'service-account-keyfile.json'), // Đường dẫn đến tệp khóa
+      keyFilename: path.join(__dirname,'..', '..', 'service-account-keyfile.json'), // Đường dẫn đến tệp khóa
     });
   }
 
   async uploadFile(file: Express.Multer.File): Promise<string> {
     const bucket = this.storage.bucket(this.bucketName);
-    const blob = bucket.file(`uploads/${uuidv4()}_${file.originalname}`);
+    const blob = bucket.file(`uploads/${uuidv4()}_${file.originalname}`); // Sửa đường dẫn để bao gồm thư mục uploads
     const blobStream = blob.createWriteStream({
       resumable: false,
       contentType: file.mimetype,
@@ -34,9 +34,9 @@ export class ImageService {
   }
 
   async fetchImage(filename: string): Promise<Buffer> {
-    console.log("🚀 ~ ImageService ~ fetchImage ~ filename:", filename)
     const bucket = this.storage.bucket(this.bucketName);
-    const file = bucket.file(`uploads/ae8e915a46fef2e1bf8670f05`);
+    console.log("🚀 ~ ImageService ~ fetchImage ~ bucket:", bucket)
+    const file = bucket.file(`uploads/bf4fb9cabecae802cb8684005`); // Sửa đường dẫn để bao gồm thư mục uploads
 
     return new Promise((resolve, reject) => {
       file.download((err, data) => {

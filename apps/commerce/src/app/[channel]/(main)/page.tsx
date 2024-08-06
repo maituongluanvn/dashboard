@@ -1,7 +1,7 @@
 'use client';
 import { ProductList } from '@/ui/components/ProductList';
 import useFetch from '@/hooks/useFetch';
-import { type IProduct } from '@/definition';
+import { type IProduct } from '@cores/definition';
 // export const metadata = {
 // 	title: 'Hoàng Phúc, powered by Hoang Phuc',
 // 	description:

@@ -15,13 +15,13 @@ export function ProductElement({
 				<div>
 					{product?.thumbnail?.url && (
 						<ProductImageWrapper
-							loading={loading}
+							loadingType={loading}
 							src={product.thumbnail.url}
 							alt={product.thumbnail.alt ?? ''}
 							width={512}
 							height={512}
 							sizes={'512px'}
-							priority={priority}
+							priority={priority || false}
 						/>
 					)}
 					<div className="mt-2 flex justify-between">
