@@ -17,7 +17,6 @@
 	"dependencies": {
 		"@adyen/adyen-web": "5.53.3",
 		"@adyen/api-library": "15.0.0-beta",
-		"@google-cloud/storage": "^7.12.0",
 		"@headlessui/react": "1.7.18",
 		"@saleor/auth-sdk": "1.0.1",
 		"@stripe/react-stripe-js": "2.6.2",

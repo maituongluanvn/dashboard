@@ -14,6 +14,7 @@ import configuration from './config/configuration';
 import { APP_FILTER } from '@nestjs/core';
 import { HttpExceptionFilter } from '@common/http-exception.filter';
 import { AppService } from './app.service';
+import { ImageModule } from './image/image.module';
 @Module({
 	imports: [
 		ConfigModule.forRoot({ load: [configuration], isGlobal: true, cache: true }),
@@ -29,6 +30,7 @@ import { AppService } from './app.service';
 		OutcomesModule,
 		TransactionModule,
 		CommonTypesModule,
+		ImageModule,
 		// TelegramInstance,
 	],
 	// controllers: [AppController],
