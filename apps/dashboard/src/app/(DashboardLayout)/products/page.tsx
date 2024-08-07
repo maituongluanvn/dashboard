@@ -1,15 +1,12 @@
 'use client';
 import React, { useState, useEffect } from 'react';
-import { useRouter } from 'next/navigation';
 import PageContainer from '@/app/(DashboardLayout)/components/container/PageContainer';
 import DashboardCard from '@/app/(DashboardLayout)/components/shared/DashboardCard';
 import DataGridWrapper from '@/components/DataGridWrapper';
 import useFetch from '@/hooks/useFetch';
 import type { IProduct } from '@cores/definition';
-import { formatMoney } from '@/lib/utils'; // Import utils if needed for formatting
 
 const Products: React.FC = () => {
-	const router = useRouter();
 	const {
 		data: products = [],
 		loading,
@@ -21,7 +18,6 @@ const Products: React.FC = () => {
 
 	useEffect(() => {
 		if (products) {
-			console.log('🚀 ~ useEffect ~ products:', products);
 			setData(products);
 		}
 	}, [products]);

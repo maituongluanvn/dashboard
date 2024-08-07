@@ -22,6 +22,7 @@ const ProductDetail: React.FC = () => {
 	const [imageFile, setImageFile] = useState<File | null>(null);
 	const [uploading, setUploading] = useState<boolean>(false);
 	const [imagePreview, setImagePreview] = useState<string | ArrayBuffer | null>(null);
+	const [imageUrlChanged, setImageUrlChanged] = useState<boolean>(false);
 
 	const {
 		data: imageBlob,
@@ -64,6 +65,7 @@ const ProductDetail: React.FC = () => {
 		const file = event.target.files?.[0];
 		if (file) {
 			setImageFile(file);
+			setImageUrlChanged(true); // Đánh dấu rằng ảnh đã thay đổi
 			const reader = new FileReader();
 			reader.onloadend = () => {
 				setImagePreview(reader.result as string);
@@ -78,7 +80,7 @@ const ProductDetail: React.FC = () => {
 			prevData
 				? {
 						...prevData,
-						[name]: value,
+						[name]: name === 'category' ? { id: value } : value,
 					}
 				: null,
 		);
@@ -123,10 +125,11 @@ const ProductDetail: React.FC = () => {
 		setUploading(true);
 		try {
 			let imageUrl = productData.thumbnail?.url || '';
-			if (imageFile) {
-				imageUrl = await uploadImage(imageFile, imageUrl);
-				setImagePreview(imageUrl);
+
+			if (imageUrlChanged && imageFile) {
+				imageUrl = await uploadImage(imageFile, imageUrl); // Gọi hàm tải lên ảnh
 				setImageFile(null);
+				setImageUrlChanged(false); // Đánh dấu rằng ảnh đã được tải lên
 			}
 
 			const updatedProductData = {
@@ -240,21 +243,37 @@ const ProductDetail: React.FC = () => {
 					</TextField>
 				</Grid>
 				<Grid item xs={12}>
-					<Button variant="contained" component="label">
-						Select Thumbnail
-						<input type="file" hidden accept="image/*" onChange={handleImageChange} />
-					</Button>
-					{imagePreview && (
-						<NextImage
-							src={imagePreview as string}
-							alt="Thumbnail preview"
-							layout="responsive"
-							width={400} // Adjust width as needed
-							height={300} // Adjust height as needed
-							sizes="(max-width: 600px) 480px, 800px"
-							priority={false}
-						/>
-					)}
+					<Grid item xs={12}>
+						<Button variant="contained" component="label">
+							Upload Thumbnail
+							<input type="file" hidden accept="image/*" onChange={handleImageChange} />
+						</Button>
+						{uploading ? (
+							<CircularProgress />
+						) : (
+							imageFile && (
+								<Button
+									variant="contained"
+									color="secondary"
+									onClick={handleSave}
+									style={{ marginTop: '16px' }}
+								>
+									Save image
+								</Button>
+							)
+						)}
+						{imagePreview && (
+							<NextImage
+								src={imagePreview as string}
+								alt="Thumbnail preview"
+								layout="responsive"
+								width={400} // Adjust width as needed
+								height={300} // Adjust height as needed
+								sizes="(max-width: 600px) 480px, 800px"
+								priority={false}
+							/>
+						)}
+					</Grid>
 				</Grid>
 				<Grid item xs={12}>
 					<Button variant="contained" color="primary" onClick={handleSave} disabled={!editMode || uploading}>

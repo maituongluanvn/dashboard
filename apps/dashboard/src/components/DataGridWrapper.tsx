@@ -13,7 +13,7 @@ interface IDataGridWrapperProps<T extends GridRowModel> {
 	setData: (data: T[]) => void;
 	addNew: (newRow: T) => void;
 	columnsConfig: GridColDef[];
-	getRowId: (row: T) => string;
+	getRowId: (row: T) => string | any;
 	handleEdit: () => void;
 	addNewButtonTo: string;
 }
@@ -40,7 +40,7 @@ const DataGridWrapper = <T extends GridRowModel>({
 	};
 
 	const handleEdit = (id: string) => {
-		router.push(`/products/edit/${id}`);
+		router.push(`/products/${id}`);
 	};
 
 	const handleDelete = async (id: string) => {
