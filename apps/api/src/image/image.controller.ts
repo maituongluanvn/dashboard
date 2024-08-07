@@ -1,4 +1,4 @@
-import { Controller, Post, Get, Param, UseInterceptors, UploadedFile, HttpException, HttpStatus, Res } from '@nestjs/common';
+import { Controller, Post, Get, Delete, Param, UseInterceptors, UploadedFile, HttpException, HttpStatus, Res } from '@nestjs/common';
 import { FileInterceptor } from '@nestjs/platform-express';
 import { ImageService } from './image.service';
 import { Response } from 'express';
@@ -30,6 +30,16 @@ export class ImageController {
       res.send(imageBuffer);
     } catch (error) {
       throw new HttpException('Failed to fetch image', HttpStatus.NOT_FOUND);
+    }
+  }
+
+  @Delete(':filename')
+  async deleteImage(@Param('filename') filename: string) {
+    try {
+      await this.imageService.deleteFile(filename);
+      return { message: 'Image deleted successfully' };
+    } catch (error) {
+      throw new HttpException('Failed to delete image', HttpStatus.INTERNAL_SERVER_ERROR);
     }
   }
 }

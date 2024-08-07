@@ -1,4 +1,4 @@
-import { Injectable } from '@nestjs/common';
+import { Injectable, HttpException, HttpStatus } from '@nestjs/common';
 import { Storage } from '@google-cloud/storage';
 import { Readable } from 'stream';
 import * as path from 'path';
@@ -11,13 +11,13 @@ export class ImageService {
 
   constructor() {
     this.storage = new Storage({
-      keyFilename: path.join(__dirname,'..', '..', 'service-account-keyfile.json'), // Đường dẫn đến tệp khóa
+      keyFilename: path.join(__dirname, '..', '..', 'service-account-keyfile.json'), // Đường dẫn đến tệp khóa
     });
   }
 
   async uploadFile(file: Express.Multer.File): Promise<string> {
     const bucket = this.storage.bucket(this.bucketName);
-    const blob = bucket.file(`uploads/${uuidv4()}_${file.originalname}`); // Sửa đường dẫn để bao gồm thư mục uploads
+    const blob = bucket.file(`uploads/${uuidv4()}_${file.originalname}`); // Thư mục uploads
     const blobStream = blob.createWriteStream({
       resumable: false,
       contentType: file.mimetype,
@@ -27,7 +27,7 @@ export class ImageService {
       Readable.from(file.buffer).pipe(blobStream)
         .on('error', (err) => reject(err))
         .on('finish', () => {
-          const publicUrl = `https://storage.googleapis.com/${this.bucketName}/uploads/${blob.name}`;
+          const publicUrl = `https://storage.googleapis.com/${this.bucketName}/${blob.name}`;
           resolve(publicUrl);
         });
     });
@@ -35,8 +35,7 @@ export class ImageService {
 
   async fetchImage(filename: string): Promise<Buffer> {
     const bucket = this.storage.bucket(this.bucketName);
-    console.log("🚀 ~ ImageService ~ fetchImage ~ bucket:", bucket)
-    const file = bucket.file(`uploads/bf4fb9cabecae802cb8684005`); // Sửa đường dẫn để bao gồm thư mục uploads
+    const file = bucket.file(`uploads/${filename}`); // Đảm bảo đường dẫn đúng
 
     return new Promise((resolve, reject) => {
       file.download((err, data) => {
@@ -48,5 +47,17 @@ export class ImageService {
         }
       });
     });
+  }
+
+  async deleteFile(filename: string): Promise<void> {
+    const bucket = this.storage.bucket(this.bucketName);
+    const file = bucket.file(`uploads/${filename}`); // Đảm bảo đường dẫn đúng
+
+    try {
+      await file.delete();
+    } catch (error) {
+      console.error('Error deleting file:', error);
+      throw new HttpException('Failed to delete file', HttpStatus.INTERNAL_SERVER_ERROR);
+    }
   }
 }

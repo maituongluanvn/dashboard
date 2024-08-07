@@ -9,7 +9,7 @@ interface IApiResponse<T> {
 	error: Error | null;
 }
 
-const useFetch = <T>(url: string, method: HttpMethod = 'GET', bodyData?: any): IApiResponse<T> => {
+const useFetch = <T>(url: string, method: HttpMethod = 'GET', bodyData?: any): IApiResponse<T | null> => {
 	const [data, setData] = useState<T | null>(null);
 	const [loading, setLoading] = useState<boolean>(true);
 	const [error, setError] = useState<Error | null>(null);
@@ -27,14 +27,13 @@ const useFetch = <T>(url: string, method: HttpMethod = 'GET', bodyData?: any): I
 				if (!response.ok) {
 					throw new Error('Network response was not ok');
 				}
-				const result = (await response.json()) as T;
-				setData(result);
-			} catch (err) {
-				if (err instanceof Error) {
-					setError(err);
-				} else {
-					setError(new Error('An unexpected error occurred'));
-				}
+				const result = method === 'GET' && response.headers.get('Content-Type')?.startsWith('image/') 
+					? await response.blob() 
+					: (await response.json()) as T;
+				setData(result as any);
+			} catch (error: any) {
+				// eslint-disable-next-line @typescript-eslint/no-unsafe-member-access, @typescript-eslint/no-unsafe-argument
+				setError(error.message);
 			} finally {
 				setLoading(false);
 			}
@@ -42,7 +41,6 @@ const useFetch = <T>(url: string, method: HttpMethod = 'GET', bodyData?: any): I
 
 		void fetchData();
 	}, [url, method, bodyData]);
-
 	return { data, loading, error };
 };
 
