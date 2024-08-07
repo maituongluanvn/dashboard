@@ -16,9 +16,14 @@ export class ProductController {
 		return this.productService.getAllProducts();
 	}
 
+	@Get('/categories')
+	async getCategories(): Promise<IProduct[]> {
+		return this.productService.getCategories();
+	}
+
 	@Get(':id')
 	async getProductBySlug(@Param('id') id: string): Promise<IProduct | undefined> {
-		return this.productService.getProductBySlug(id);
+		return this.productService.getProductBySlugAndId(id);
 	}
 
 	@Post()
@@ -32,6 +37,7 @@ export class ProductController {
 		@Param('id') id: string,
 		@Body() updatedProduct: Partial<IProduct>,
 	): Promise<IApiResponse> {
+		console.log("🚀 ~ ProductController ~ id:", id)
 		await this.productService.updateProduct(id, updatedProduct);
 		return { status: HttpStatus.OK, message: 'Product Update successfully' };
 	}
