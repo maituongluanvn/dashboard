@@ -2,8 +2,6 @@
 /* eslint-disable @typescript-eslint/no-unsafe-return */
 /* eslint-disable @typescript-eslint/no-unsafe-member-access */
 import { cookies } from 'next/headers';
-import { CheckoutCreateDocument } from '@/gql/graphql';
-import { executeGraphQL } from '@/lib/graphql';
 
 export function getIdFromCookies(channel: string) {
 	const cookieName = `checkoutId-${channel}`;
@@ -46,4 +44,5 @@ export async function findOrCreate({ channel, checkoutId }: { checkoutId?: strin
 
 export const create = ({ channel }: { channel: string }) =>
 	// eslint-disable-next-line @typescript-eslint/no-unsafe-call
-	executeGraphQL(CheckoutCreateDocument, { cache: 'no-cache', variables: { channel } });
+	// executeGraphQL(CheckoutCreateDocument, { cache: 'no-cache', variables: { channel } });
+	 null;

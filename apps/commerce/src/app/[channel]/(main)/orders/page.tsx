@@ -1,16 +1,15 @@
 /* eslint-disable @typescript-eslint/no-unsafe-call */
 /* eslint-disable @typescript-eslint/no-unsafe-member-access */
 /* eslint-disable @typescript-eslint/no-unsafe-assignment */
-import { CurrentUserOrderListDocument } from '@/gql/graphql';
-import { executeGraphQL } from '@/lib/graphql';
 import { LoginForm } from '@/ui/components/LoginForm';
 import { OrderListItem } from '@/ui/components/OrderListItem';
 
 export default async function OrderPage() {
-	const { me: user }: any = await executeGraphQL(CurrentUserOrderListDocument, {
-		cache: 'no-cache',
-		variables: undefined,
-	});
+	// const { me: user }: any = await executeGraphQL(CurrentUserOrderListDocument, {
+	// 	cache: 'no-cache',
+	// 	variables: undefined,
+	// });
+	let user: any;
 
 	if (!user) {
 		return <LoginForm />;

@@ -12,31 +12,31 @@ import {
 } from 'react';
 import { LinkWithChannel } from '../atoms/LinkWithChannel';
 import { ChannelSelect } from './ChannelSelect';
-import { ChannelsListDocument, MenuGetBySlugDocument } from '@/gql/graphql';
-import { executeGraphQL } from '@/lib/graphql';
 
 export async function Footer({ channel }: { channel: string }) {
-	const footerLinks = await executeGraphQL(MenuGetBySlugDocument, {
-		variables: { slug: 'footer', channel },
-		revalidate: 60 * 60 * 24,
-	});
-	const channels = process.env.SALEOR_APP_TOKEN
-		? await executeGraphQL(ChannelsListDocument, {
-				withAuth: false, // disable cookie-based auth for this call
-				headers: {
-					// and use app token instead
-					Authorization: `Bearer ${process.env.SALEOR_APP_TOKEN}`,
-				},
-				variables: undefined,
-			})
-		: null;
+	// const footerLinks = await executeGraphQL(MenuGetBySlugDocument, {
+	// 	variables: { slug: 'footer', channel },
+	// 	revalidate: 60 * 60 * 24,
+	// });
+	// const channels = process.env.SALEOR_APP_TOKEN
+	// 	? await executeGraphQL(ChannelsListDocument, {
+	// 			withAuth: false, // disable cookie-based auth for this call
+	// 			headers: {
+	// 				// and use app token instead
+	// 				Authorization: `Bearer ${process.env.SALEOR_APP_TOKEN}`,
+	// 			},
+	// 			variables: undefined,
+	// 		})
+	// 	: null;
 	const currentYear = new Date().getFullYear();
+	let footerLinks: any;
+	let channels: any;
 
 	return (
 		<footer className="border-neutral-300 bg-neutral-50">
 			<div className="mx-auto max-w-7xl px-4 lg:px-8">
 				<div className="grid grid-cols-3 gap-8 py-16">
-					{(footerLinks as any).menu?.items?.map(
+					{/* {(footerLinks as any).menu?.items?.map(
 						(item: {
 							id: Key | null | undefined;
 							name:
@@ -104,7 +104,7 @@ export async function Footer({ channel }: { channel: string }) {
 								</div>
 							);
 						},
-					)}
+					)} */}
 				</div>
 
 				{(channels as any)?.channels && (
