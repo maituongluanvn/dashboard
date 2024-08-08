@@ -6,6 +6,7 @@ on:
       - master # Run the action when pushing to the master branch
     paths:
       - 'apps/api/**' # Only run when changes are made in the apps/api directory
+  workflow_dispatch: # Allows the workflow to be triggered manually
 
 jobs:
   build-and-push:
