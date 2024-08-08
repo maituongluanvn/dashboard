@@ -5,13 +5,13 @@ import DashboardCard from '@/app/(DashboardLayout)/components/shared/DashboardCa
 import DataGridWrapper from '@/components/DataGridWrapper';
 import useFetch from '@/hooks/useFetch';
 import type { IProduct } from '@cores/definition';
+import { Skeleton, Alert } from '@mui/material';
 
 const Products: React.FC = () => {
 	const {
 		data: products = [],
 		loading,
 		error,
-		// eslint-disable-next-line @typescript-eslint/no-unsafe-call
 	} = useFetch<IProduct[]>(`${process.env.NEXT_PUBLIC_API_URL}/dashboard/product`);
 
 	const [data, setData] = useState<IProduct[]>(products || []);
@@ -37,28 +37,26 @@ const Products: React.FC = () => {
 
 	const getRowId = (row: IProduct) => row._id;
 
-	if (loading) {
-		return <div>Loading...</div>;
-	}
-
-	if (error) {
-		return <div>Error: {error.message}</div>;
-	}
-
 	return (
 		<div>
 			<h1>Products</h1>
 			<PageContainer title="Products Page" description="This is the Products page">
 				<DashboardCard title="Product List">
-					<DataGridWrapper<IProduct>
-						addNewButtonTo="/products/new"
-						data={data}
-						setData={setData}
-						addNew={addNew}
-						columnsConfig={columnsConfig}
-						getRowId={getRowId}
-						loading={loading}
-					/>
+					{loading ? (
+						<Skeleton animation="wave" variant="rounded" width="100%" height={400} />
+					) : error ? (
+						<Alert severity="error">Error: {error.message}</Alert>
+					) : (
+						<DataGridWrapper<IProduct>
+							addNewButtonTo="/products/new"
+							data={data}
+							setData={setData}
+							addNew={addNew}
+							columnsConfig={columnsConfig}
+							getRowId={getRowId}
+							loading={loading}
+						/>
+					)}
 				</DashboardCard>
 			</PageContainer>
 		</div>
