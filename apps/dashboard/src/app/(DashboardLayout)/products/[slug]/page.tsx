@@ -1,45 +1,60 @@
 'use client';
 
 import React, { useState, useEffect } from 'react';
-import { useParams, useRouter } from 'next/navigation';
-import useFetch from '@/hooks/useFetch';
-import { IProduct, IProductCategory } from '@cores/definition';
-import { TextField, Button, Typography, Grid, MenuItem, CircularProgress } from '@mui/material';
-import { notFound } from 'next/navigation';
+import { TextField, Button, Grid, Box, CircularProgress, MenuItem } from '@mui/material';
+import { useFormik } from 'formik';
+import * as Yup from 'yup';
+import { useRouter, useParams } from 'next/navigation'; // Đối với Next.js 13 hoặc mới hơn
+import type { IProduct, IProductCategory } from '@cores/definition';
 import NextImage from 'next/image';
+import useFetch from '@/hooks/useFetch';
+
+// Define validation schema
+const validationSchema = Yup.object({
+	name: Yup.string().required('Name is required'),
+	slug: Yup.string()
+		.required('Slug is required')
+		.matches(
+			/^[a-z0-9]+(-[a-z0-9]+)*$/,
+			'Slug must be lowercase and can only contain letters, numbers, and hyphens',
+		),
+	description: Yup.string().required('Description is required'),
+	seoTitle: Yup.string().required('SEO Title is required'),
+	seoDescription: Yup.string().required('SEO Description is required'),
+	pricingStartAmount: Yup.number()
+		.required('Start price is required')
+		.min(0, 'Price must be greater than or equal to 0'),
+	pricingStopAmount: Yup.number()
+		.required('Stop price is required')
+		.min(0, 'Price must be greater than or equal to 0'),
+	categoryName: Yup.string().required('Category is required'),
+	thumbnailUrl: Yup.string(),
+	belongTo: Yup.string(),
+});
 
 const ProductDetail: React.FC = () => {
-	const { slug } = useParams();
-	const router = useRouter();
-	const {
-		data: product,
-		loading: productLoading,
-		error: productError,
-	} = useFetch<IProduct>(`${process.env.NEXT_PUBLIC_API_URL}/dashboard/product/${slug}`);
-	const [editMode, setEditMode] = useState<boolean>(true);
-	const [productData, setProductData] = useState<IProduct | null>(null);
 	const [categories, setCategories] = useState<IProductCategory[]>([]);
-	const [imageFile, setImageFile] = useState<File | null>(null);
+	const [loading, setLoading] = useState(false);
+	const [submitStatus, setSubmitStatus] = useState<string | null>(null);
+	const [product, setProduct] = useState<IProduct | null>(null);
 	const [uploading, setUploading] = useState<boolean>(false);
-	const [imagePreview, setImagePreview] = useState<string | ArrayBuffer | null>(null);
+	const [imagePreview, setImagePreview] = useState<string | null>(null);
 	const [imageUrlChanged, setImageUrlChanged] = useState<boolean>(false);
+
+	const [imageFile, setImageFile] = useState<File | null>(null);
+	const router = useRouter();
+	const { slug } = useParams();
 
 	const {
 		data: imageBlob,
 		loading: imageLoading,
 		error: imageError,
 	} = useFetch<Blob>(
-		productData?.thumbnail?.url
-			? `${process.env.NEXT_PUBLIC_API_URL}/images/${productData.thumbnail.url.split('/').pop()}`
+		product?.thumbnail?.url
+			? `${process.env.NEXT_PUBLIC_API_URL}/images/${product.thumbnail.url.split('/').pop()}`
 			: '',
 		'GET',
 	);
-
-	useEffect(() => {
-		if (product) {
-			setProductData(product);
-		}
-	}, [product]);
 
 	useEffect(() => {
 		if (imageBlob) {
@@ -49,6 +64,24 @@ const ProductDetail: React.FC = () => {
 	}, [imageBlob]);
 
 	useEffect(() => {
+		const fetchProduct = async () => {
+			try {
+				const response = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/dashboard/product/${slug}`);
+
+				if (!response.ok) {
+					throw new Error(`HTTP error! status: ${response.status}`);
+				}
+
+				const data = await response.json(); // Lấy phản hồi dưới dạng JSON
+				setProduct(data);
+				if (data.thumbnailUrl) {
+					setImagePreview(data.thumbnailUrl);
+				}
+			} catch (error) {
+				console.error('Error fetching product:', error);
+			}
+		};
+
 		const fetchCategories = async () => {
 			try {
 				const response = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/dashboard/product/categories`);
@@ -58,32 +91,22 @@ const ProductDetail: React.FC = () => {
 				console.error('Error fetching categories:', error);
 			}
 		};
+
+		fetchProduct();
 		fetchCategories();
-	}, []);
+	}, [slug]);
 
 	const handleImageChange = (event: React.ChangeEvent<HTMLInputElement>) => {
 		const file = event.target.files?.[0];
 		if (file) {
 			setImageFile(file);
-			setImageUrlChanged(true); // Đánh dấu rằng ảnh đã thay đổi
+			setImageUrlChanged(true);
 			const reader = new FileReader();
 			reader.onloadend = () => {
 				setImagePreview(reader.result as string);
 			};
 			reader.readAsDataURL(file);
 		}
-	};
-
-	const handleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
-		const { name, value } = event.target;
-		setProductData(prevData =>
-			prevData
-				? {
-						...prevData,
-						[name]: name === 'category' ? { id: value } : value,
-					}
-				: null,
-		);
 	};
 
 	const uploadImage = async (file: File, oldImageUrl?: string) => {
@@ -120,11 +143,11 @@ const ProductDetail: React.FC = () => {
 	};
 
 	const handleSave = async () => {
-		if (!productData) return;
+		if (!product) return;
 
 		setUploading(true);
 		try {
-			let imageUrl = productData.thumbnail?.url || '';
+			let imageUrl = product.thumbnail?.url || '';
 
 			if (imageUrlChanged && imageFile) {
 				imageUrl = await uploadImage(imageFile, imageUrl); // Gọi hàm tải lên ảnh
@@ -132,10 +155,10 @@ const ProductDetail: React.FC = () => {
 				setImageUrlChanged(false); // Đánh dấu rằng ảnh đã được tải lên
 			}
 
-			const updatedProductData = {
-				...productData,
+			const updatedproduct = {
+				...product,
 				thumbnail: {
-					...productData.thumbnail,
+					...product.thumbnail,
 					url: imageUrl,
 				},
 			};
@@ -143,12 +166,10 @@ const ProductDetail: React.FC = () => {
 			const response = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/dashboard/product/${slug}`, {
 				method: 'PUT',
 				headers: { 'Content-Type': 'application/json' },
-				body: JSON.stringify(updatedProductData),
+				body: JSON.stringify(updatedproduct),
 			});
 			const data = await response.json();
 			if (response.ok) {
-				setProductData(data);
-				setEditMode(false);
 				router.refresh();
 			} else {
 				console.error('Error updating product:', data.message);
@@ -160,128 +181,250 @@ const ProductDetail: React.FC = () => {
 		}
 	};
 
-	if (productLoading) return <CircularProgress />;
-	if (productError) return <p>Error: {productError.message}</p>;
-	if (!product) {
-		notFound();
-	}
+	const useUpdateProduct = async (product: IProduct) => {
+		setUploading(true);
+		const url = `${process.env.NEXT_PUBLIC_API_URL}/dashboard/product/${product._id}`;
+		const requestOptions: RequestInit = {
+			method: 'PUT',
+			headers: { 'Content-Type': 'application/json' },
+			body: JSON.stringify(product),
+		};
+
+		try {
+			const response = await fetch(url, requestOptions);
+			if (!response.ok) {
+				throw new Error('Network response was not ok');
+			}
+			const result = (await response.json()) as IProduct;
+			return { data: result, error: null };
+		} catch (error) {
+			if (error instanceof Error) {
+				return { data: null, error };
+			} else {
+				return { data: null, error: new Error('An unexpected error occurred') };
+			}
+		} finally {
+			setUploading(false);
+		}
+	};
+
+	// Initialize Formik only after product data is fetched
+	const formik = useFormik({
+		initialValues: {
+			name: product?.name || '',
+			slug: product?.slug || '',
+			description: product?.description || '',
+			seoTitle: product?.seoTitle || '',
+			seoDescription: product?.seoDescription || '',
+			pricingStartAmount: product?.pricing?.priceRange?.start?.gross?.amount || 0,
+			pricingStopAmount: product?.pricing?.priceRange?.stop?.gross?.amount || 0,
+			categoryName: product?.category?.name || '',
+			thumbnailUrl: product?.thumbnail?.url || '',
+			belongTo: product?.belongTo || 'hoangphuc',
+		},
+		validationSchema,
+		enableReinitialize: true, // Reinitialize form values when product changes
+		onSubmit: async values => {
+			try {
+				setLoading(true);
+				let thumbnailUrl = product?.thumbnail?.url || '';
+
+				if (imageFile) {
+					thumbnailUrl = await uploadImage(imageFile, product?.thumbnail?.url);
+				}
+
+				const updatedProduct: IProduct = {
+					...product!,
+					name: values.name,
+					slug: values.slug,
+					description: values.description,
+					seoTitle: values.seoTitle,
+					seoDescription: values.seoDescription,
+					pricing: {
+						priceRange: {
+							start: { gross: { amount: values.pricingStartAmount, currency: 'VND' } },
+							stop: { gross: { amount: values.pricingStopAmount, currency: 'VND' } },
+						},
+					},
+					category: { id: '', name: values.categoryName }, // Adjust category id if needed
+					thumbnail: { url: thumbnailUrl, alt: '' }, // Handle thumbnail alt text if needed
+					belongTo: values.belongTo, // Use formik value for belongTo
+				};
+
+				setSubmitStatus('Updating...');
+				const { data, error } = await useUpdateProduct(updatedProduct);
+
+				if (error) {
+					setSubmitStatus(`Error: ${error.message}`);
+				} else if (data) {
+					setSubmitStatus('Update successful!');
+					router.push('/products'); // Chuyển hướng sau khi submit thành công
+				}
+			} catch (error) {
+				setSubmitStatus('An error occurred during update');
+			} finally {
+				setLoading(false);
+			}
+		},
+	});
 
 	return (
-		<section className="product-detail">
-			<Typography variant="h4">Product Details</Typography>
-			<Grid container spacing={2} mt={2}>
-				<Grid item xs={12} md={6}>
+		<Box component="form" onSubmit={formik.handleSubmit} sx={{ maxWidth: '700px', margin: 'auto' }}>
+			<Grid container spacing={2}>
+				<Grid item xs={12}>
 					<TextField
-						label="Name"
+						fullWidth
+						id="name"
 						name="name"
-						value={productData?.name || ''}
-						onChange={handleChange}
-						fullWidth
-						disabled={!editMode}
+						label="Product Name"
+						value={formik.values.name}
+						onChange={formik.handleChange}
+						onBlur={formik.handleBlur}
+						error={formik.touched.name && Boolean(formik.errors.name)}
+						helperText={formik.touched.name && formik.errors.name}
 					/>
 				</Grid>
-				<Grid item xs={12} md={6}>
+				<Grid item xs={12}>
 					<TextField
-						label="Slug"
+						fullWidth
+						id="slug"
 						name="slug"
-						value={productData?.slug || ''}
-						onChange={handleChange}
-						fullWidth
-						disabled={!editMode}
+						label="Slug"
+						value={formik.values.slug}
+						onChange={formik.handleChange}
+						onBlur={formik.handleBlur}
+						error={formik.touched.slug && Boolean(formik.errors.slug)}
+						helperText={formik.touched.slug && formik.errors.slug}
 					/>
 				</Grid>
 				<Grid item xs={12}>
 					<TextField
-						label="Description"
+						fullWidth
+						id="description"
 						name="description"
-						value={productData?.description || ''}
-						onChange={handleChange}
-						fullWidth
+						label="Description"
 						multiline
 						rows={4}
-						disabled={!editMode}
+						value={formik.values.description}
+						onChange={formik.handleChange}
+						onBlur={formik.handleBlur}
+						error={formik.touched.description && Boolean(formik.errors.description)}
+						helperText={formik.touched.description && formik.errors.description}
 					/>
 				</Grid>
 				<Grid item xs={12}>
 					<TextField
-						label="SEO Title"
+						fullWidth
+						id="seoTitle"
 						name="seoTitle"
-						value={productData?.seoTitle || ''}
-						onChange={handleChange}
-						fullWidth
-						disabled={!editMode}
+						label="SEO Title"
+						value={formik.values.seoTitle}
+						onChange={formik.handleChange}
+						onBlur={formik.handleBlur}
+						error={formik.touched.seoTitle && Boolean(formik.errors.seoTitle)}
+						helperText={formik.touched.seoTitle && formik.errors.seoTitle}
 					/>
 				</Grid>
 				<Grid item xs={12}>
 					<TextField
-						label="SEO Description"
+						fullWidth
+						id="seoDescription"
 						name="seoDescription"
-						value={productData?.seoDescription || ''}
-						onChange={handleChange}
-						fullWidth
+						label="SEO Description"
 						multiline
-						rows={4}
-						disabled={!editMode}
+						rows={2}
+						value={formik.values.seoDescription}
+						onChange={formik.handleChange}
+						onBlur={formik.handleBlur}
+						error={formik.touched.seoDescription && Boolean(formik.errors.seoDescription)}
+						helperText={formik.touched.seoDescription && formik.errors.seoDescription}
+					/>
+				</Grid>
+				<Grid item xs={6}>
+					<TextField
+						fullWidth
+						id="pricingStartAmount"
+						name="pricingStartAmount"
+						label="Start Price"
+						type="number"
+						value={formik.values.pricingStartAmount}
+						onChange={formik.handleChange}
+						onBlur={formik.handleBlur}
+						error={formik.touched.pricingStartAmount && Boolean(formik.errors.pricingStartAmount)}
+						helperText={formik.touched.pricingStartAmount && formik.errors.pricingStartAmount}
+					/>
+				</Grid>
+				<Grid item xs={6}>
+					<TextField
+						fullWidth
+						id="pricingStopAmount"
+						name="pricingStopAmount"
+						label="Stop Price"
+						type="number"
+						value={formik.values.pricingStopAmount}
+						onChange={formik.handleChange}
+						onBlur={formik.handleBlur}
+						error={formik.touched.pricingStopAmount && Boolean(formik.errors.pricingStopAmount)}
+						helperText={formik.touched.pricingStopAmount && formik.errors.pricingStopAmount}
 					/>
 				</Grid>
 				<Grid item xs={12}>
-					<Typography variant="h6">Category:</Typography>
 					<TextField
-						select
-						label="Category"
-						name="category"
-						value={productData?.category?.id || ''}
-						onChange={handleChange}
 						fullWidth
-						disabled={!editMode}
+						id="categoryName"
+						name="categoryName"
+						label="Category"
+						select
+						value={formik.values.categoryName}
+						onChange={formik.handleChange}
+						onBlur={formik.handleBlur}
+						error={formik.touched.categoryName && Boolean(formik.errors.categoryName)}
+						helperText={formik.touched.categoryName && formik.errors.categoryName}
 					>
+						<MenuItem value="" disabled>
+							Select category
+						</MenuItem>
 						{categories.map(category => (
-							<MenuItem key={category.id} value={category.id}>
+							<MenuItem key={category.id} value={category.name}>
 								{category.name}
 							</MenuItem>
 						))}
 					</TextField>
 				</Grid>
 				<Grid item xs={12}>
-					<Grid item xs={12}>
-						<Button variant="contained" component="label">
-							Upload Thumbnail
-							<input type="file" hidden accept="image/*" onChange={handleImageChange} />
-						</Button>
-						{uploading ? (
-							<CircularProgress />
-						) : (
-							imageFile && (
-								<Button
-									variant="contained"
-									color="secondary"
-									onClick={handleSave}
-									style={{ marginTop: '16px' }}
-								>
-									Save image
-								</Button>
-							)
-						)}
-						{imagePreview && (
-							<NextImage
-								src={imagePreview as string}
-								alt="Thumbnail preview"
-								layout="responsive"
-								width={400} // Adjust width as needed
-								height={300} // Adjust height as needed
-								sizes="(max-width: 600px) 480px, 800px"
-								priority={false}
-							/>
-						)}
-					</Grid>
+					<Button variant="contained" component="label">
+						Upload Thumbnail
+						<input type="file" hidden accept="image/*" onChange={handleImageChange} />
+					</Button>
+					{uploading ? (
+						<CircularProgress />
+					) : (
+						imageFile && (
+							<Button variant="contained" color="secondary" onClick={handleSave}>
+								Save image
+							</Button>
+						)
+					)}
+					{imagePreview && (
+						<NextImage
+							src={imagePreview as string}
+							alt="Thumbnail preview"
+							layout="responsive"
+							width={400} // Adjust width as needed
+							height={300} // Adjust height as needed
+							sizes="(max-width: 600px) 480px, 800px"
+							priority={false}
+						/>
+					)}
 				</Grid>
 				<Grid item xs={12}>
-					<Button variant="contained" color="primary" onClick={handleSave} disabled={!editMode || uploading}>
-						{uploading ? <CircularProgress size={24} /> : 'Save'}
+					<Button color="primary" variant="contained" fullWidth type="submit" disabled={loading}>
+						{loading ? <CircularProgress size={24} /> : 'Submit'}
 					</Button>
+					{submitStatus && <p>{submitStatus}</p>}
 				</Grid>
 			</Grid>
-		</section>
+		</Box>
 	);
 };
 

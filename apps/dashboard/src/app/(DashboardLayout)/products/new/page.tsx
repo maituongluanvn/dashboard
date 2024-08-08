@@ -1,10 +1,11 @@
 'use client';
-import React, { useState } from 'react';
-import { TextField, Button, Grid, Box, CircularProgress } from '@mui/material';
+
+import React, { useState, useEffect } from 'react';
+import { TextField, Button, Grid, Box, CircularProgress, MenuItem } from '@mui/material';
 import { useFormik } from 'formik';
-import * as Yup from 'yup';
+import { validationSchema } from '../productValidateSchema';
 import { useRouter } from 'next/navigation'; // Đối với Next.js 13 hoặc mới hơn
-import type { IProduct, IProductWithoutID } from '@cores/definition';
+import type { IProduct, IProductWithoutID, IProductCategory } from '@cores/definition';
 
 // Define flattened form values type
 interface IFormikValues {
@@ -21,35 +22,26 @@ interface IFormikValues {
 	belongTo: string;
 }
 
-// Define validation schema
-const validationSchema = Yup.object({
-	name: Yup.string().required('Name is required'),
-	slug: Yup.string()
-		.required('Slug is required')
-		.matches(
-			/^[a-z0-9]+(-[a-z0-9]+)*$/,
-			'Slug must be lowercase and can only contain letters, numbers, and hyphens',
-		),
-	description: Yup.string().required('Description is required'),
-	seoTitle: Yup.string().required('SEO Title is required'),
-	seoDescription: Yup.string().required('SEO Description is required'),
-	pricingStartAmount: Yup.number()
-		.required('Start price is required')
-		.min(0, 'Price must be greater than or equal to 0'),
-	pricingStopAmount: Yup.number()
-		.required('Stop price is required')
-		.min(0, 'Price must be greater than or equal to 0'),
-	categoryName: Yup.string().required('Category is required'),
-	thumbnailUrl: Yup.string(),
-	belongTo: Yup.string(),
-});
-
 const NewProductForm: React.FC = () => {
 	const [imagePreview, setImagePreview] = useState<string | null>(null);
 	const [imageFile, setImageFile] = useState<File | null>(null);
 	const [loading, setLoading] = useState(false);
 	const [submitStatus, setSubmitStatus] = useState<string | null>(null);
+	const [categories, setCategories] = useState<IProductCategory[]>([]);
 	const router = useRouter(); // Hook để điều hướng
+
+	useEffect(() => {
+		const fetchCategories = async () => {
+			try {
+				const response = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/dashboard/product/categories`);
+				const data = await response.json();
+				setCategories(data);
+			} catch (error) {
+				console.error('Error fetching categories:', error);
+			}
+		};
+		fetchCategories();
+	}, []);
 
 	const handleImageChange = (event: React.ChangeEvent<HTMLInputElement>) => {
 		const file = event.target.files?.[0];
@@ -66,7 +58,6 @@ const NewProductForm: React.FC = () => {
 	const uploadImage = async (file: File) => {
 		const formData = new FormData();
 		formData.append('file', file);
-		console.log('🚀 ~ uploadImage ~ formData:', formData);
 
 		try {
 			const response = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/images/upload`, {
@@ -277,7 +268,6 @@ const NewProductForm: React.FC = () => {
 						name="categoryName"
 						label="Category"
 						select
-						SelectProps={{ native: true }}
 						value={formik.values.categoryName}
 						onChange={formik.handleChange}
 						onBlur={formik.handleBlur}
@@ -287,19 +277,11 @@ const NewProductForm: React.FC = () => {
 						<option value="" disabled>
 							Select category
 						</option>
-						<option value="Vitamin - khoáng chất">Vitamin - khoáng chất</option>
-						<option value="Amino acid">Amino acid</option>
-						<option value="Bù nước - điện giải">Bù nước - điện giải</option>
-						<option value="Giảm đau - hạ sốt">Giảm đau - hạ sốt</option>
-						<option value="Kháng sinh">Kháng sinh</option>
-						<option value="Dạ dày">Dạ dày</option>
-						<option value="Miễn dịch - NSAID">Miễn dịch - NSAID</option>
-						<option value="Cảm cúm - giảm đau - hạ sốt - kháng viêm">
-							Cảm cúm - giảm đau - hạ sốt - kháng viêm
-						</option>
-						<option value="Huyết áp">Huyết áp</option>
-						<option value="Đường huyết">Đường huyết</option>
-						<option value="Thần kinh">Thần kinh</option>
+						{categories.map(category => (
+							<MenuItem key={category.id} value={category.name}>
+								{category.name}
+							</MenuItem>
+						))}
 					</TextField>
 				</Grid>
 				<Grid item xs={12}>
