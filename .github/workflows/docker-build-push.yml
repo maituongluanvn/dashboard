@@ -38,6 +38,7 @@ jobs:
           echo "${{ secrets.SERVICE_ACCOUNT_KEYFILE }}" > /tmp/service-account-keyfile.json
           DOCKER_BUILDKIT=1 docker build \
             --secret id=service_account_keyfile,src=/tmp/service-account-keyfile.json \
+            -f Docker.api \
             -t asia-east2-docker.pkg.dev/maituongluan/dashboard/api:$VERSION .
           rm /tmp/service-account-keyfile.json
 
