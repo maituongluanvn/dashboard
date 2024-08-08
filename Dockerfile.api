@@ -1,11 +1,9 @@
+# syntax=docker/dockerfile:1.3-labs
+# The docker/dockerfile:1.3-labs directive at the top ensures that Docker BuildKit features (like --mount=type=secret) are enabled.
 # Stage 1: Build
 FROM --platform=$BUILDPLATFORM node:20.15.0-slim AS builder
 
 # Set environment variables
-ENV NEXT_PUBLIC_SALEOR_API_URL="https://storefront1.saleor.cloud/graphql/"
-ENV NEXT_PUBLIC_API_BASE_URL="http://localhost:3000"
-ENV PRODUCT_JSON_URL="https://3ymzvofxaogcuowg.public.blob.vercel-storage.com/products-bC1qc1cXEi9tDRsYgrZDBotfPOyAg2.json"
-
 # Install pnpm
 RUN npm install -g pnpm
 
@@ -17,6 +15,10 @@ COPY . .
 
 # Install dependencies for the whole monorepo
 RUN pnpm install
+
+# Use the secret to securely add the service-account-keyfile.json during the build process
+RUN --mount=type=secret,id=service_account_keyfile \
+    cp /run/secrets/service_account_keyfile ./service-account-keyfile.json
 
 # Run Turborepo build for the specific project (api)
 RUN pnpm run build:api
@@ -31,13 +33,13 @@ ENV MONGO_URI=""
 RUN npm install -g pnpm
 
 WORKDIR /app
- 
+
 # Copy root package.json and lockfile
 COPY package.json pnpm-lock.yaml turbo.json pnpm-workspace.yaml ./
- 
+
 # Copy the needed folder
-COPY --from=builder app/apps/api ./apps/api
-COPY --from=builder app/packages ./packages
+COPY --from=builder /app/apps/api ./apps/api
+COPY --from=builder /app/packages ./packages
 
 RUN pnpm install --production
 
