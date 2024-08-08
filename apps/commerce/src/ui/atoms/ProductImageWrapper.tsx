@@ -26,7 +26,7 @@ const ProductImageWrapper: React.FC<IProductImageWrapperProps> = ({
 		loading,
 		error,
 		// eslint-disable-next-line @typescript-eslint/no-unsafe-call
-	} = useFetch<Blob>(`${process.env.NEXT_PUBLIC_API_URL}/images/${src.split('/').pop() || ''}`, 'GET');
+	} = useFetch<Blob>(`${process.env.NEXT_PUBLIC_API_URL}/api/images/${src.split('/').pop() || ''}`, 'GET');
 
 	if (loading) return <p>Loading...</p>;
 	if (error) return <p>Error: {error as any}</p>;
@@ -62,7 +62,7 @@ export default ProductImageWrapper;
 // 		data: imageBlob,
 // 		loading,
 // 		error,
-// 	} = useFetch<Blob>(`${process.env.NEXT_PUBLIC_API_URL}/images/${imageName}`, 'GET');
+// 	} = useFetch<Blob>(`${process.env.NEXT_PUBLIC_API_URL}/api/images/${imageName}`, 'GET');
 
 // 	if (loading) return <p>Loading...</p>;
 // 	if (error) return <p>Error: {error}</p>;

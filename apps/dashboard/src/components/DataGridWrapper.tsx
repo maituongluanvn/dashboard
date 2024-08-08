@@ -47,7 +47,7 @@ const DataGridWrapper = <T extends GridRowModel>({
 	const handleDelete = async (id: string) => {
 		if (confirm('Are you sure you want to delete this item?')) {
 			try {
-				await fetch(`${process.env.NEXT_PUBLIC_API_URL}/dashboard/product/${id}`, {
+				await fetch(`${process.env.NEXT_PUBLIC_API_URL}/api/dashboard/product/${id}`, {
 					method: 'DELETE',
 					headers: {
 						'Content-Type': 'application/json',
