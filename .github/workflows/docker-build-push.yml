@@ -3,7 +3,7 @@ name: Build and Push Docker Image
 on:
   push:
     branches:
-      - main # Run the action when pushing to the main branch
+      - master # Run the action when pushing to the master branch
     paths:
       - 'apps/api/**' # Only run when changes are made in the apps/api directory
 
