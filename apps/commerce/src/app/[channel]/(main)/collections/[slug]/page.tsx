@@ -3,25 +3,25 @@
 /* eslint-disable @typescript-eslint/no-unsafe-assignment */
 /* eslint-disable @typescript-eslint/no-unsafe-member-access */
 import { notFound } from 'next/navigation';
-import { type ResolvingMetadata, type Metadata } from 'next';
+// import { type ResolvingMetadata } from 'next';
 import { ProductList } from '@/ui/components/ProductList';
 
-export const generateMetadata = async (
-	{ params }: { params: { slug: string; channel: string } },
-	parent: ResolvingMetadata,
-): Promise<void> => {
-	// const { collection }: any = await executeGraphQL(ProductListByCollectionDocument, {
-	// 	variables: { slug: params.slug, channel: params.channel },
-	// 	revalidate: 60,
-	// });
-	// return {
-	// 	title: `${collection?.name || 'Collection'} | ${collection?.seoTitle || (await parent).title?.absolute}`,
-	// 	description:
-	// 		collection?.seoDescription || collection?.description || collection?.seoTitle || collection?.name,
-	// };
-};
+// export const generateMetadata = async (
+// 	{ params }: { params: { slug: string; channel: string } },
+// 	parent: ResolvingMetadata,
+// ): Promise<void> => {
+// const { collection }: any = await executeGraphQL(ProductListByCollectionDocument, {
+// 	variables: { slug: params.slug, channel: params.channel },
+// 	revalidate: 60,
+// });
+// return {
+// 	title: `${collection?.name || 'Collection'} | ${collection?.seoTitle || (await parent).title?.absolute}`,
+// 	description:
+// 		collection?.seoDescription || collection?.description || collection?.seoTitle || collection?.name,
+// };
+// };
 
-export default async function Page({ params }: { params: { slug: string; channel: string } }) {
+export default async function Page() {
 	// const { collection }: any = await executeGraphQL(ProductListByCollectionDocument, {
 	// 	variables: { slug: params.slug, channel: params.channel },
 	// 	revalidate: 60,

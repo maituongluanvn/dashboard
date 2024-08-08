@@ -1,6 +1,6 @@
 import { Controller, Get, Post } from '@nestjs/common';
 import { ApiTags } from '@nestjs/swagger';
-import { SettingsService } from './settings.service';
+import type { SettingsService } from './settings.service';
 
 const name = 'settings';
 

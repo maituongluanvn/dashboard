@@ -8,7 +8,7 @@ interface ProductImageWrapperProps {
 	alt: string;
 	width: number;
 	height: number;
-	sizes: string;
+	sizes?: string;
 	priority: boolean;
 }
 

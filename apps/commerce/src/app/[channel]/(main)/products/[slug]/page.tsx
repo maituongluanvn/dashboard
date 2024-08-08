@@ -93,6 +93,7 @@ export default function Page({
 				<div className="md:col-span-1 lg:col-span-5">
 					{firstImage && (
 						<ProductImageWrapper
+							loadingType="lazy"
 							priority={true}
 							alt={firstImage.alt ?? ''}
 							width={1024}

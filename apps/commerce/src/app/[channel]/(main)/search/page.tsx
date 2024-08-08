@@ -6,7 +6,7 @@
 import { notFound, redirect } from 'next/navigation';
 import { Pagination } from '@/ui/components/Pagination';
 import { ProductList } from '@/ui/components/ProductList';
-import { ProductsPerPage } from '@/app/config';
+// import { ProductsPerPage } from '@/app/config';
 
 export const metadata = {
 	title: 'Search products · Saleor Storefront example',
@@ -15,12 +15,11 @@ export const metadata = {
 
 export default async function Page({
 	searchParams,
-	params,
 }: {
 	searchParams: Record<'query' | 'cursor', string | string[] | undefined>;
 	params: { channel: string };
 }) {
-	const cursor = typeof searchParams.cursor === 'string' ? searchParams.cursor : null;
+	// const cursor = typeof searchParams.cursor === 'string' ? searchParams.cursor : null;
 	const searchValue = searchParams.query;
 
 	if (!searchValue) {

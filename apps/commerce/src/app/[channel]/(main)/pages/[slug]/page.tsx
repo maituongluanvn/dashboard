@@ -1,24 +1,24 @@
 /* eslint-disable @typescript-eslint/no-unsafe-assignment */
 /* eslint-disable @typescript-eslint/no-unsafe-member-access */
-import { notFound } from 'next/navigation';
-import { type Metadata } from 'next';
-import edjsHTML from 'editorjs-html';
-import xss from 'xss';
+// import { notFound } from 'next/navigation';
+// import { type Metadata } from 'next';
+// import edjsHTML from 'editorjs-html';
+// import xss from 'xss';
 
-const parser = edjsHTML();
+// const parser = edjsHTML();
 
-export const generateMetadata = async ({ params }: { params: { slug: string } }): Promise<void> => {
-	// const { page }: any = await executeGraphQL(PageGetBySlugDocument, {
-	// 	variables: { slug: params.slug },
-	// 	revalidate: 60,
-	// });
-	// return {
-	// 	title: `${page?.seoTitle || page?.title || 'Page'} · Saleor Storefront example`,
-	// 	description: page?.seoDescription || page?.seoTitle || page?.title,
-	// };
-};
+// export const generateMetadata = async ({ params }: { params: { slug: string } }): Promise<void> => {
+// const { page }: any = await executeGraphQL(PageGetBySlugDocument, {
+// 	variables: { slug: params.slug },
+// 	revalidate: 60,
+// });
+// return {
+// 	title: `${page?.seoTitle || page?.title || 'Page'} · Saleor Storefront example`,
+// 	description: page?.seoDescription || page?.seoTitle || page?.title,
+// };
+// };
 
-export default async function Page({ params }: { params: { slug: string } }) {
+export default async function Page() {
 	// const { page }: any = await executeGraphQL(PageGetBySlugDocument, {
 	// 	variables: { slug: params.slug },
 	// 	revalidate: 60,

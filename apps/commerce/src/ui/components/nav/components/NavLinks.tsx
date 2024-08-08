@@ -10,7 +10,7 @@ import {
 } from 'react';
 import navLinks from '../../../../../public/menu.json';
 import { NavLink } from './NavLink';
-import type { IMenu } from '@/definition';
+import type { IMenu } from '@cores/definition';
 
 // eslint-disable-next-line @typescript-eslint/no-unused-vars
 export const NavLinks = async ({}: { channel: string }) => {

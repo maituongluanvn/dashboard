@@ -6,23 +6,15 @@
 import { notFound } from 'next/navigation';
 import { Pagination } from '@/ui/components/Pagination';
 import { ProductList } from '@/ui/components/ProductList';
-import { ProductsPerPage } from '@/app/config';
+// import { ProductsPerPage } from '@/app/config';
 
 export const metadata = {
 	title: 'Products · Saleor Storefront example',
 	description: 'All products in Saleor Storefront example',
 };
 
-export default async function Page({
-	params,
-	searchParams,
-}: {
-	params: { channel: string };
-	searchParams: {
-		cursor: string | string[] | undefined;
-	};
-}) {
-	const cursor = typeof searchParams.cursor === 'string' ? searchParams.cursor : null;
+export default async function Page() {
+	// const cursor = typeof searchParams.cursor === 'string' ? searchParams.cursor : null;
 
 	let products: any;
 

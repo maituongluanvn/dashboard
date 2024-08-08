@@ -16,7 +16,7 @@ interface IDataGridWrapperProps<T extends GridRowModel> {
 	columnsConfig: GridColDef[];
 	getRowId: (row: T) => string | any;
 	addNewButtonTo?: string;
-	loading: boolean; // Thêm prop loading
+	loading: boolean;
 }
 
 const DataGridWrapper = <T extends GridRowModel>({
@@ -25,7 +25,7 @@ const DataGridWrapper = <T extends GridRowModel>({
 	columnsConfig,
 	getRowId,
 	addNewButtonTo,
-	loading, // Nhận prop loading
+	loading,
 }: IDataGridWrapperProps<T>) => {
 	const router = useRouter();
 

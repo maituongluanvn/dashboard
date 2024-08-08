@@ -3,17 +3,17 @@
 /* eslint-disable @typescript-eslint/no-unsafe-call */
 import Link from 'next/link';
 import Image from 'next/image';
-import {
-	type ReactElement,
-	type JSXElementConstructor,
-	type ReactNode,
-	type ReactPortal,
-	type Key,
-} from 'react';
-import { LinkWithChannel } from '../atoms/LinkWithChannel';
+// import {
+// 	type ReactElement,
+// 	type JSXElementConstructor,
+// 	type ReactNode,
+// 	type ReactPortal,
+// 	type Key,
+// } from 'react';
+// import { LinkWithChannel } from '../atoms/LinkWithChannel';
 import { ChannelSelect } from './ChannelSelect';
 
-export async function Footer({ channel }: { channel: string }) {
+export async function Footer({}: { channel: string }) {
 	// const footerLinks = await executeGraphQL(MenuGetBySlugDocument, {
 	// 	variables: { slug: 'footer', channel },
 	// 	revalidate: 60 * 60 * 24,
@@ -29,7 +29,7 @@ export async function Footer({ channel }: { channel: string }) {
 	// 		})
 	// 	: null;
 	const currentYear = new Date().getFullYear();
-	let footerLinks: any;
+	// let footerLinks: any;
 	let channels: any;
 
 	return (

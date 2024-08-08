@@ -46,7 +46,7 @@
 	},
 	"devDependencies": {
 		"@cores/definition": "workspace:^",
-		"@cores/eslint": "workspace:^",
+		"@cores/eslint-config": "workspace:^",
 		"@next/env": "14.0.4",
 		"@parcel/watcher": "2.3.0",
 		"@playwright/test": "1.40.1",

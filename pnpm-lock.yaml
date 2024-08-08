@@ -69,7 +69,7 @@ importers:
       '@cores/definition':
         specifier: workspace:^
         version: link:../../packages/definition
-      '@cores/eslint':
+      '@cores/eslint-config':
         specifier: workspace:^
         version: link:../../packages/eslint
       '@nestjs/cli':
@@ -244,7 +244,7 @@ importers:
       '@cores/definition':
         specifier: workspace:^
         version: link:../../packages/definition
-      '@cores/eslint':
+      '@cores/eslint-config':
         specifier: workspace:^
         version: link:../../packages/eslint
       '@next/env':
@@ -431,7 +431,7 @@ importers:
       '@cores/definition':
         specifier: workspace:^
         version: link:../../packages/definition
-      '@cores/eslint':
+      '@cores/eslint-config':
         specifier: workspace:^
         version: link:../../packages/eslint
       '@mui/x-data-grid-generator':
@@ -461,6 +461,9 @@ importers:
 
   packages/definition:
     dependencies:
+      '@cores/eslint-config':
+        specifier: workspace:^
+        version: link:../eslint
       class-transformer:
         specifier: ^0.5.1
         version: 0.5.1

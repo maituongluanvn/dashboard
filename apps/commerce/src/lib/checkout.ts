@@ -42,7 +42,7 @@ export async function findOrCreate({ channel, checkoutId }: { checkoutId?: strin
 	return checkout || ((await create({ channel })) as any).checkoutCreate?.checkout;
 }
 
-export const create = ({ channel }: { channel: string }) =>
+export const create = ({ }: { channel: string }) =>
 	// eslint-disable-next-line @typescript-eslint/no-unsafe-call
 	// executeGraphQL(CheckoutCreateDocument, { cache: 'no-cache', variables: { channel } });
 	 null;

@@ -1,7 +1,7 @@
 import { clsx } from 'clsx';
 import { redirect } from 'next/navigation';
 import { LinkWithChannel } from '../atoms/LinkWithChannel';
-import { type ProductListItemFragment, type VariantDetailsFragment } from '@/gql/graphql';
+// import { type ProductListItemFragment, type VariantDetailsFragment } from '@/gql/graphql';
 import { getHrefForVariant } from '@/lib/utils';
 
 export function VariantSelector({
@@ -10,12 +10,13 @@ export function VariantSelector({
 	selectedVariant,
 	channel,
 }: {
-	variants: readonly VariantDetailsFragment[];
-	product: ProductListItemFragment;
-	selectedVariant?: VariantDetailsFragment;
+	variants: readonly any[];
+	product: any;
+	selectedVariant?: any;
 	channel: string;
 }) {
 	if (!selectedVariant && variants.length === 1 && variants[0]?.quantityAvailable) {
+		// eslint-disable-next-line @typescript-eslint/no-unsafe-call
 		redirect('/' + channel + getHrefForVariant({ productSlug: product.slug, variantId: variants[0].id }));
 	}
 
@@ -33,6 +34,7 @@ export function VariantSelector({
 								prefetch={true}
 								scroll={false}
 								href={
+									// eslint-disable-next-line @typescript-eslint/no-unsafe-call
 									isDisabled ? '#' : getHrefForVariant({ productSlug: product.slug, variantId: variant.id })
 								}
 								className={clsx(

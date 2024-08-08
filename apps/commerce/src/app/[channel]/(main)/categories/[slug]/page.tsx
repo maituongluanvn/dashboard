@@ -1,7 +1,7 @@
 'use client';
 import { notFound } from 'next/navigation';
 import { ProductList } from '@/ui/components/ProductList';
-import { type ICategory } from '@/definition';
+import { type ICategory } from '@cores/definition';
 import useFetch from '@/hooks/useFetch';
 
 export default function Page({ params }: { params: { slug: string; channel: string } }) {

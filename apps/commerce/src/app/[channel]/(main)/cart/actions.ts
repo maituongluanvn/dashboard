@@ -8,8 +8,6 @@ type deleteLineFromCheckoutArgs = {
 };
 
 export const deleteLineFromCheckout = async ({
-	lineId,
-	checkoutId,
 }: deleteLineFromCheckoutArgs): Promise<any> => {
 	// await executeGraphQL(CheckoutDeleteLinesDocument, {
 	// 	variables: {

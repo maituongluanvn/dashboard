@@ -1,11 +1,12 @@
-import Image from 'next/image';
-import { LinkWithChannel } from '../atoms/LinkWithChannel';
-import { formatDate, formatMoney, getHrefForVariant } from '@/lib/utils';
-import { type OrderDetailsFragment } from '@/gql/graphql';
-import { PaymentStatus } from '@/ui/components/PaymentStatus';
+// import Image from 'next/image';
+// import { LinkWithChannel } from '../atoms/LinkWithChannel';
+import { formatDate, formatMoney } from '@/lib/utils';
+// import { type OrderDetailsFragment } from '@/gql/graphql';
+// import { PaymentStatus } from '@/ui/components/PaymentStatus';
 
 type Props = {
-	order: OrderDetailsFragment;
+	// order: OrderDetailsFragment;
+	order: any;
 };
 
 export const OrderListItem = ({ order }: Props) => {
@@ -25,9 +26,7 @@ export const OrderListItem = ({ order }: Props) => {
 					</div>
 					<div className="flex flex-row items-center justify-between py-4 md:flex-col md:items-start md:gap-y-1">
 						<dt className="font-medium text-neutral-900">Payment status</dt>
-						<dd>
-							<PaymentStatus status={order.paymentStatus} />
-						</dd>
+						<dd>{/* <PaymentStatus status={order.paymentStatus} /> */}</dd>
 					</div>
 				</dl>
 				{/* TODO: Reveal after implementing the order details page. */}
@@ -53,7 +52,7 @@ export const OrderListItem = ({ order }: Props) => {
 								</tr>
 							</thead>
 							<tbody className="md:divide-y">
-								{order.lines.map(item => {
+								{/* {order.lines.map(item => {
 									if (!item.variant) {
 										return null;
 									}
@@ -120,7 +119,7 @@ export const OrderListItem = ({ order }: Props) => {
 											</td>
 										</tr>
 									);
-								})}
+								})} */}
 							</tbody>
 						</table>
 					</div>

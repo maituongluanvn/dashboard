@@ -24,9 +24,9 @@ export class ProductService {
 			{ id: '8', name: 'Cảm cúm - giảm đau - hạ sốt - kháng viêm' },
 			{ id: '9', name: 'Huyết áp' },
 			{ id: '10', name: 'Đường huyết' },
-			{ id: '11', name: 'Thần kinh' }
+			{ id: '11', name: 'Thần kinh' },
 		];
-		
+
 		return categories;
 	}
 
@@ -42,7 +42,7 @@ export class ProductService {
 	// todo: need update promise<any>
 	async getProductBySlugAndId(idOrSlug: string): Promise<any> {
 		let product;
-    
+
 		// Kiểm tra xem idOrSlug có phải là ID hay không (chẳng hạn bằng cách sử dụng phương thức kiểm tra hợp lệ của Mongoose)
 		if (this.isValidObjectId(idOrSlug)) {
 			product = await this.products.findById(idOrSlug).exec();
@@ -55,7 +55,6 @@ export class ProductService {
 
 	async createProduct(product: CreateProductDto): Promise<void> {
 		(await this.products.create(product)).save();
-			
 	}
 
 	async updateProduct(id: string, updatedProduct: Partial<IProduct>): Promise<IProduct | null> {
