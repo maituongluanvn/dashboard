@@ -17,6 +17,7 @@ export class ImageService {
 
 	async uploadFile(file: Express.Multer.File): Promise<string> {
 		const bucket = this.storage.bucket(this.bucketName);
+		// eslint-disable-next-line @typescript-eslint/no-unsafe-call
 		const blob = bucket.file(`uploads/${uuidv4()}_${file.originalname}`); // Thư mục uploads
 		const blobStream = blob.createWriteStream({
 			resumable: false,

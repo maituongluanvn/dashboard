@@ -20,6 +20,6 @@ export class SettingsController {
 			name: 'spentType',
 			value: [{ text: 'Nhậu', callback_data: 'drink' }],
 		};
-		this.service.createSetting(setting);
+		void this.service.createSetting(setting);
 	}
 }

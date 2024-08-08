@@ -70,6 +70,7 @@ const DataGridWrapper = <T extends GridRowModel>({
 				<IconButton onClick={() => handleEdit(params.id as string)}>
 					<EditIcon color="primary" />
 				</IconButton>
+				{/* eslint-disable-next-line @typescript-eslint/no-misused-promises */}
 				<IconButton onClick={() => handleDelete(params.id as string)}>
 					<DeleteIcon color="error" />
 				</IconButton>

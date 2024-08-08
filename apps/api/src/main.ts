@@ -29,4 +29,5 @@ async function bootstrap() {
 		Logger.log('========= Listen at port 8888');
 	});
 }
-bootstrap();
+
+void bootstrap();

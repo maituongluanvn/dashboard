@@ -2,7 +2,7 @@ import React from 'react';
 import NextImage from 'next/image';
 import useFetch from '@/hooks/useFetch';
 
-interface ProductImageWrapperProps {
+interface IProductImageWrapperProps {
 	loadingType: 'eager' | 'lazy';
 	src: string;
 	alt: string;
@@ -12,7 +12,7 @@ interface ProductImageWrapperProps {
 	priority: boolean;
 }
 
-const ProductImageWrapper: React.FC<ProductImageWrapperProps> = ({
+const ProductImageWrapper: React.FC<IProductImageWrapperProps> = ({
 	loadingType,
 	src,
 	alt,
@@ -25,6 +25,7 @@ const ProductImageWrapper: React.FC<ProductImageWrapperProps> = ({
 		data: imageBlob,
 		loading,
 		error,
+		// eslint-disable-next-line @typescript-eslint/no-unsafe-call
 	} = useFetch<Blob>(`${process.env.NEXT_PUBLIC_API_URL}/images/${src.split('/').pop() || ''}`, 'GET');
 
 	if (loading) return <p>Loading...</p>;

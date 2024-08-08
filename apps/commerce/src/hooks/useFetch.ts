@@ -27,9 +27,10 @@ const useFetch = <T>(url: string, method: HttpMethod = 'GET', bodyData?: any): I
 				if (!response.ok) {
 					throw new Error('Network response was not ok');
 				}
-				const result = method === 'GET' && response.headers.get('Content-Type')?.startsWith('image/') 
-					? await response.blob() 
-					: (await response.json()) as T;
+				const result =
+					method === 'GET' && response.headers.get('Content-Type')?.startsWith('image/')
+						? await response.blob()
+						: ((await response.json()) as T);
 				setData(result as any);
 			} catch (error: any) {
 				// eslint-disable-next-line @typescript-eslint/no-unsafe-member-access, @typescript-eslint/no-unsafe-argument

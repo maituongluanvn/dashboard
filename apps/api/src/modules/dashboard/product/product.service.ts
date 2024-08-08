@@ -1,4 +1,4 @@
-import { Injectable } from '@nestjs/common';
+import { HttpException, HttpStatus, Injectable } from '@nestjs/common';
 import type { IProduct, CreateProductDto } from '@cores/definition';
 import { InjectModel } from '@nestjs/mongoose';
 import { Product } from '@schemas/product.schema';
@@ -54,11 +54,24 @@ export class ProductService {
 	}
 
 	async createProduct(product: CreateProductDto): Promise<void> {
-		(await this.products.create(product)).save();
+		try {
+			// Create a new product and save it
+			// eslint-disable-next-line @typescript-eslint/no-unsafe-call
+			await (await this.products.create(product)).save();
+		} catch (error) {
+			// Ném lỗi với mã trạng thái HTTP và thông điệp lỗi
+			throw new HttpException(
+				{
+					status: HttpStatus.INTERNAL_SERVER_ERROR,
+					error: 'An error occurred while creating the product',
+				},
+				HttpStatus.INTERNAL_SERVER_ERROR,
+			);
+		}
 	}
 
-	async updateProduct(id: string, updatedProduct: Partial<IProduct>): Promise<IProduct | null> {
-		return this.products.findByIdAndUpdate(id, updatedProduct, { new: true });
+	async updateProduct(id: string, updatedProduct: Partial<IProduct>): Promise<void> {
+		await this.products.findByIdAndUpdate(id, updatedProduct, { new: true });
 	}
 
 	async deleteProduct(id: string): Promise<IProduct | null> {

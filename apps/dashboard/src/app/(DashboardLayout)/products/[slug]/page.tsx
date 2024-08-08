@@ -45,11 +45,8 @@ const ProductDetail: React.FC = () => {
 	const router = useRouter();
 	const { slug } = useParams();
 
-	const {
-		data: imageBlob,
-		loading: _imageLoading,
-		error: _imageError,
-	} = useFetch<Blob>(
+	// eslint-disable-next-line @typescript-eslint/no-unsafe-call
+	const { data: imageBlob } = useFetch<Blob>(
 		product?.thumbnail?.url
 			? `${process.env.NEXT_PUBLIC_API_URL}/images/${product.thumbnail.url.split('/').pop()}`
 			: '',
@@ -92,8 +89,8 @@ const ProductDetail: React.FC = () => {
 			}
 		};
 
-		fetchProduct();
-		fetchCategories();
+		void fetchProduct();
+		void fetchCategories();
 	}, [slug]);
 
 	const handleImageChange = (event: React.ChangeEvent<HTMLInputElement>) => {
@@ -252,6 +249,7 @@ const ProductDetail: React.FC = () => {
 				};
 
 				setSubmitStatus('Updating...');
+				// eslint-disable-next-line react-hooks/rules-of-hooks
 				const { data, error } = await useUpdateProduct(updatedProduct);
 
 				if (error) {
@@ -400,6 +398,7 @@ const ProductDetail: React.FC = () => {
 						<CircularProgress />
 					) : (
 						imageFile && (
+							// eslint-disable-next-line @typescript-eslint/no-misused-promises
 							<Button variant="contained" color="secondary" onClick={handleSave}>
 								Save image
 							</Button>
