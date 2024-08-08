@@ -47,8 +47,8 @@ const ProductDetail: React.FC = () => {
 
 	const {
 		data: imageBlob,
-		loading: imageLoading,
-		error: imageError,
+		loading: _imageLoading,
+		error: _imageError,
 	} = useFetch<Blob>(
 		product?.thumbnail?.url
 			? `${process.env.NEXT_PUBLIC_API_URL}/images/${product.thumbnail.url.split('/').pop()}`

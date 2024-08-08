@@ -57,6 +57,7 @@ const Products: React.FC = () => {
 						addNew={addNew}
 						columnsConfig={columnsConfig}
 						getRowId={getRowId}
+						loading={loading}
 					/>
 				</DashboardCard>
 			</PageContainer>
