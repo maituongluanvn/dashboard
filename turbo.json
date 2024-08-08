@@ -16,6 +16,11 @@
 		},
 		"build:definition": {
 			"dependsOn": ["^build"],
+			"outputs": ["dist/**", ".next/**"],
+			"cache": false
+		},
+		"build:eslint": {
+			"dependsOn": ["^build"],
 			"outputs": ["dist/**", ".next/**"]
 		},
 		"tsc": {

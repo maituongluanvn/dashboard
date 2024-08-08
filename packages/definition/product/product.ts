@@ -32,8 +32,15 @@ export interface IVariants {
 	pricing: { price: { gross: { currency: string; amount: number } } };
 }
 
+export interface IProductWithoutID extends Omit<IProduct, '_id'> {}
+
+export interface IObjectId {
+	toHexString(): string;
+	// You can add more methods as needed, but this is the most commonly used one
+}
+
 export interface IProduct {
-	id: string;
+	_id: IObjectId | string;
 	name: string;
 	slug: string;
 	description: string;

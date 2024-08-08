@@ -1,7 +1,8 @@
-import { Model } from 'mongoose';
+import type { Model } from 'mongoose';
 import { Injectable } from '@nestjs/common';
 import { InjectModel } from '@nestjs/mongoose';
-import { Settings, SettingsDocument } from '@schemas/settings.schema';
+import type { SettingsDocument } from '@schemas/settings.schema';
+import { Settings } from '@schemas/settings.schema';
 
 @Injectable()
 export class SettingsService {
@@ -12,6 +13,6 @@ export class SettingsService {
 	}
 
 	async createSetting(setting: Settings): Promise<void> {
-		this.settingsModel.create(setting);
+		void this.settingsModel.create(setting);
 	}
 }

@@ -8,7 +8,6 @@ export const metadata = {
 };
 
 export default function RootLayout(props: { children: ReactNode; params: { channel: string } }) {
-	console.log('🚀 ~ RootLayout ~ props:', props.params);
 	return (
 		<>
 			<Header channel={props.params.channel} />

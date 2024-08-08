@@ -4,11 +4,9 @@
 /* eslint-disable @typescript-eslint/no-unsafe-member-access */
 /* eslint-disable @typescript-eslint/no-unsafe-argument */
 import { notFound, redirect } from 'next/navigation';
-import { OrderDirection, ProductOrderField, SearchProductsDocument } from '@/gql/graphql';
-import { executeGraphQL } from '@/lib/graphql';
 import { Pagination } from '@/ui/components/Pagination';
 import { ProductList } from '@/ui/components/ProductList';
-import { ProductsPerPage } from '@/app/config';
+// import { ProductsPerPage } from '@/app/config';
 
 export const metadata = {
 	title: 'Search products · Saleor Storefront example',
@@ -17,12 +15,11 @@ export const metadata = {
 
 export default async function Page({
 	searchParams,
-	params,
 }: {
 	searchParams: Record<'query' | 'cursor', string | string[] | undefined>;
 	params: { channel: string };
 }) {
-	const cursor = typeof searchParams.cursor === 'string' ? searchParams.cursor : null;
+	// const cursor = typeof searchParams.cursor === 'string' ? searchParams.cursor : null;
 	const searchValue = searchParams.query;
 
 	if (!searchValue) {
@@ -37,18 +34,7 @@ export default async function Page({
 		redirect(`/search?${new URLSearchParams({ query: firstValidSearchValue }).toString()}`);
 	}
 
-	const { products }: any = await executeGraphQL(SearchProductsDocument, {
-		variables: {
-			first: ProductsPerPage,
-			search: searchValue,
-			after: cursor,
-			sortBy: ProductOrderField.Rating,
-			sortDirection: OrderDirection.Asc,
-			channel: params.channel,
-		},
-		revalidate: 60,
-	});
-
+	let products: any;
 	if (!products) {
 		notFound();
 	}

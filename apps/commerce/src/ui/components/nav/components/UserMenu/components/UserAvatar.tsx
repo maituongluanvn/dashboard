@@ -1,9 +1,9 @@
 /* eslint-disable @typescript-eslint/no-unsafe-call */
 import Image from 'next/image';
-import { type UserDetailsFragment } from '@/gql/graphql';
 
 type Props = {
-	user: UserDetailsFragment;
+	// user: UserDetailsFragment;
+	user: any;
 };
 
 export const UserAvatar = ({ user }: Props) => {

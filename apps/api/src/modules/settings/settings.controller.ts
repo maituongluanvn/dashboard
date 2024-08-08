@@ -1,6 +1,6 @@
 import { Controller, Get, Post } from '@nestjs/common';
 import { ApiTags } from '@nestjs/swagger';
-import { SettingsService } from './settings.service';
+import type { SettingsService } from './settings.service';
 
 const name = 'settings';
 
@@ -20,6 +20,6 @@ export class SettingsController {
 			name: 'spentType',
 			value: [{ text: 'Nhậu', callback_data: 'drink' }],
 		};
-		this.service.createSetting(setting);
+		void this.service.createSetting(setting);
 	}
 }

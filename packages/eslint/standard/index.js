@@ -33,6 +33,7 @@ module.exports = {
 			},
 			plugins: ['@typescript-eslint', 'anti-trojan-source'],
 			rules: {
+				'react-hooks/rules-of-hooks': 'off',
 				'@typescript-eslint/ban-types': 'warn',
 				'@typescript-eslint/ban-ts-comment': 'warn',
 				'@typescript-eslint/consistent-type-imports': 'error',

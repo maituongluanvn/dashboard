@@ -16,9 +16,14 @@ export class ProductController {
 		return this.productService.getAllProducts();
 	}
 
+	@Get('/categories')
+	async getCategories(): Promise<IProduct[]> {
+		return this.productService.getCategories();
+	}
+
 	@Get(':id')
-	async getProductById(@Param('id') id: string): Promise<IProduct | undefined> {
-		return this.productService.getProductById(id);
+	async getProductBySlug(@Param('id') id: string): Promise<IProduct | undefined> {
+		return this.productService.getProductBySlugAndId(id);
 	}
 
 	@Post()
