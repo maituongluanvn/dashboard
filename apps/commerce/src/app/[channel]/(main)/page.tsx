@@ -14,7 +14,7 @@ const Page: React.FC = () => {
 		data: products = [],
 		loading,
 		error,
-	} = useFetch<IProduct[]>(`${process.env.NEXT_PUBLIC_API_URL}/dashboard/product`);
+	} = useFetch<IProduct[]>(`${process.env.NEXT_PUBLIC_API_URL}/api/dashboard/product`);
 
 	if (loading) return <p>Loading...</p>;
 	if (error as any) return <p>Error: {error as any}</p>;

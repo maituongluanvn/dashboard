@@ -21,7 +21,7 @@ export default function Page({
 		data: product,
 		loading,
 		error,
-	} = useFetch<IProduct>(`${process.env.NEXT_PUBLIC_API_URL}/dashboard/product/${params.slug}`);
+	} = useFetch<IProduct>(`${process.env.NEXT_PUBLIC_API_URL}/api/dashboard/product/${params.slug}`);
 
 	if (loading) return <p>Loading...</p>;
 	if (error) return <p>Error: {error.message}</p>;
