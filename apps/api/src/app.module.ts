@@ -5,7 +5,7 @@ import { ConfigModule, ConfigService } from '@nestjs/config';
 import IncomesModule from './modules/incomes/incomes.module';
 import OutcomesModule from './modules/outcomes/outcomes.module';
 import TransactionModule from './modules/transaction/transaction.module';
-import CommonTypesModule from '@modules/settings/settings.module';
+// import CommonTypesModule from '@modules/settings/settings.module';
 import ProductModule from './modules/dashboard/product/product.module';
 // import WebhookModule from './modules/webhook/webhook.module';
 import LoggerMiddleware from '@middlewares/logger.middleware';
@@ -29,7 +29,6 @@ import { ImageModule } from './image/image.module';
 		ProductModule,
 		OutcomesModule,
 		TransactionModule,
-		CommonTypesModule,
 		ImageModule,
 		// TelegramInstance,
 	],
