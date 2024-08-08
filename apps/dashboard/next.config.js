@@ -1,15 +1,6 @@
 /** @type {import('next').NextConfig} */
-const config = {
-	images: {
-		remotePatterns: [
-			{
-				hostname: "*",
-			},
-		],
-	},
-	experimental: {
-		typedRoutes: false,
-	},
+const nextConfig = {
+	reactStrictMode: true,
 };
 
-export default config;
+module.exports = nextConfig;
