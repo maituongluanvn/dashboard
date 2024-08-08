@@ -1,0 +1,41 @@
+name: Build and Push Docker Image
+
+on:
+  push:
+    branches:
+      - main # Run the action when pushing to the main branch
+    paths:
+      - 'apps/api/**' # Only run when changes are made in the apps/api directory
+
+jobs:
+  build-and-push:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v3
+
+      - name: Set up Docker Buildx
+        uses: docker/setup-buildx-action@v2
+
+      - name: Login to Google Container Registry
+        uses: google-github-actions/auth@v2
+        with:
+          credentials_json: ${{ secrets.GCP_SERVICE_ACCOUNT_KEY }}
+
+      - name: Configure Docker for Google Container Registry
+        run: gcloud auth configure-docker asia-east2-docker.pkg.dev
+
+      - name: Extract version from package.json
+        id: extract_version
+        run: |
+          version=$(jq -r '.version' apps/api/package.json)
+          echo "VERSION=$version" >> $GITHUB_ENV
+
+      - name: Build Docker image
+        run: |
+          docker build -t asia-east2-docker.pkg.dev/maituongluan/dashboard/api:$VERSION ./apps/api
+
+      - name: Push Docker image
+        run: |
+          docker push asia-east2-docker.pkg.dev/maituongluan/dashboard/api:$VERSION
