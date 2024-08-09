@@ -11,7 +11,7 @@ import {
 	Res,
 } from '@nestjs/common';
 import { FileInterceptor } from '@nestjs/platform-express';
-import type { ImageService } from './image.service';
+import { ImageService } from './image.service';
 import type { Response } from 'express';
 
 @Controller('images')
