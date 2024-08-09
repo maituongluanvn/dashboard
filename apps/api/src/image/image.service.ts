@@ -20,7 +20,8 @@ export class ImageService {
 
 	private async initializeStorage(): Promise<void> {
 		const secretClient = new SecretManagerServiceClient();
-		const secretName = process.env.GCLOUD_SECRET_NAME;
+		const secretName = 'service-account-keyfile';
+		console.log('🚀 ~ ImageService ~ initializeStorage ~ secretName:', secretName);
 
 		if (!secretName) {
 			throw new HttpException('Secret name not provided', HttpStatus.INTERNAL_SERVER_ERROR);
@@ -30,6 +31,7 @@ export class ImageService {
 			// Truy cập Secret
 			const [version] = await secretClient.accessSecretVersion({ name: secretName });
 			const keyFileContents = version.payload.data.toString();
+			console.log('🚀 ~ ImageService ~ initializeStorage ~ keyFileContents:', keyFileContents);
 
 			// Khởi tạo Storage với tệp khóa JSON
 			this.storage = new Storage({ credentials: JSON.parse(keyFileContents) });
