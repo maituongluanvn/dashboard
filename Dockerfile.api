@@ -1,5 +1,3 @@
-# syntax=docker/dockerfile:1.3-labs
-
 # Stage 1: Build
 FROM --platform=$BUILDPLATFORM node:20.15.0-slim AS builder
 
@@ -16,11 +14,6 @@ COPY . .
 # Install dependencies for the whole monorepo
 RUN pnpm install
 
-# Securely use the service-account-keyfile.json during the build process
-# Make sure to activate BuildKit by using the syntax directive at the top of the file
-RUN --mount=type=secret,id=service_account_keyfile \
-    cp /run/secrets/service_account_keyfile /app/service-account-keyfile.json
-
 # Run Turborepo build for the specific project (api)
 RUN pnpm run build:api
 RUN pnpm run build:definition
@@ -29,6 +22,7 @@ RUN pnpm run build:definition
 FROM --platform=$TARGETPLATFORM node:20.15.0-slim AS production
 
 ENV MONGO_URI=""
+ENV GCLOUD_SECRET_NAME="service-account-keyfile"
 
 # Install pnpm
 RUN npm install -g pnpm
@@ -39,8 +33,6 @@ WORKDIR /app
 COPY package.json pnpm-lock.yaml turbo.json pnpm-workspace.yaml ./
 
 # Copy the needed folder
-COPY --from=builder /app/service-account-keyfile.json /app/apps/api/dist/service_account_keyfile.json
-COPY --from=builder /app/service-account-keyfile.json /app/apps/api/service_account_keyfile.json
 COPY --from=builder /app/apps/api ./apps/api
 COPY --from=builder /app/packages ./packages
 
