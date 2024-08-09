@@ -1,6 +1,5 @@
 import { Injectable, HttpException, HttpStatus } from '@nestjs/common';
 import { Storage } from '@google-cloud/storage';
-import { SecretManagerServiceClient } from '@google-cloud/secret-manager';
 import { Readable } from 'stream';
 import { v4 as uuidv4 } from 'uuid';
 
@@ -19,24 +18,30 @@ export class ImageService {
 	}
 
 	private async initializeStorage(): Promise<void> {
-		const secretClient = new SecretManagerServiceClient();
-		const secretName = 'service-account-keyfile';
-		console.log('🚀 ~ ImageService ~ initializeStorage ~ secretName:', secretName);
+		const projectId = process.env.GOOGLE_PROJECT_ID;
+		const clientEmail = process.env.GOOGLE_CLIENT_EMAIL;
+		const privateKey = process.env.GOOGLE_PRIVATE_KEY;
+		const privateKeyId = process.env.GOOGLE_PRIVATE_KEY_ID;
 
-		if (!secretName) {
-			throw new HttpException('Secret name not provided', HttpStatus.INTERNAL_SERVER_ERROR);
+		if (!projectId || !clientEmail || !privateKey || !privateKeyId) {
+			throw new HttpException('Missing required environment variables', HttpStatus.INTERNAL_SERVER_ERROR);
 		}
 
 		try {
-			// Truy cập Secret
-			const [version] = await secretClient.accessSecretVersion({ name: secretName });
-			const keyFileContents = version.payload.data.toString();
-			console.log('🚀 ~ ImageService ~ initializeStorage ~ keyFileContents:', keyFileContents);
-
-			// Khởi tạo Storage với tệp khóa JSON
-			this.storage = new Storage({ credentials: JSON.parse(keyFileContents) });
+			// Khởi tạo Storage với thông tin xác thực từ biến môi trường
+			this.storage = new Storage({
+				projectId,
+				credentials: {
+					client_email: clientEmail,
+					private_key: privateKey.replace(/\\n/g, '\n'),
+					private_key_id: privateKeyId,
+				},
+			});
 		} catch (err) {
-			throw new HttpException(`Failed to access secret: ${err.message}`, HttpStatus.INTERNAL_SERVER_ERROR);
+			throw new HttpException(
+				`Failed to initialize storage: ${err.message}`,
+				HttpStatus.INTERNAL_SERVER_ERROR,
+			);
 		}
 	}
 
@@ -50,7 +55,6 @@ export class ImageService {
 		this.checkStorageInitialized();
 
 		const bucket = this.storage.bucket(this.bucketName);
-		// eslint-disable-next-line @typescript-eslint/no-unsafe-call
 		const blob = bucket.file(`uploads/${uuidv4()}_${file.originalname}`); // Thư mục uploads
 		const blobStream = blob.createWriteStream({
 			resumable: false,
