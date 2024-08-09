@@ -1,5 +1,5 @@
 # syntax=docker/dockerfile:1.3-labs
-# The docker/dockerfile:1.3-labs directive at the top ensures that Docker BuildKit features (like --mount=type=secret) are enabled.
+
 # Stage 1: Build
 FROM --platform=$BUILDPLATFORM node:20.15.0-slim AS builder
 
@@ -16,9 +16,10 @@ COPY . .
 # Install dependencies for the whole monorepo
 RUN pnpm install
 
-# Use the secret to securely add the service-account-keyfile.json during the build process
+# Securely use the service-account-keyfile.json during the build process
+# Make sure to activate BuildKit by using the syntax directive at the top of the file
 RUN --mount=type=secret,id=service_account_keyfile \
-    cp /run/secrets/service_account_keyfile ./service-account-keyfile.json
+    cp /run/secrets/service_account_keyfile /app/service-account-keyfile.json
 
 # Run Turborepo build for the specific project (api)
 RUN pnpm run build:api
