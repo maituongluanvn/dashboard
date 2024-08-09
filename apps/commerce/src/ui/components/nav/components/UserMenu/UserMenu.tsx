@@ -6,7 +6,7 @@ import { Menu, Transition } from '@headlessui/react';
 import { UserInfo } from './components/UserInfo';
 import { UserAvatar } from './components/UserAvatar';
 // import { type UserDetailsFragment } from '@/gql/graphql';
-import { logout } from '@/app/actions';
+// import { logout } from '@/app/actions';
 import { LinkWithChannel } from '@/ui/atoms/LinkWithChannel';
 
 type Props = {
@@ -47,7 +47,7 @@ export function UserMenu({ user }: Props) {
 						</Menu.Item>
 					</div>
 					<div className="flex flex-col px-1 py-1">
-						<Menu.Item>
+						{/* <Menu.Item>
 							{({ active }) => (
 								// eslint-disable-next-line @typescript-eslint/no-misused-promises
 								<form action={logout}>
@@ -62,7 +62,7 @@ export function UserMenu({ user }: Props) {
 									</button>
 								</form>
 							)}
-						</Menu.Item>
+						</Menu.Item> */}
 					</div>
 				</Menu.Items>
 			</Transition>

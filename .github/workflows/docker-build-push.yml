@@ -3,9 +3,10 @@ name: Build and Push Docker Image
 on:
   push:
     branches:
-      - master # Run the action when pushing to the master branch
+      - master
     paths:
-      - 'apps/api/**' # Only run when changes are made in the apps/api directory
+      - 'apps/api/**'
+
   workflow_dispatch: # Allows the workflow to be triggered manually
 
 jobs:
