@@ -36,7 +36,7 @@ jobs:
 
       - name: Build Docker image
         run: |
-          echo "${{ secrets.SERVICE_ACCOUNT_KEYFILE }}" > /tmp/service-account-keyfile.json
+          printf "%s" "${{ secrets.SERVICE_ACCOUNT_KEYFILE }}" > /tmp/service-account-keyfile.json
           DOCKER_BUILDKIT=1 docker build \
             --secret id=service_account_keyfile,src=/tmp/service-account-keyfile.json \
             -f Dockerfile.api \
