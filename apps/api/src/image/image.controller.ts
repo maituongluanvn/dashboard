@@ -29,7 +29,7 @@ export class ImageController {
 			const imageUrl = await this.imageService.uploadFile(file);
 			return { url: imageUrl };
 		} catch (error) {
-			throw new HttpException('Failed to upload image', HttpStatus.INTERNAL_SERVER_ERROR);
+			throw new HttpException(`Failed to upload image ${error}`, HttpStatus.INTERNAL_SERVER_ERROR);
 		}
 	}
 
