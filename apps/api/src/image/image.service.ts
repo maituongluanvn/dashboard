@@ -20,7 +20,7 @@ export class ImageService {
 	private async initializeStorage(): Promise<void> {
 		const projectId = process.env.GOOGLE_PROJECT_ID;
 		const clientEmail = process.env.GOOGLE_CLIENT_EMAIL;
-		const privateKey = process.env.GOOGLE_PRIVATE_KEY;
+		const privateKey = process.env.PRIVATE_KEY.split(String.raw`\n`).join('\n');
 		const privateKeyId = process.env.GOOGLE_PRIVATE_KEY_ID;
 
 		if (!projectId || !clientEmail || !privateKey || !privateKeyId) {

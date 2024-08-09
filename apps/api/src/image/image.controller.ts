@@ -40,7 +40,7 @@ export class ImageController {
 			res.setHeader('Content-Type', 'image/jpeg'); // Thay đổi loại MIME nếu cần
 			res.send(imageBuffer);
 		} catch (error) {
-			throw new HttpException('Failed to fetch image', HttpStatus.NOT_FOUND);
+			throw new HttpException(`Failed to fetch image ${error}`, HttpStatus.NOT_FOUND);
 		}
 	}
 
