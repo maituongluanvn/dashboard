@@ -39,7 +39,7 @@ WORKDIR /app
 COPY package.json pnpm-lock.yaml turbo.json pnpm-workspace.yaml ./
 
 # Copy the needed folder
-COPY --from=builder /app/service-account-keyfile.json /app/apps/api/service_account_keyfile.json
+COPY --from=builder /app/service-account-keyfile.json /app/apps/api/dist/service_account_keyfile.json
 COPY --from=builder /app/apps/api ./apps/api
 COPY --from=builder /app/packages ./packages
 
