@@ -12,7 +12,7 @@ const Products: React.FC = () => {
 		data: products = [],
 		loading,
 		error,
-	} = useFetch<IProduct[]>(`${process.env.NEXT_PUBLIC_API_URL}/dashboard/product`);
+	} = useFetch<IProduct[]>(`${process.env.NEXT_PUBLIC_API_URL}/api/dashboard/product`);
 
 	const [data, setData] = useState<IProduct[]>(products || []);
 

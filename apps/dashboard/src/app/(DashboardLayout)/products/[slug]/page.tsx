@@ -48,7 +48,7 @@ const ProductDetail: React.FC = () => {
 	// eslint-disable-next-line @typescript-eslint/no-unsafe-call
 	const { data: imageBlob } = useFetch<Blob>(
 		product?.thumbnail?.url
-			? `${process.env.NEXT_PUBLIC_API_URL}/images/${product.thumbnail.url.split('/').pop()}`
+			? `${process.env.NEXT_PUBLIC_API_URL}/api/images/${product.thumbnail.url.split('/').pop()}`
 			: '',
 		'GET',
 	);
@@ -63,7 +63,7 @@ const ProductDetail: React.FC = () => {
 	useEffect(() => {
 		const fetchProduct = async () => {
 			try {
-				const response = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/dashboard/product/${slug}`);
+				const response = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/api/dashboard/product/${slug}`);
 
 				if (!response.ok) {
 					throw new Error(`HTTP error! status: ${response.status}`);
@@ -81,7 +81,7 @@ const ProductDetail: React.FC = () => {
 
 		const fetchCategories = async () => {
 			try {
-				const response = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/dashboard/product/categories`);
+				const response = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/api/dashboard/product/categories`);
 				const data = await response.json();
 				setCategories(data);
 			} catch (error) {
@@ -115,14 +115,14 @@ const ProductDetail: React.FC = () => {
 			if (oldImageUrl) {
 				const oldImageName = oldImageUrl.split('/').pop();
 				if (oldImageName) {
-					await fetch(`${process.env.NEXT_PUBLIC_API_URL}/images/${oldImageName}`, {
+					await fetch(`${process.env.NEXT_PUBLIC_API_URL}/api/images/${oldImageName}`, {
 						method: 'DELETE',
 					});
 				}
 			}
 
 			// Tải ảnh mới lên
-			const response = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/images/upload`, {
+			const response = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/api/images/upload`, {
 				method: 'POST',
 				body: formData,
 			});
@@ -160,7 +160,7 @@ const ProductDetail: React.FC = () => {
 				},
 			};
 
-			const response = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/dashboard/product/${slug}`, {
+			const response = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/api/dashboard/product/${slug}`, {
 				method: 'PUT',
 				headers: { 'Content-Type': 'application/json' },
 				body: JSON.stringify(updatedproduct),
@@ -180,7 +180,7 @@ const ProductDetail: React.FC = () => {
 
 	const useUpdateProduct = async (product: IProduct) => {
 		setUploading(true);
-		const url = `${process.env.NEXT_PUBLIC_API_URL}/dashboard/product/${product._id}`;
+		const url = `${process.env.NEXT_PUBLIC_API_URL}/api/dashboard/product/${product._id}`;
 		const requestOptions: RequestInit = {
 			method: 'PUT',
 			headers: { 'Content-Type': 'application/json' },

@@ -33,7 +33,7 @@ const NewProductForm: React.FC = () => {
 	useEffect(() => {
 		const fetchCategories = async () => {
 			try {
-				const response = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/dashboard/product/categories`);
+				const response = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/api/dashboard/product/categories`);
 				const data = await response.json();
 				setCategories(data);
 			} catch (error) {
@@ -60,7 +60,7 @@ const NewProductForm: React.FC = () => {
 		formData.append('file', file);
 
 		try {
-			const response = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/images/upload`, {
+			const response = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/api/images/upload`, {
 				method: 'POST',
 				body: formData,
 			});
@@ -79,7 +79,7 @@ const NewProductForm: React.FC = () => {
 	};
 
 	const useSubmitProduct = async (product: IProductWithoutID) => {
-		const url = `${process.env.NEXT_PUBLIC_API_URL}/dashboard/product`;
+		const url = `${process.env.NEXT_PUBLIC_API_URL}/api/dashboard/product`;
 		const requestOptions: RequestInit = {
 			method: 'POST',
 			headers: { 'Content-Type': 'application/json' },

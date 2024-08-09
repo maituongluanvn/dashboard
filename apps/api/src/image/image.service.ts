@@ -2,16 +2,23 @@ import { Injectable, HttpException, HttpStatus } from '@nestjs/common';
 import { Storage } from '@google-cloud/storage';
 import { Readable } from 'stream';
 import * as path from 'path';
+import * as fs from 'fs'; // Thêm import module fs
 import { v4 as uuidv4 } from 'uuid';
 
 @Injectable()
 export class ImageService {
 	private readonly storage: Storage;
 	private readonly bucketName: string = 'hoangphuc'; // Tên bucket của bạn
+	private readonly keyFilePath: string = path.join(__dirname, '..', '..', 'service-account-keyfile.json'); // Đường dẫn đến tệp khóa
 
 	constructor() {
+		if (!fs.existsSync(this.keyFilePath)) {
+			// Kiểm tra sự tồn tại của tệp khóa
+			throw new HttpException('Service account key file does not exist', HttpStatus.INTERNAL_SERVER_ERROR);
+		}
+
 		this.storage = new Storage({
-			keyFilename: path.join(__dirname, '..', '..', 'service-account-keyfile.json'), // Đường dẫn đến tệp khóa
+			keyFilename: this.keyFilePath, // Đường dẫn đến tệp khóa
 		});
 	}
 
