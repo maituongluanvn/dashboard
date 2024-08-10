@@ -95,7 +95,6 @@ export default function Page({
 					{firstImage && (
 						<ProductImageWrapper
 							loadingType="lazy"
-							priority={true}
 							alt={firstImage.alt ?? ''}
 							width={1024}
 							height={1024}
