@@ -6,7 +6,7 @@ type HttpMethod = 'GET' | 'POST' | 'PUT';
 interface IApiResponse<T> {
 	data: T | null;
 	loading: boolean;
-	error: Error | null;
+	error?: Error | null;
 }
 
 const useFetch = <T>(url: string, method: HttpMethod = 'GET', bodyData?: any): IApiResponse<T | null> => {

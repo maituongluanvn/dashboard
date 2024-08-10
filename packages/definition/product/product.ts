@@ -1,7 +1,6 @@
 export type TParams = { channel: string; slug: string };
 
 export interface IProductCategory {
-	id: string;
 	name: string;
 }
 
