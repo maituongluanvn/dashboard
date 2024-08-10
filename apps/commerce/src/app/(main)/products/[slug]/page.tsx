@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-unsafe-call */
 'use client';
 import { notFound } from 'next/navigation';
 import xss from 'xss';
