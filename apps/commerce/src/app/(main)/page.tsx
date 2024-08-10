@@ -1,32 +1,34 @@
-'use client';
 import { ProductList } from '@/ui/components/ProductList';
-import useFetch from '@/hooks/useFetch';
-import { type IProduct } from '@cores/definition';
-// export const metadata = {
-// 	title: 'Hoàng Phúc, powered by Hoang Phuc',
-// 	description:
-// 		'Storefront Next.js Example for building performant e-commerce experiences with Saleor - the composable, headless commerce platform for global brands.',
-// };
+import type { IProduct } from '@cores/definition';
 
-// const Page({ params }: { params: { channel: string } }) {
-const Page: React.FC = () => {
-	const {
-		data: products = [],
-		loading,
-		error,
-		// eslint-disable-next-line @typescript-eslint/no-unsafe-call
-	} = useFetch<IProduct[]>(`${process.env.NEXT_PUBLIC_API_URL}/api/dashboard/product`);
+// Hàm bất đồng bộ để lấy dữ liệu sản phẩm
+async function getProducts(): Promise<IProduct[]> {
+	const response = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/api/dashboard/product`);
+	if (!response.ok) {
+		throw new Error('Failed to fetch products');
+	}
+	return response.json();
+}
 
-	if (loading) return <p>Loading...</p>;
-	if (error as any) return <p>Error: {error as any}</p>;
-	if (!products) return null;
+// Server Component
+const Page = async () => {
+	try {
+		// Gọi hàm getProducts để lấy dữ liệu
+		const products = await getProducts();
+		console.log('🚀 ~ products:', products);
 
-	return (
-		<section className="mx-auto max-w-7xl p-8 pb-16">
-			<h2 className="sr-only">Product list</h2>
-			<ProductList products={products} />
-		</section>
-	);
+		// Trả về giao diện với dữ liệu sản phẩm
+		return (
+			<section className="mx-auto max-w-7xl p-8 pb-16">
+				<h2 className="sr-only">Product list</h2>
+				<ProductList products={products} />
+			</section>
+		);
+	} catch (error) {
+		console.error('Failed to fetch products:', error);
+		// Xử lý lỗi (có thể hiển thị một thông báo lỗi hoặc một trạng thái lỗi nào đó)
+		return <p>Error fetching products</p>;
+	}
 };
 
 export default Page;
