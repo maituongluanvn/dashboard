@@ -55,10 +55,6 @@ export class Variant {
 export class Category {
 	@IsNotEmpty()
 	@IsString()
-	id: string;
-
-	@IsNotEmpty()
-	@IsString()
 	name: string;
 }
 

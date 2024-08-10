@@ -3,6 +3,7 @@ import { ApiTags } from '@nestjs/swagger';
 import type { IApiResponse } from '@common/api-responese.interface';
 // eslint-disable-next-line @typescript-eslint/consistent-type-imports
 import { ProductService } from './product.service';
+import type { Product } from '@schemas/product.schema';
 import type { IProduct, CreateProductDto } from '@cores/definition';
 
 const prefix = 'dashboard/product';
@@ -20,6 +21,11 @@ export class ProductController {
 	@Get('/categories')
 	async getCategories(): Promise<IProduct[]> {
 		return this.productService.getCategories();
+	}
+
+	@Get('/categories/:name')
+	async getProductByCategoryName(@Param('name') name: string): Promise<Product[]> {
+		return this.productService.findByCategoryName(name);
 	}
 
 	@Get(':id')

@@ -14,20 +14,26 @@ export class ProductService {
 
 	async getCategories(): Promise<any[]> {
 		const categories = [
-			{ id: '1', name: 'Vitamin - khoáng chất' },
-			{ id: '2', name: 'Amino acid' },
-			{ id: '3', name: 'Bù nước - điện giải' },
-			{ id: '4', name: 'Giảm đau - hạ sốt' },
-			{ id: '5', name: 'Kháng sinh' },
-			{ id: '6', name: 'Dạ dày' },
-			{ id: '7', name: 'Miễn dịch - NSAID' },
-			{ id: '8', name: 'Cảm cúm - giảm đau - hạ sốt - kháng viêm' },
-			{ id: '9', name: 'Huyết áp' },
-			{ id: '10', name: 'Đường huyết' },
-			{ id: '11', name: 'Thần kinh' },
+			{ _id: '1', name: 'Vitamin - khoáng chất' },
+			{ _id: '2', name: 'Amino acid' },
+			{ _id: '3', name: 'Bù nước - điện giải' },
+			{ _id: '4', name: 'Giảm đau - hạ sốt' },
+			{ _id: '5', name: 'Kháng sinh' },
+			{ _id: '6', name: 'Dạ dày' },
+			{ _id: '7', name: 'Miễn dịch - NSAID' },
+			{ _id: '8', name: 'Cảm cúm - giảm đau - hạ sốt - kháng viêm' },
+			{ _id: '9', name: 'Huyết áp' },
+			{ _id: '10', name: 'Đường huyết' },
+			{ _id: '11', name: 'Thần kinh' },
 		];
 
 		return categories;
+	}
+
+	async findByCategoryName(categoryName: string): Promise<Product[]> {
+		const regex = new RegExp(categoryName, 'i');
+		const products = await this.products.find({ 'category.name': { $regex: regex } }).exec();
+		return products;
 	}
 
 	async getProductById(id: string): Promise<IProduct | undefined> {
