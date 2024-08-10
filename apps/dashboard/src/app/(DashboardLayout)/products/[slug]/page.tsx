@@ -4,7 +4,7 @@ import React, { useState, useEffect } from 'react';
 import { TextField, Button, Grid, Box, CircularProgress, MenuItem } from '@mui/material';
 import { useFormik } from 'formik';
 import * as Yup from 'yup';
-import { useRouter, useParams } from 'next/navigation'; // Đối với Next.js 13 hoặc mới hơn
+import { useRouter, useParams } from 'next/navigation';
 import type { IProduct, IProductCategory } from '@cores/definition';
 import NextImage from 'next/image';
 import useFetch from '@/hooks/useFetch';
@@ -111,17 +111,20 @@ const ProductDetail: React.FC = () => {
 		formData.append('file', file);
 
 		try {
-			// Nếu có URL của ảnh cũ, xóa ảnh cũ trước khi tải ảnh mới
+			// If you have the URL of the old image, delete the old image before uploading the new one.
 			if (oldImageUrl) {
 				const oldImageName = oldImageUrl.split('/').pop();
 				if (oldImageName) {
-					await fetch(`${process.env.NEXT_PUBLIC_API_URL}/api/images/${oldImageName}`, {
-						method: 'DELETE',
-					});
+					try {
+						// eslint-disable-next-line react-hooks/rules-of-hooks, @typescript-eslint/no-unsafe-call
+						useFetch(`${process.env.NEXT_PUBLIC_API_URL}/api/images/${oldImageName}`, 'DELETE');
+					} catch (error) {
+						console.error('Can not delete image URL:', oldImageName);
+					}
 				}
 			}
 
-			// Tải ảnh mới lên
+			// Upload new image
 			const response = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/api/images/upload`, {
 				method: 'POST',
 				body: formData,
@@ -147,9 +150,9 @@ const ProductDetail: React.FC = () => {
 			let imageUrl = product.thumbnail?.url || '';
 
 			if (imageUrlChanged && imageFile) {
-				imageUrl = await uploadImage(imageFile, imageUrl); // Gọi hàm tải lên ảnh
+				imageUrl = await uploadImage(imageFile, imageUrl);
 				setImageFile(null);
-				setImageUrlChanged(false); // Đánh dấu rằng ảnh đã được tải lên
+				setImageUrlChanged(false);
 			}
 
 			const updatedproduct = {
@@ -256,7 +259,7 @@ const ProductDetail: React.FC = () => {
 					setSubmitStatus(`Error: ${error.message}`);
 				} else if (data) {
 					setSubmitStatus('Update successful!');
-					router.push('/products'); // Chuyển hướng sau khi submit thành công
+					router.push('/products');
 				}
 			} catch (error) {
 				setSubmitStatus('An error occurred during update');
