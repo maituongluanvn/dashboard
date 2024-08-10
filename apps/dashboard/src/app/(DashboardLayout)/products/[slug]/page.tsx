@@ -246,7 +246,7 @@ const ProductDetail: React.FC = () => {
 							stop: { gross: { amount: values.pricingStopAmount, currency: 'VND' } },
 						},
 					},
-					category: { id: '', name: values.categoryName }, // Adjust category id if needed
+					category: { name: values.categoryName }, // Adjust category id if needed
 					thumbnail: { url: thumbnailUrl, alt: '' }, // Handle thumbnail alt text if needed
 					belongTo: values.belongTo, // Use formik value for belongTo
 				};
@@ -386,7 +386,7 @@ const ProductDetail: React.FC = () => {
 							Select category
 						</MenuItem>
 						{categories.map(category => (
-							<MenuItem key={category.id} value={category.name}>
+							<MenuItem key={category.name} value={category.name}>
 								{category.name}
 							</MenuItem>
 						))}
