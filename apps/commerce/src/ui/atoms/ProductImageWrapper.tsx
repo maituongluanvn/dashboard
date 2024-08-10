@@ -1,17 +1,24 @@
 import React from 'react';
 import NextImage from 'next/image';
-import useFetch from '@/hooks/useFetch';
+
+async function getImageUrl(src: string): Promise<any> {
+	const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/api/images/${src.split('/').pop() || ''}`, {
+		next: { revalidate: 60 }, // Revalidate every 60 seconds
+	});
+	return res.ok ? res.url : '/default-image.png';
+}
 
 interface IProductImageWrapperProps {
 	loadingType: 'eager' | 'lazy';
-	src: string;
+	src: string; // Đây là tên file hình ảnh
 	alt: string;
 	width: number;
 	height: number;
 	sizes?: string;
 }
 
-const ProductImageWrapper: React.FC<IProductImageWrapperProps> = ({
+// Server Component
+const ProductImageWrapper: React.FC<IProductImageWrapperProps> = async ({
 	loadingType,
 	src,
 	alt,
@@ -19,18 +26,7 @@ const ProductImageWrapper: React.FC<IProductImageWrapperProps> = ({
 	height,
 	sizes,
 }) => {
-	const {
-		data: imageBlob,
-		loading,
-		error,
-		// eslint-disable-next-line @typescript-eslint/no-unsafe-call
-	} = useFetch<Blob>(`${process.env.NEXT_PUBLIC_API_URL}/api/images/${src.split('/').pop() || ''}`, 'GET');
-
-	if (loading) return <p>Loading...</p>;
-	if (error) return <p>Error: {error as any}</p>;
-	if (!imageBlob) return <p>No image found</p>;
-
-	const imageUrl = URL.createObjectURL(imageBlob);
+	const imageUrl = await getImageUrl(src);
 
 	return (
 		<div>
