@@ -1,5 +1,6 @@
 import { IsString, IsNotEmpty, ValidateNested, IsArray, IsNumber, IsOptional } from 'class-validator';
 import { Type as TransformType } from 'class-transformer';
+import { UniqueFieldValidator } from '../unique-field.validator';
 
 export class Gross {
 	@IsNotEmpty()
@@ -78,6 +79,7 @@ export class CreateProductDto {
 
 	@IsNotEmpty()
 	@IsString()
+	@UniqueFieldValidator({ message: 'The slug must be unique.' })
 	slug: string;
 
 	@IsNotEmpty()

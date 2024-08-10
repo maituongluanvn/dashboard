@@ -12,6 +12,7 @@
 		"build:eslint": "turbo run build --filter=@cores/eslint",
 		"testunit": "turbo run testunit",
 		"dev": "turbo run dev",
+		"dev:ui": "turbo run dev:ui",
 		"dev:api": "turbo run dev:api",
 		"dev:dashboard": "turbo run dev:dashboard",
 		"lint": "turbo run lint",

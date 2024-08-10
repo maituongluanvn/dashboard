@@ -1,25 +1,20 @@
 'use client';
 
-import { usePathname } from 'next/navigation';
+import Image from 'next/image';
 import { LinkWithChannel } from '../atoms/LinkWithChannel';
-
-const companyName = 'ACME';
+import LogoSVG from '@/app/hoangphuc-logo.png';
 
 export const Logo = () => {
-	const pathname = usePathname();
+	// const pathname = usePathname();
 
-	if (pathname === '/') {
-		return (
-			<h1 className="flex items-center font-bold" aria-label="homepage">
-				{companyName}
-			</h1>
-		);
-	}
 	return (
 		<div className="flex items-center font-bold">
 			<LinkWithChannel aria-label="homepage" href="/">
-				{companyName}
+				<Image priority src={LogoSVG} height={32} width={32} alt="Follow us on Twitter" />
+				{/* <LogoSVG className="w-24 h-auto" /> */}
 			</LinkWithChannel>
 		</div>
 	);
 };
+
+export default Logo;

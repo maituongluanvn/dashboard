@@ -14,6 +14,7 @@ const Page: React.FC = () => {
 		data: products = [],
 		loading,
 		error,
+		// eslint-disable-next-line @typescript-eslint/no-unsafe-call
 	} = useFetch<IProduct[]>(`${process.env.NEXT_PUBLIC_API_URL}/api/dashboard/product`);
 
 	if (loading) return <p>Loading...</p>;

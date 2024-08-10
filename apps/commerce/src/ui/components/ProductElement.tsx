@@ -1,4 +1,5 @@
-import { LinkWithChannel } from '../atoms/LinkWithChannel';
+// import { LinkWithChannel } from '../atoms/LinkWithChannel';
+import Link from 'next/link';
 import ProductImageWrapper from '@/ui/atoms/ProductImageWrapper';
 
 import { formatMoneyRange } from '@/lib/utils';
@@ -7,11 +8,10 @@ import { type IProduct } from '@cores/definition';
 export function ProductElement({
 	product,
 	loading,
-	priority,
 }: { product: IProduct } & { loading: 'eager' | 'lazy'; priority?: boolean }) {
 	return (
 		<li data-testid="ProductElement">
-			<LinkWithChannel href={`/products/${product.slug}`} key={product._id}>
+			<Link href={`/products/${product.slug}`}>
 				<div>
 					{product?.thumbnail?.url && (
 						<ProductImageWrapper
@@ -21,7 +21,6 @@ export function ProductElement({
 							width={512}
 							height={512}
 							sizes={'512px'}
-							priority={priority || false}
 						/>
 					)}
 					<div className="mt-2 flex justify-between">
@@ -32,6 +31,7 @@ export function ProductElement({
 							</p>
 						</div>
 						<p className="mt-1 text-sm font-medium text-neutral-900" data-testid="ProductElement_PriceRange">
+							{/* eslint-disable-next-line @typescript-eslint/no-unsafe-call */}
 							{formatMoneyRange({
 								start: product?.pricing?.priceRange?.start?.gross,
 								stop: product?.pricing?.priceRange?.stop?.gross,
@@ -39,7 +39,7 @@ export function ProductElement({
 						</p>
 					</div>
 				</div>
-			</LinkWithChannel>
+			</Link>
 		</li>
 	);
 }

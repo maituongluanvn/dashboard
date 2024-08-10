@@ -1,12 +1,12 @@
 'use client';
 import { useState, useEffect } from 'react';
 
-type HttpMethod = 'GET' | 'POST' | 'PUT';
+type HttpMethod = 'GET' | 'POST' | 'PUT' | 'DELETE';
 
 interface IApiResponse<T> {
 	data: T | null;
 	loading: boolean;
-	error: Error | null;
+	error?: Error | null;
 }
 
 const useFetch = <T>(url: string, method: HttpMethod = 'GET', bodyData?: any): IApiResponse<T | null> => {

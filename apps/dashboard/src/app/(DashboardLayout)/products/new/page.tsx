@@ -1,7 +1,18 @@
 'use client';
 
 import React, { useState, useEffect } from 'react';
-import { TextField, Button, Grid, Box, CircularProgress, MenuItem } from '@mui/material';
+import {
+	TextField,
+	Button,
+	Grid,
+	Box,
+	CircularProgress,
+	MenuItem,
+	Select,
+	FormControl,
+	InputLabel,
+	FormHelperText,
+} from '@mui/material';
 import { useFormik } from 'formik';
 import { validationSchema } from '../productValidateSchema';
 import { useRouter } from 'next/navigation'; // Đối với Next.js 13 hoặc mới hơn
@@ -263,27 +274,28 @@ const NewProductForm: React.FC = () => {
 					/>
 				</Grid>
 				<Grid item xs={12}>
-					<TextField
-						fullWidth
-						id="categoryName"
-						name="categoryName"
-						label="Category"
-						select
-						value={formik.values.categoryName}
-						onChange={formik.handleChange}
-						onBlur={formik.handleBlur}
-						error={formik.touched.categoryName && Boolean(formik.errors.categoryName)}
-						helperText={formik.touched.categoryName && formik.errors.categoryName}
-					>
-						<option value="" disabled>
-							Select category
-						</option>
-						{categories.map(category => (
-							<MenuItem key={category.id} value={category.name}>
-								{category.name}
+					<FormControl fullWidth error={formik.touched.categoryName && Boolean(formik.errors.categoryName)}>
+						<InputLabel id="categoryName-label">Category</InputLabel>
+						<Select
+							labelId="categoryName-label"
+							id="categoryName"
+							name="categoryName"
+							value={formik.values.categoryName}
+							onChange={formik.handleChange}
+							onBlur={formik.handleBlur}
+							label="Category"
+						>
+							<MenuItem value="" disabled>
+								Select category
 							</MenuItem>
-						))}
-					</TextField>
+							{categories.map(category => (
+								<MenuItem key={category.id} value={category.name}>
+									{category.name}
+								</MenuItem>
+							))}
+						</Select>
+						<FormHelperText>{formik.touched.categoryName && formik.errors.categoryName}</FormHelperText>
+					</FormControl>
 				</Grid>
 				<Grid item xs={12}>
 					<Button variant="contained" component="label">

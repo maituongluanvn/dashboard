@@ -1,8 +1,9 @@
 import { Controller, Get, Post, Put, Delete, Body, Param, HttpStatus } from '@nestjs/common';
 import { ApiTags } from '@nestjs/swagger';
-import { IApiResponse } from '@common/api-responese.interface';
+import type { IApiResponse } from '@common/api-responese.interface';
+// eslint-disable-next-line @typescript-eslint/consistent-type-imports
 import { ProductService } from './product.service';
-import { IProduct, CreateProductDto } from '@cores/definition';
+import type { IProduct, CreateProductDto } from '@cores/definition';
 
 const prefix = 'dashboard/product';
 
@@ -22,7 +23,7 @@ export class ProductController {
 	}
 
 	@Get(':id')
-	async getProductBySlug(@Param('id') id: string): Promise<IProduct | undefined> {
+	async getProductBySlugAndId(@Param('id') id: string): Promise<IProduct | undefined> {
 		return this.productService.getProductBySlugAndId(id);
 	}
 

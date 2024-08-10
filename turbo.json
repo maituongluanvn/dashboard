@@ -32,6 +32,9 @@
 		"lint:fix": {
 			"outputs": []
 		},
+		"dev:ui": {
+			"cache": false
+		},
 		"dev:api": {
 			"cache": false
 		},

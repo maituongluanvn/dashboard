@@ -42,8 +42,6 @@ export class ProductService {
 	// todo: need update promise<any>
 	async getProductBySlugAndId(idOrSlug: string): Promise<any> {
 		let product;
-
-		// Kiểm tra xem idOrSlug có phải là ID hay không (chẳng hạn bằng cách sử dụng phương thức kiểm tra hợp lệ của Mongoose)
 		if (this.isValidObjectId(idOrSlug)) {
 			product = await this.products.findById(idOrSlug).exec();
 		} else {
@@ -59,7 +57,6 @@ export class ProductService {
 			// eslint-disable-next-line @typescript-eslint/no-unsafe-call
 			await (await this.products.create(product)).save();
 		} catch (error) {
-			// Ném lỗi với mã trạng thái HTTP và thông điệp lỗi
 			throw new HttpException(
 				{
 					status: HttpStatus.INTERNAL_SERVER_ERROR,
