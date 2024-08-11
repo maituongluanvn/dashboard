@@ -25,16 +25,18 @@ const ProductImageWrapper: React.FC<IProductImageWrapperProps> = ({
 	loading,
 }) => {
 	return (
-		<NextImage
-			loader={imageLoader}
-			src={src}
-			alt={alt}
-			width={width}
-			height={height}
-			sizes={sizes}
-			loading={loading}
-			layout="responsive" // Ensure layout is specified
-		/>
+		<div className="relative w-full" style={{ paddingTop: `${(height / width) * 100}%` }}>
+			<NextImage
+				loader={imageLoader}
+				src={src}
+				alt={alt}
+				layout="fill" // Make the image fill the container
+				objectFit="cover" // Ensure the image covers the container while maintaining its aspect ratio
+				sizes={sizes}
+				loading={loading}
+				className="absolute inset-0"
+			/>
+		</div>
 	);
 };
 
