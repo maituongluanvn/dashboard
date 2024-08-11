@@ -3,8 +3,17 @@ import { Footer } from '@/ui/components/Footer';
 import { Header } from '@/ui/components/Header';
 
 export const metadata = {
-	title: 'Hoàng phúc',
-	description: 'Starter pack for building performant e-commerce experiences with Saleor.',
+	metadataBase: new URL('https://www.dichtruyenhoangphuc.com'),
+	alternates: {
+		canonical: '/',
+		languages: {
+			'en-US': '/en-US',
+			'vn-VN': '/vn-VN',
+		},
+	},
+	openGraph: {
+		images: '/default-image.png',
+	},
 };
 
 export default function RootLayout(props: { children: ReactNode; params: { channel: string } }) {
