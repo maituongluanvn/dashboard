@@ -1,5 +1,6 @@
 // import { LinkWithChannel } from '../atoms/LinkWithChannel';
 import Link from 'next/link';
+import ProductImageWrapper from '@/ui/atoms/ProductImageWrapper';
 
 import { formatMoneyRange } from '@/lib/utils';
 import { type IProduct } from '@cores/definition';
@@ -11,16 +12,15 @@ export function ProductElement({
 		<li data-testid="ProductElement">
 			<Link href={`/products/${product.slug}`}>
 				<div>
-					{/* {product?.thumbnail?.url && (
+					{product?.thumbnail?.url && (
 						<ProductImageWrapper
-							loadingType={loading}
 							src={product.thumbnail.url}
 							alt={product.thumbnail.alt ?? ''}
 							width={512}
 							height={512}
 							sizes={'512px'}
 						/>
-					)} */}
+					)}
 					<div className="mt-2 flex justify-between">
 						<div>
 							<h3 className="mt-1 text-sm font-semibold text-neutral-900">{product.name}</h3>
