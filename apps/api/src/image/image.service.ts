@@ -97,6 +97,7 @@ export class ImageService {
 	}
 
 	async deleteFile(filename: string): Promise<void> {
+		console.log('🚀 ~ ImageService ~ deleteFile ~ filename:', filename);
 		this.checkStorageInitialized();
 
 		const bucket = this.storage.bucket(this.bucketName);
