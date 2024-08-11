@@ -115,12 +115,23 @@ const ProductDetail: React.FC = () => {
 			if (oldImageUrl) {
 				const oldImageName = oldImageUrl.split('/').pop();
 				if (oldImageName) {
-					try {
-						// eslint-disable-next-line react-hooks/rules-of-hooks, @typescript-eslint/no-unsafe-call
-						useFetch(`${process.env.NEXT_PUBLIC_API_URL}/api/images/${oldImageName}`, 'DELETE');
-					} catch (error) {
-						console.error('Can not delete image URL:', oldImageName);
-					}
+					const deleteImage = async () => {
+						try {
+							const response = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/api/images/${oldImageName}`, {
+								method: 'DELETE',
+							});
+
+							if (!response.ok) {
+								throw new Error(`Error: ${response.statusText}`);
+							}
+
+							console.log('Image deleted successfully');
+						} catch (error) {
+							console.error('Failed to delete image:', error);
+						}
+					};
+
+					await deleteImage();
 				}
 			}
 

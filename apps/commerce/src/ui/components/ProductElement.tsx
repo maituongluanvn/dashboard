@@ -8,6 +8,7 @@ import { type IProduct } from '@cores/definition';
 
 export function ProductElement({
 	product,
+	loading,
 }: { product: IProduct } & { loading: 'eager' | 'lazy'; priority?: boolean }) {
 	return (
 		<li data-testid="ProductElement">
@@ -20,6 +21,7 @@ export function ProductElement({
 							width={512}
 							height={512}
 							sizes={'512px'}
+							loading={loading}
 						/>
 					)}
 					<div className="mt-2 flex justify-between">

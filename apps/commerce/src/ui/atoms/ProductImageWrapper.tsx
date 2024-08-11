@@ -1,6 +1,6 @@
+'use client';
 import React from 'react';
 import NextImage from 'next/image';
-import useFetch from '@/hooks/useFetch';
 
 interface IProductImageWrapperProps {
 	src: string;
@@ -8,32 +8,33 @@ interface IProductImageWrapperProps {
 	width: number;
 	height: number;
 	sizes?: string;
+	loading?: 'eager' | 'lazy';
 }
 
-const ProductImageWrapper: React.FC<IProductImageWrapperProps> = ({ src, alt, width, height, sizes }) => {
-	const {
-		data: imageBlob,
-		loading,
-		error,
-		// eslint-disable-next-line @typescript-eslint/no-unsafe-call
-	} = useFetch<Blob>(`${process.env.NEXT_PUBLIC_API_URL}/api/images/${src.split('/').pop() || ''}`, 'GET');
+function imageLoader({ src }: { src: string }): string {
+	const imageName = src.split('/').pop();
+	return imageName ? `${process.env.NEXT_PUBLIC_API_URL}/api/images/${imageName}` : '';
+}
 
-	if (loading) return <p>Loading...</p>;
-	if (error) return <p>Error: {error as any}</p>;
-	if (!imageBlob) return <p>No image found</p>;
-
-	const imageUrl = URL.createObjectURL(imageBlob);
-
+const ProductImageWrapper: React.FC<IProductImageWrapperProps> = ({
+	src,
+	alt,
+	width,
+	height,
+	sizes,
+	loading = 'lazy',
+}) => {
 	return (
-		<div>
+		<div className="relative w-full" style={{ paddingTop: `${(height / width) * 100}%` }}>
 			<NextImage
-				src={imageUrl}
+				loader={imageLoader}
+				src={src}
 				alt={alt}
-				layout="responsive"
-				width={width}
-				height={height}
+				layout="fill" // Make the image fill the container
+				objectFit="cover" // Ensure the image covers the container while maintaining its aspect ratio
 				sizes={sizes}
-				loading="lazy"
+				loading={loading}
+				className="absolute inset-0"
 			/>
 		</div>
 	);
