@@ -1,5 +1,5 @@
 /* eslint-disable @typescript-eslint/no-unsafe-call */
-import Image from 'next/image';
+import Image from "next/legacy/image";
 
 type Props = {
 	// user: UserDetailsFragment;
