@@ -8,7 +8,7 @@ interface IProductImageWrapperProps {
 	width: number;
 	height: number;
 	sizes?: string;
-	loading: 'eager' | 'lazy';
+	loading?: 'eager' | 'lazy';
 }
 
 function imageLoader({ src }: { src: string }): string {
@@ -22,7 +22,7 @@ const ProductImageWrapper: React.FC<IProductImageWrapperProps> = ({
 	width,
 	height,
 	sizes,
-	loading,
+	loading = 'lazy',
 }) => {
 	return (
 		<div className="relative w-full" style={{ paddingTop: `${(height / width) * 100}%` }}>
