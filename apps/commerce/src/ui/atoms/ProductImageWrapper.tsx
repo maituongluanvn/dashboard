@@ -1,5 +1,5 @@
 import React from 'react';
-import NextImage from "next/legacy/image";
+import NextImage from 'next/legacy/image';
 
 async function getImageUrl(src: string): Promise<any> {
 	const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/api/images/${src.split('/').pop() || ''}`, {

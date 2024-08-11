@@ -1,6 +1,6 @@
 'use client';
 
-import Image from "next/legacy/image";
+import Image from 'next/legacy/image';
 import { LinkWithChannel } from '../atoms/LinkWithChannel';
 import LogoSVG from '@/app/hoangphuc-logo.png';
 
