@@ -9,7 +9,6 @@ async function getImageUrl(src: string): Promise<any> {
 }
 
 interface IProductImageWrapperProps {
-	loadingType: 'eager' | 'lazy';
 	src: string; // Đây là tên file hình ảnh
 	alt: string;
 	width: number;
