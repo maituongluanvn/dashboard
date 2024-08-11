@@ -9,6 +9,7 @@ async function getImageUrl(src: string): Promise<any> {
 }
 
 interface IProductImageWrapperProps {
+	loadingType: 'eager' | 'lazy';
 	src: string; // Đây là tên file hình ảnh
 	alt: string;
 	width: number;
@@ -35,7 +36,8 @@ const ProductImageWrapper: React.FC<IProductImageWrapperProps> = async ({
 				width={width}
 				height={height}
 				sizes={sizes}
-				loading="lazy"
+				priority={true}
+				loading="eager"
 			/>
 		</div>
 	);
