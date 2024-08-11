@@ -1,3 +1,4 @@
+'use client';
 // import { LinkWithChannel } from '../atoms/LinkWithChannel';
 import Link from 'next/link';
 import ProductImageWrapper from '@/ui/atoms/ProductImageWrapper';
@@ -7,7 +8,6 @@ import { type IProduct } from '@cores/definition';
 
 export function ProductElement({
 	product,
-	loading,
 }: { product: IProduct } & { loading: 'eager' | 'lazy'; priority?: boolean }) {
 	return (
 		<li data-testid="ProductElement">
@@ -15,7 +15,6 @@ export function ProductElement({
 				<div>
 					{product?.thumbnail?.url && (
 						<ProductImageWrapper
-							loadingType={loading}
 							src={product.thumbnail.url}
 							alt={product.thumbnail.alt ?? ''}
 							width={512}

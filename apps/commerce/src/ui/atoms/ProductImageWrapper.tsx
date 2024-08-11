@@ -3,7 +3,6 @@ import NextImage from 'next/image';
 import useFetch from '@/hooks/useFetch';
 
 interface IProductImageWrapperProps {
-	loadingType: 'eager' | 'lazy';
 	src: string;
 	alt: string;
 	width: number;
@@ -11,14 +10,7 @@ interface IProductImageWrapperProps {
 	sizes?: string;
 }
 
-const ProductImageWrapper: React.FC<IProductImageWrapperProps> = ({
-	loadingType,
-	src,
-	alt,
-	width,
-	height,
-	sizes,
-}) => {
+const ProductImageWrapper: React.FC<IProductImageWrapperProps> = ({ src, alt, width, height, sizes }) => {
 	const {
 		data: imageBlob,
 		loading,
@@ -41,7 +33,7 @@ const ProductImageWrapper: React.FC<IProductImageWrapperProps> = ({
 				width={width}
 				height={height}
 				sizes={sizes}
-				loading={loadingType}
+				loading="lazy"
 			/>
 		</div>
 	);

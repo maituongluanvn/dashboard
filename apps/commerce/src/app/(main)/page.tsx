@@ -1,25 +1,18 @@
-'use client';
+'use server';
 import { ProductList } from '@/ui/components/ProductList';
-import useFetch from '@/hooks/useFetch';
-import { type IProduct } from '@cores/definition';
-// export const metadata = {
-// 	title: 'Hoàng Phúc, powered by Hoang Phuc',
-// 	description:
-// 		'Storefront Next.js Example for building performant e-commerce experiences with Saleor - the composable, headless commerce platform for global brands.',
-// };
+import type { IProduct } from '@cores/definition';
 
-// const Page({ params }: { params: { channel: string } }) {
-const Page: React.FC = () => {
-	const {
-		data: products = [],
-		loading,
-		error,
-		// eslint-disable-next-line @typescript-eslint/no-unsafe-call
-	} = useFetch<IProduct[]>(`${process.env.NEXT_PUBLIC_API_URL}/api/dashboard/product`);
+async function getProducts(): Promise<IProduct[]> {
+	const response = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/api/dashboard/product`);
+	if (!response.ok) {
+		throw new Error('Failed to fetch products');
+	}
+	return response.json();
+}
 
-	if (loading) return <p>Loading...</p>;
-	if (error as any) return <p>Error: {error as any}</p>;
-	if (!products) return null;
+// Server Component
+const Page = async () => {
+	const products = await getProducts();
 
 	return (
 		<section className="mx-auto max-w-7xl p-8 pb-16">

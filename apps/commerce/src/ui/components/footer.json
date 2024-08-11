@@ -1,0 +1,68 @@
+{
+	"menu": {
+		"items": [
+			{
+				"id": "TWVudUl0ZW06MjIw",
+				"name": "Saleor",
+				"level": 0,
+				"category": null,
+				"collection": null,
+				"page": null,
+				"url": "/",
+				"children": [
+					{
+						"id": "TWVudUl0ZW06MjM5",
+						"name": "About",
+						"level": 1,
+						"category": null,
+						"collection": null,
+						"page": { "id": "UGFnZToz", "title": "About", "slug": "about" },
+						"url": null
+					},
+					{
+						"id": "TWVudUl0ZW06MjIy",
+						"name": "Documentation",
+						"level": 1,
+						"category": null,
+						"collection": null,
+						"page": null,
+						"url": "https://docs.saleor.io/"
+					}
+				]
+			},
+			{
+				"id": "TWVudUl0ZW06MjQz",
+				"name": "Collections",
+				"level": 0,
+				"category": null,
+				"collection": { "id": "Q29sbGVjdGlvbjo0", "name": "Featured Products", "slug": "featured-products" },
+				"page": null,
+				"url": null,
+				"children": [
+					{
+						"id": "TWVudUl0ZW06MjQ0",
+						"name": "Featured Products",
+						"level": 1,
+						"category": null,
+						"collection": {
+							"id": "Q29sbGVjdGlvbjo0",
+							"name": "Featured Products",
+							"slug": "featured-products"
+						},
+						"page": null,
+						"url": null
+					},
+					{
+						"id": "TWVudUl0ZW06MjQ1",
+						"name": "Summer Picks",
+						"level": 1,
+						"category": null,
+						"collection": { "id": "Q29sbGVjdGlvbjo1", "name": "Summer Picks", "slug": "summer-picks" },
+						"page": null,
+						"url": null
+					}
+				]
+			}
+		]
+	}
+}

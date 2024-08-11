@@ -6,7 +6,7 @@ import { useFormik } from 'formik';
 import * as Yup from 'yup';
 import { useRouter, useParams } from 'next/navigation';
 import type { IProduct, IProductCategory } from '@cores/definition';
-import NextImage from 'next/image';
+import NextImage from 'next/legacy/image';
 import useFetch from '@/hooks/useFetch';
 
 // Define validation schema

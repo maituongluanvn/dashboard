@@ -93,13 +93,7 @@ export default function Page({
 			<form className="grid gap-2 sm:grid-cols-2 lg:grid-cols-8">
 				<div className="md:col-span-1 lg:col-span-5">
 					{firstImage && (
-						<ProductImageWrapper
-							loadingType="lazy"
-							alt={firstImage.alt ?? ''}
-							width={1024}
-							height={1024}
-							src={firstImage.url}
-						/>
+						<ProductImageWrapper alt={firstImage.alt ?? ''} width={1024} height={1024} src={firstImage.url} />
 					)}
 				</div>
 				<div className="flex flex-col pt-6 sm:col-span-1 sm:px-6 sm:pt-0 lg:col-span-3 lg:pt-16">
