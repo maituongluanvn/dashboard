@@ -1,3 +1,4 @@
+'use client';
 // import { LinkWithChannel } from '../atoms/LinkWithChannel';
 import Link from 'next/link';
 import ProductImageWrapper from '@/ui/atoms/ProductImageWrapper';

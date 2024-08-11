@@ -1,3 +1,4 @@
+'use server';
 import { ProductList } from '@/ui/components/ProductList';
 import type { IProduct } from '@cores/definition';
 
